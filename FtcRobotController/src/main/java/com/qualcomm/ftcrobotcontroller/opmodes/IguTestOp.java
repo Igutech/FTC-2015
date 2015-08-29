@@ -27,6 +27,28 @@ public class IguTestOp extends OpMode {
         servoPos+=.5;
         servo.setPosition(servoPos);
 
+        // PROPORTIONAL CONTROL TESTING!!!
+        /*
+        if (gamepad1.x) {
+            telemetry.addData("Speed", 1);
+            dcmotor.setPower(1);
+        } else if (gamepad1.b) {
+            telemetry.addData("Speed", .0001);
+            dcmotor.setPower(.0001);
+        } else if (gamepad1.y) {
+            telemetry.addData("Speed", .001);
+            dcmotor.setPower(.001);
+        } else if (gamepad1.a) {
+            telemetry.addData("Speed", .01);
+            dcmotor.setPower(.01);
+        } else {
+            telemetry.addData("Speed", 0);
+            //dcmotor.setPower(0);
+        }
+        */
+
+        // PROPORTIONAL CONTROL TESTING!!!
+
         try {
             Thread.sleep(10);
         } catch (Exception e) {  }
