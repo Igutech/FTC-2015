@@ -8,24 +8,23 @@ import com.qualcomm.robotcore.hardware.Servo;
  * Created by Kevin on 8/28/2015.
  */
 public class IguTestOp extends OpMode {
-    DcMotor dcmotor;
     Servo servo;
-
+    TestDCMotorDriver motorDriver;
+    TestServoDriver servoDriver;
     @Override
     public void init() {
-        dcmotor = hardwareMap.dcMotor.get("motor");
-        servo = hardwareMap.servo.get("servo");
-
-        dcmotor.setPower(0);
-        servo.setPosition(0);
+        servoDriver = new TestServoDriver();
+        motorDriver = new TestDCMotorDriver(TestRobotConstants.motor);
     }
 
     @Override
     public void loop() {
-        dcmotor.setPower(gamepad1.left_stick_y);
-        double servoPos = gamepad1.right_stick_x/2;
-        servoPos+=.5;
-        servo.setPosition(servoPos);
+        if (TestRobotConstants.motorReverse) {
+            motorDriver.setMotorSpeed(-gamepad1.left_stick_y); //run the motor backwards
+        } else { //otherwise (it shouldn't be reversed...)
+            motorDriver.setMotorSpeed(gamepad1.left_stick_y); //run the motor normally
+        }
+        servoDriver.setServoPos(servoDriver.scale(gamepad1.right_stick_x));
 
         // PROPORTIONAL CONTROL TESTING!!!
         /*
