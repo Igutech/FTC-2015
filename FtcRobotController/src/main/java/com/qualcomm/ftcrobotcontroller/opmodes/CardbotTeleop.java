@@ -20,10 +20,13 @@ public class CardbotTeleop extends OpMode {
     double rightPow;
 
     CardbotDriver driver;
+    CardbotSensors sensors;
 
     @Override
     public void init() {
         driver = new CardbotDriver(hardwareMap);
+        sensors = new CardbotSensors(hardwareMap);
+        //sensors.calibrateCompass();
     }
 
     @Override
@@ -39,5 +42,7 @@ public class CardbotTeleop extends OpMode {
 
         driver.leftDrive(leftPow);
         driver.rightDrive(rightPow);
+
+        telemetry.addData("Compass Reading: ", sensors.getCompass());
     }
 }
