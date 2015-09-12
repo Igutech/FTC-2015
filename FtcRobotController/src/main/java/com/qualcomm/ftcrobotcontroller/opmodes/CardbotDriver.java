@@ -23,17 +23,14 @@ public class CardbotDriver {
     }
 
 
-    public void leftdrive(double power) {
+    public void leftDrive(double power) {
         m1.setPower(power);
         m2.setPower(power);
     }
-    public void rightdrive(double power) {
+    public void rightDrive(double power) {
         m3.setPower(power);
         m4.setPower(power);
     }
 
-    /*public void forward(float power) {
-        m1.setPower(power);
-        m2.setPower(power);
-    }*/
+
 }

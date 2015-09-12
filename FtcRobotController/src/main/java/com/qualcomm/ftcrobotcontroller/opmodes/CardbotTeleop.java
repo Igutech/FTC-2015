@@ -12,6 +12,13 @@ import com.qualcomm.robotcore.hardware.Servo;
  */
 
 public class CardbotTeleop extends OpMode {
+
+    double JoyThr;
+    double JoyYaw;
+
+    double leftPow;
+    double rightPow;
+
     CardbotDriver driver;
 
     @Override
@@ -21,8 +28,16 @@ public class CardbotTeleop extends OpMode {
 
     @Override
     public void loop() {
-        driver.leftdrive(gamepad1.left_stick_y);
-        driver.rightdrive(gamepad1.right_stick_y);
-    }
+        JoyThr = gamepad1.left_stick_y;
+        JoyYaw = gamepad1.right_stick_x;
 
+        leftPow = JoyThr;
+        rightPow = JoyThr;
+
+        leftPow+=JoyYaw;
+        rightPow-=JoyYaw;
+
+        driver.leftDrive(leftPow);
+        driver.rightDrive(rightPow);
+    }
 }
