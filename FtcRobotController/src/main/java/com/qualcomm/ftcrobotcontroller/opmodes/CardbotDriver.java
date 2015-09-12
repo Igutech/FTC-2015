@@ -1,37 +1,39 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 /**
  * Created by Igutech-02 on 9/9/2015.
+ *
+ * if you have more problems feel free to email me at brandon@brandonbarker.me
  */
-public class CardbotDriver extends CardbotTeleop {
-    CardbotConfig config;
-    DcMotor left1 = config.getLeft1();
-    DcMotor left2 = config.getLeft2();
+public class CardbotDriver {
 
-    public CardbotDriver(CardbotConfig d)
+    protected DcMotor m1, m2, m3, m4;
+
+    public CardbotDriver(HardwareMap hardwareMap)
     {
-        config = d;
+        m1 = hardwareMap.dcMotor.get("m1");
+        m2 = hardwareMap.dcMotor.get("m2");
+        m3 = hardwareMap.dcMotor.get("m3");
+        m4 = hardwareMap.dcMotor.get("m4");
     }
 
-    public CardbotDriver() {
 
+    public void leftdrive(double power) {
+        m1.setPower(power);
+        m2.setPower(power);
+    }
+    public void rightdrive(double power) {
+        m3.setPower(power);
+        m4.setPower(power);
     }
 
-
-    public void setLeftPower(float x)
-    {
-        left1.setPower(x);
-        left2.setPower(x);
-    }
-
-    public void stopLeftDrive()
-    {
-        left1.setPower(0);
-        left2.setPower(0);
-    }
-
+    /*public void forward(float power) {
+        m1.setPower(power);
+        m2.setPower(power);
+    }*/
 }

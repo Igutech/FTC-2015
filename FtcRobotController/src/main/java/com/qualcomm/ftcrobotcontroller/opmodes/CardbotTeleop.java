@@ -2,6 +2,8 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
@@ -9,29 +11,18 @@ import com.qualcomm.robotcore.hardware.Servo;
  * Created by Tilman on Igutech 02 on 9/9/2015.
  */
 
-public class CardbotTeleop extends OpMode{
-    CardbotDriver drivetrain;
-    CardbotConfig config;
+public class CardbotTeleop extends OpMode {
+    CardbotDriver driver;
+
     @Override
     public void init() {
-        config = new CardbotConfig();
-        drivetrain = new CardbotDriver(config);
-
-
+        driver = new CardbotDriver(hardwareMap);
     }
 
     @Override
     public void loop() {
-
-        drivetrain.setLeftPower(-gamepad1.left_stick_y);
-        try {
-            Thread.sleep(10); //hyperdrive warp speed preventer tool (also gives the timer some time to check if time is up... This prevents the phone from crashing mid-run.
-        } catch (Exception exception) {  } //nothing will happen, but java complains if we don't try to catch it.
-
+        driver.leftdrive(gamepad1.left_stick_y);
+        driver.rightdrive(gamepad1.right_stick_y);
     }
 
-    //@Override
-  //  public void stop() {
-
-//    }
 }
