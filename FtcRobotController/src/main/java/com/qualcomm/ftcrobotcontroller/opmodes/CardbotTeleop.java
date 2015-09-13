@@ -40,6 +40,11 @@ public class CardbotTeleop extends OpMode {
         leftPow+=JoyYaw;
         rightPow-=JoyYaw;
 
+        if(leftPow > 1){leftPow = 1;}                       //Removes any excess speed because motors cannot do more than 1
+        if(leftPow < -1){leftPow = -1;}                     //Removes any excess speed because motors cannot do more than 1
+        if(rightPow > 1){rightPow = 1;}                       //Removes any excess speed because motors cannot do more than 1
+        if(rightPow < -1){rightPow = -1;}                     //Removes any excess speed because motors cannot do more than 1
+
         driver.leftDrive(leftPow);
         driver.rightDrive(rightPow);
 
