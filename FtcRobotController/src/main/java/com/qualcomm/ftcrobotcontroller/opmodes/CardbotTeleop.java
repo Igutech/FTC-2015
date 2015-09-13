@@ -19,13 +19,19 @@ public class CardbotTeleop extends OpMode {
     double leftPow;
     double rightPow;
 
+    double sp = 0;
+
     CardbotDriver driver;
     CardbotSensors sensors;
+    CardbotPID pidcontroller;
 
     @Override
     public void init() {
         driver = new CardbotDriver(hardwareMap);
         sensors = new CardbotSensors(hardwareMap);
+        pidcontroller.setP(1);
+        pidcontroller.setI(0);
+        pidcontroller.setD(0);
         //sensors.calibrateCompass();
     }
 
@@ -34,19 +40,37 @@ public class CardbotTeleop extends OpMode {
         JoyThr = gamepad1.left_stick_y;
         JoyYaw = gamepad1.right_stick_x;
 
-        leftPow = JoyThr;
-        rightPow = JoyThr;
+        if (gamepad1.right_bumper) { //PID assisted driving
+            sp=+JoyYaw;
 
-        leftPow+=JoyYaw;
-        rightPow-=JoyYaw;
+            double pidval = pidcontroller.doCalc(sp, sensors.getCompass());
 
-        if(leftPow > 1){leftPow = 1;}                       //Removes any excess speed because motors cannot do more than 1
-        if(leftPow < -1){leftPow = -1;}                     //Removes any excess speed because motors cannot do more than 1
-        if(rightPow > 1){rightPow = 1;}                       //Removes any excess speed because motors cannot do more than 1
-        if(rightPow < -1){rightPow = -1;}                     //Removes any excess speed because motors cannot do more than 1
+            leftPow = JoyThr;
+            rightPow = JoyThr;
 
-        driver.leftDrive(leftPow);
-        driver.rightDrive(rightPow);
+            leftPow +=pidval;
+            rightPow-=pidval;
+
+            if(leftPow > 1){leftPow = 1;}                       //Removes any excess speed because motors cannot do more than 1
+            if(leftPow < -1){leftPow = -1;}                     //Removes any excess speed because motors cannot do more than 1
+            if(rightPow > 1){rightPow = 1;}                       //Removes any excess speed because motors cannot do more than 1
+            if(rightPow < -1){rightPow = -1;}                     //Removes any excess speed because motors cannot do more than 1
+
+        } else { //normal non-assisted driving
+            leftPow = JoyThr;
+            rightPow = JoyThr;
+
+            leftPow+=JoyYaw;
+            rightPow-=JoyYaw;
+
+            if(leftPow > 1){leftPow = 1;}                       //Removes any excess speed because motors cannot do more than 1
+            if(leftPow < -1){leftPow = -1;}                     //Removes any excess speed because motors cannot do more than 1
+            if(rightPow > 1){rightPow = 1;}                       //Removes any excess speed because motors cannot do more than 1
+            if(rightPow < -1){rightPow = -1;}                     //Removes any excess speed because motors cannot do more than 1
+
+            driver.leftDrive(leftPow);
+            driver.rightDrive(rightPow);
+        }
 
         telemetry.addData("Compass Reading: ", sensors.getCompass());
     }
