@@ -1,11 +1,6 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorController;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
-
 
 /**
  * Created by Tilman on Igutech 02 on 9/9/2015.
@@ -27,29 +22,30 @@ public class CardbotTeleop extends OpMode {
 
     @Override
     public void init() {
-        driver = new CardbotDriver(hardwareMap);
-        sensors = new CardbotSensors(hardwareMap);
-        pidcontroller.setP(1);
-        pidcontroller.setI(0);
-        pidcontroller.setD(0);
-        //sensors.calibrateCompass();
+
+        driver = new CardbotDriver(hardwareMap); //create the driver object
+        sensors = new CardbotSensors(hardwareMap); //create the sensor object
+        pidcontroller.setP(1); //define PID values
+        pidcontroller.setI(0); //define PID values
+        pidcontroller.setD(0); //define PID values
     }
 
     @Override
     public void loop() {
-        JoyThr = gamepad1.left_stick_y;
-        JoyYaw = gamepad1.right_stick_x;
+        JoyThr = gamepad1.left_stick_y;   //get throttle value
+        JoyYaw = gamepad1.right_stick_x;  //get yaw value
+
+        sp=+JoyYaw; //set the setpoint for PID controller
 
         if (gamepad1.right_bumper) { //PID assisted driving
-            sp=+JoyYaw;
 
-            double pidval = pidcontroller.doCalc(sp, sensors.getCompass());
+            double pidval = pidcontroller.doCalc(sp, sensors.getCompass()); //do the PID calculation
 
-            leftPow = JoyThr;
-            rightPow = JoyThr;
+            leftPow = JoyThr;   //setup the variables for adjustment
+            rightPow = JoyThr;  //setup the variables for adjustment
 
-            leftPow +=pidval;
-            rightPow-=pidval;
+            leftPow +=pidval; //adjust the variables according to PID output
+            rightPow-=pidval; //adjust the variables according to PID output
 
             if(leftPow > 1){leftPow = 1;}                       //Removes any excess speed because motors cannot do more than 1
             if(leftPow < -1){leftPow = -1;}                     //Removes any excess speed because motors cannot do more than 1
@@ -57,21 +53,26 @@ public class CardbotTeleop extends OpMode {
             if(rightPow < -1){rightPow = -1;}                     //Removes any excess speed because motors cannot do more than 1
 
         } else { //normal non-assisted driving
-            leftPow = JoyThr;
-            rightPow = JoyThr;
+            leftPow = JoyThr;   //setup the variables for yaw adjustment
+            rightPow = JoyThr;  //setup the variables for yaw adjustment
 
-            leftPow+=JoyYaw;
-            rightPow-=JoyYaw;
+            leftPow+=JoyYaw;    //adjust the variables due to yaw output
+            rightPow-=JoyYaw;   //adjust the variables due to yaw output
 
             if(leftPow > 1){leftPow = 1;}                       //Removes any excess speed because motors cannot do more than 1
             if(leftPow < -1){leftPow = -1;}                     //Removes any excess speed because motors cannot do more than 1
             if(rightPow > 1){rightPow = 1;}                       //Removes any excess speed because motors cannot do more than 1
             if(rightPow < -1){rightPow = -1;}                     //Removes any excess speed because motors cannot do more than 1
 
-            driver.leftDrive(leftPow);
-            driver.rightDrive(rightPow);
         }
 
-        telemetry.addData("Compass Reading: ", sensors.getCompass());
+        driver.leftDrive(leftPow);    //send the data to the motors
+        driver.rightDrive(rightPow);  //send the data to the motors
+
+        telemetry.addData("Compass Reading: ", sensors.getCompass());  //simple telemetry debug
+
+        try {
+            Thread.sleep(10); //let the robot react before running another PID loop
+        } catch (Exception e) {  }
     }
 }

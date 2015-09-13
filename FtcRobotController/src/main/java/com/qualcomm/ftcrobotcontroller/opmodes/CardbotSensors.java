@@ -12,12 +12,12 @@ public class CardbotSensors {
     CompassSensor compass;
     double compassval;
 
-    public CardbotSensors(HardwareMap hardwareMap) {
-        compass = hardwareMap.compassSensor.get("compass");
+    public CardbotSensors(HardwareMap hardwareMap) { //constructor...
+        compass = hardwareMap.compassSensor.get("compass"); //define the compass to it's address
     }
 
     public double getCompass() {
-        compassval = compass.getDirection();
-        return compassval;
+        compassval = compass.getDirection();  //get the compass data
+        return compassval;  //send it to whatever called this method
     }
 }

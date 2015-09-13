@@ -16,18 +16,18 @@ public class CardbotDriver {
 
     public CardbotDriver(HardwareMap hardwareMap)
     {
-        m1 = hardwareMap.dcMotor.get("m1");
-        m2 = hardwareMap.dcMotor.get("m2");
-        m3 = hardwareMap.dcMotor.get("m3");
-        m4 = hardwareMap.dcMotor.get("m4");
+        m1 = hardwareMap.dcMotor.get("m1"); //create the motor objects
+        m2 = hardwareMap.dcMotor.get("m2"); //create the motor objects
+        m3 = hardwareMap.dcMotor.get("m3"); //create the motor objects
+        m4 = hardwareMap.dcMotor.get("m4"); //create the motor objects
     }
 
 
-    public void leftDrive(double power) {
+    public void leftDrive(double power) {   //set the left drive train's power
         m1.setPower(power);
         m2.setPower(power);
     }
-    public void rightDrive(double power) {
+    public void rightDrive(double power) { //set the right drive train's power
         m3.setPower(power);
         m4.setPower(power);
     }
