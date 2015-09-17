@@ -7,7 +7,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 /**
  * Created by Kevin on 8/28/2015.
  */
-public class IguTestOp extends OpMode {
+//public class IguTestOp extends OpMode {
+
+    /*
     Servo servo;
     TestDCMotorDriver motorDriver;
     TestServoDriver servoDriver;
@@ -44,12 +46,15 @@ public class IguTestOp extends OpMode {
             telemetry.addData("Speed", 0);
             //dcmotor.setPower(0);
         }
-        */
+
 
         // PROPORTIONAL CONTROL TESTING!!!
 
         try {
             Thread.sleep(10);
         } catch (Exception e) {  }
+
+
     }
-}
+    */
+//}

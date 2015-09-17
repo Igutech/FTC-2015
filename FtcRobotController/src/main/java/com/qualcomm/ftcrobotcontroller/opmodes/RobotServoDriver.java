@@ -26,7 +26,7 @@ public class RobotServoDriver extends OpMode {
         releaseServoPos = inputReleaseServoPos;
     }
 
-    public double getRelaseServoPos() {
+    public double getReleseServoPos() {
         return releaseServoPos;
     }
 

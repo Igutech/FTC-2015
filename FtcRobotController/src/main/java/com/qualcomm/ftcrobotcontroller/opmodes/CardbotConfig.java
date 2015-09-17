@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.hardware.configuration.MotorControllerConfiguratio
 /**
  * Created by Igutech-02 on 9/9/2015.
  */
+/*
 public class CardbotConfig extends CardbotDriver{
     private DcMotorController v_dc_motor_controller_drive;
     private DcMotor v_motor_left_drive;
@@ -18,12 +19,12 @@ public class CardbotConfig extends CardbotDriver{
     private DcMotor v_motor_left_drive2;
     final int v_channel_left_drive2 = 2;
 
-    public CardbotConfig()
-    {
-        v_dc_motor_controller_drive = hardwareMap.dcMotorController.get("mc1");
-        v_motor_left_drive = hardwareMap.dcMotor.get ("m1");
-        v_motor_left_drive2 = hardwareMap.dcMotor.get ("m2");
-    }
+    //public CardbotConfig()
+    //{
+        //v_dc_motor_controller_drive = hardwareMap.dcMotorController.get("mc1");
+        //v_motor_left_drive = hardwareMap.dcMotor.get ("m1");
+        //v_motor_left_drive2 = hardwareMap.dcMotor.get ("m2");
+    //}
     public DcMotor getLeft1()
     {
         return v_motor_left_drive;
@@ -57,3 +58,4 @@ public class CardbotConfig extends CardbotDriver{
 
     }
 }
+*/
