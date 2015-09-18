@@ -101,7 +101,6 @@ public class FtcOpModeRegister implements OpModeRegister {
     //manager.register("IguTestOp", IguTestOp.class);
     manager.register("Tilman's Teleop", TilmansTeleop.class);
     manager.register("Cardbot Teleop", CardbotTeleop.class);
-    //manager.register("Logan is figuring schtuff out", LoganWhiteboard.class);
 
   }
 }
