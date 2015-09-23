@@ -109,7 +109,7 @@ public class CardbotTeleop extends OpMode {
         telemetry.addData("Compass Reading: ", sensors.getCompass());  //simple telemetry debug
 
         try {
-            Thread.sleep(10); //let the robot react before running another PID loop
+            Thread.sleep(2); //let the robot react before running another PID loop
         } catch (Exception e) {  }
     }
 }
