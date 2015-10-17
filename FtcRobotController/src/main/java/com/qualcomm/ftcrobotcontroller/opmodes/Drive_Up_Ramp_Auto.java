@@ -9,6 +9,14 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class Drive_Up_Ramp_Auto extends OpMode {
+    @Override
+    public void init() {
 
+    }
+
+    @Override
+    public void loop() {
+
+    }
 
 }
