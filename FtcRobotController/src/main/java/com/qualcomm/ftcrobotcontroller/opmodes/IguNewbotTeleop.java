@@ -33,7 +33,7 @@ public class IguNewbotTeleop extends OpMode {
     public void loop() {
 
         JoyThr = -gamepad1.left_stick_y;
-        JoyYaw = -gamepad1.right_stick_x;
+        JoyYaw = gamepad1.right_stick_x;
 
         if (JoyThr == 0) {
             rightPow = -JoyYaw;
@@ -53,8 +53,8 @@ public class IguNewbotTeleop extends OpMode {
             leftPow = JoyThr;
         }
 
-        leftMotor1.setPower(-leftPow);
-        leftMotor2.setPower(leftPow);
+        leftMotor1.setPower(leftPow);
+        leftMotor2.setPower(-leftPow);
 
         rightMotor1.setPower(-rightPow);
         rightMotor2.setPower(rightPow);
