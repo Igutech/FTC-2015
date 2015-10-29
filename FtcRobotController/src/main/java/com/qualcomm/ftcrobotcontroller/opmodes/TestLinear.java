@@ -11,6 +11,8 @@ import com.qualcomm.robotcore.hardware.LightSensor;
  */
 public class TestLinear extends LinearOpMode {
 
+    DcMotorDriver driver;
+
     DcMotor leftMotor1;
     DcMotor leftMotor2;
 
@@ -33,6 +35,8 @@ public class TestLinear extends LinearOpMode {
         compass = hardwareMap.compassSensor.get("compass");
         light = hardwareMap.lightSensor.get("light");
 
+        driver = new DcMotorDriver(hardwareMap);
+
         waitForStart();
 
         compass.setMode(CompassSensor.CompassMode.MEASUREMENT_MODE);
@@ -43,23 +47,25 @@ public class TestLinear extends LinearOpMode {
 
         //light sensor testing
 
+        /*
         light.enableLed(true);
         while(true){
             telemetry.addData("LightValue", light.getLightDetected());
         }
+        */
 
-        /*
-        driveForward(.5);
+
+        driver.driveForward(.5);
         Thread.sleep(1000);
-        stopDriving();
+        driver.stopDriving();
         Thread.sleep(200);
-        driveRightTrain(.5);
+        driver.driveRightTrain(.5);
         while(compass.getDirection() < setpoint){
             waitOneFullHardwareCycle();
             telemetry.addData("Compass", compass.getDirection());
         }
-        stopDriving();
-        */
+        driver.stopDriving();
+
     }
 
     //basic functions used for driving for the time being
@@ -94,4 +100,5 @@ public class TestLinear extends LinearOpMode {
         rightMotor1.setPower(0);
         rightMotor2.setPower(0);
     }
+
 }
