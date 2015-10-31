@@ -102,6 +102,7 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("New Bot Teleop", IguNewbotTeleop.class);
 
     manager.register("Kevin's Linear Autonomous test", TestLinear.class);
+    manager.register("Color Sensor Telemetry", ColorSensorTelemetry.class);
     
     
   }
