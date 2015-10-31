@@ -9,12 +9,11 @@ public class ColorSensorTelemetry extends OpMode {
     ColorSensor colorsensor;
     @Override
     public void init() {
-
+        colorsensor = hardwareMap.colorSensor.get("color");
     }
 
     @Override
     public void loop() {
-        colorsensor = hardwareMap.colorSensor.get("color");
         telemetry.addData("Red", colorsensor.red());
         telemetry.addData("Green", colorsensor.green());
         telemetry.addData("Blue", colorsensor.blue());
