@@ -103,7 +103,7 @@ public class FtcOpModeRegister implements OpModeRegister {
 
     manager.register("Kevin's Linear Autonomous test", TestLinear.class);
     manager.register("Color Sensor Telemetry", ColorSensorTelemetry.class);
-    
+    manager.register("Ultrasonic Sensor", UltrasonicTest.class);
     
   }
 }
