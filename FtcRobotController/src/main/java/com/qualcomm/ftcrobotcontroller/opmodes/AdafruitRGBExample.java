@@ -92,7 +92,7 @@ public class AdafruitRGBExample extends LinearOpMode {
     cdim.setDigitalChannelMode(LED_CHANNEL, DigitalChannelController.Mode.OUTPUT);
 
     // get a reference to our ColorSensor object.
-    sensorRGB = hardwareMap.colorSensor.get("lady");
+    sensorRGB = hardwareMap.colorSensor.get("color");
 
     // bEnabled represents the state of the LED.
     boolean bEnabled = true;
@@ -162,11 +162,15 @@ public class AdafruitRGBExample extends LinearOpMode {
       Color.RGBToHSV((sensorRGB.red() * 255) / 800, (sensorRGB.green() * 255) / 800, (sensorRGB.blue() * 255) / 800, hsvValues);
 
       // send the info back to driver station using telemetry function.
-      telemetry.addData("Clear", sensorRGB.alpha());
-      telemetry.addData("Red  ", sensorRGB.red());
-      telemetry.addData("Green", sensorRGB.green());
-      telemetry.addData("Blue ", sensorRGB.blue());
-      telemetry.addData("Hue", hsvValues[0]);
+      if (sensorRGB.blue() > sensorRGB.red() && sensorRGB.blue() > sensorRGB.green()) {
+        telemetry.addData("Blue ", sensorRGB.blue());
+      }
+      if (sensorRGB.red() > sensorRGB.green() && sensorRGB.red() > sensorRGB.blue()) {
+        telemetry.addData("Red ", sensorRGB.red());
+      }
+      if (sensorRGB.green() > sensorRGB.red() && sensorRGB.green() > sensorRGB.blue()) {
+        telemetry.addData("Green ", sensorRGB.green());
+      }
 
       // change the background color to match the color detected by the RGB sensor.
       // pass a reference to the hue, saturation, and value array as an argument
@@ -179,6 +183,7 @@ public class AdafruitRGBExample extends LinearOpMode {
 
       // wait a hardware cycle before iterating.
       waitOneFullHardwareCycle();
+
     }
   }
 }

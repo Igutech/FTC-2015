@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 /**
- * Created by shiva on 10/17/2015.
+ * Created by Sahas on 10/17/2015.
  */
 public class IguNewbotTeleop extends OpMode {
 
@@ -36,11 +36,11 @@ public class IguNewbotTeleop extends OpMode {
         JoyYaw = gamepad1.right_stick_x;
 
         if (JoyThr == 0) {
-            rightPow = -JoyYaw;
-            leftPow = JoyYaw;
+            rightPow = JoyYaw;
+            leftPow = -JoyYaw;
         } else if (JoyYaw == 0) {
-            rightPow = JoyThr;
-            leftPow = JoyThr;
+            rightPow = -JoyThr;
+            leftPow = -JoyThr;
         } else if (JoyYaw < 0 && JoyYaw >= -1) {
             leftPow = ((2 * JoyYaw) + 1) * JoyThr;
             rightPow = JoyThr;
