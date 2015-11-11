@@ -4,6 +4,7 @@ import android.widget.Switch;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 /**
  * Created by Sahas on 10/17/2015.
@@ -14,6 +15,7 @@ public class IguNewbotTeleop extends OpMode {
     DcMotor leftMotor2;
     DcMotor rightMotor1;
     DcMotor rightMotor2;
+    public GyroDriver gyro = new GyroDriver(hardwareMap);
 
     int robotMode = 1;
     String nameMode;
@@ -105,20 +107,33 @@ public class IguNewbotTeleop extends OpMode {
     }
     public void ModeChooser()
     {
-        if(/*Both back triggers are pressed and robotMode=!0*/)
+        double GyroAngle;
+        GyroAngle = gyro.getGyro();
+        if(gamepad1.left_trigger >= .5 && robotMode != 0)
         {
             robotMode = 0;
         }
-        else if(/*Between mode 0 and mode 2*/)
+        /*else if(Between mode 0 and mode 2)
         {
             robotMode = 1;
-        }
-        else if(/*Both back triggers are pressed and robotMode=!2*/)
+        }*/
+        else if(gamepad1.left_trigger >= .5 && robotMode != 2)
         {
             robotMode = 2;
         }
-        else if(/*Gyro indicates that the robot is on an angle between 40 degrees and 60 degrees*/)
+        else if(GyroAngle <= 60 && GyroAngle >= 40)
+        {
+            robotMode = 3;
+        }
+        /*else if(Pull up button)
+        {
+            robotMode = 4;
+        }
+        */
+        /*else if(Tumble mode)
+        {
+            robotMode = 5;
+        }
+        */
     }
-
-
 }

@@ -14,11 +14,11 @@ public class GyroDriver {
     double gyroval;
 
     public GyroDriver(HardwareMap hardwareMap) { //constructor...
-        gyro = hardwareMap.gyroSensor.get("gyrp"); //define the compass to it's address
+        gyro = hardwareMap.gyroSensor.get("gyro"); //define the gyro to it's address
     }
 
     public double getGyro() {
-        gyroval = gyro.getRotation();  //get the compass data
+        gyroval = gyro.getRotation();  //get the gyro data
         return gyroval;  //send it to whatever called this method
     }
 }
