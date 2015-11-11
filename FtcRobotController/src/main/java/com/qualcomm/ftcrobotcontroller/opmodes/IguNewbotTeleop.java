@@ -105,7 +105,19 @@ public class IguNewbotTeleop extends OpMode {
     }
     public void ModeChooser()
     {
-
+        if(/*Both back triggers are pressed and robotMode=!0*/)
+        {
+            robotMode = 0;
+        }
+        else if(/*Between mode 0 and mode 2*/)
+        {
+            robotMode = 1;
+        }
+        else if(/*Both back triggers are pressed and robotMode=!2*/)
+        {
+            robotMode = 2;
+        }
+        else if(/*Gyro indicates that the robot is on an angle between 40 degrees and 60 degrees*/)
     }
 
 
