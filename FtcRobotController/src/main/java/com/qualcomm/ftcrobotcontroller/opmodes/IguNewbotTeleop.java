@@ -1,5 +1,7 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
+import android.widget.Switch;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -13,6 +15,16 @@ public class IguNewbotTeleop extends OpMode {
     DcMotor rightMotor1;
     DcMotor rightMotor2;
 
+    int robotMode = 1;
+    String nameMode;
+    /*
+    0 - regular driving
+    1 - transitioning to tracks
+    2 - Low mountain mode
+    3 - High mountain mode
+    4 - Pullup mode
+    5 - Tumble mode (we don't want this!)
+     */
 
     double JoyThr;
     double JoyYaw;
@@ -27,10 +39,13 @@ public class IguNewbotTeleop extends OpMode {
 
         rightMotor1 = hardwareMap.dcMotor.get("right1");
         rightMotor2 = hardwareMap.dcMotor.get("right2");
+
+
     }
 
     @Override
     public void loop() {
+        ModeChooser();
 
         JoyThr = -gamepad1.left_stick_y;
         JoyYaw = gamepad1.right_stick_x;
@@ -58,7 +73,40 @@ public class IguNewbotTeleop extends OpMode {
 
         rightMotor1.setPower(-rightPow);
         rightMotor2.setPower(rightPow);
+        roboStatus();
+    }
+    public void roboStatus()
+    {
+        switch(robotMode) {
+            case 0:
+                nameMode = "Regular Mode";
+                break;
+            case 1:
+                nameMode = "Transitioning...";
+                break;
+            case 2:
+                nameMode = "Track Mode";
+                break;
+            case 3:
+                nameMode = "High-Angle Mode";
+                break;
+            case 4:
+                nameMode = "Pullup Mode";
+                break;
+            case 5:
+                nameMode = "Tumble Mode";
+                break;
+            default:
+                nameMode = "Something isn't working...";
+                break;
+        }
+        telemetry.addData("RobotMode: ", nameMode);
 
     }
+    public void ModeChooser()
+    {
+
+    }
+
 
 }
