@@ -66,15 +66,30 @@ public class Logans_New_Teleop extends OpMode {
 
         if(wheelsUp && wheelsDown) {
             telemetry.addData("The touch sensors are both appearing as touched at the same time.", "That's not good.");
-        } else if(gamepad1.left_trigger >= .5) {
+
+        } else if(gamepad1.dpad_down) {
+            changeMotor.setPower(.8);
+        }
+        else if(gamepad1.dpad_up)
+        {
+            changeMotor.setPower(-.8);
+        }else if(gamepad1.left_trigger >= .5) {
                 if(wheelsUp) {
                     while(wheelsOut.isPressed() == false) {
-                        changeMotor.setPower(.8);
+                        rightMotor1.setPower(0);
+                        rightMotor2.setPower(0);
+                        leftMotor1.setPower(0);
+                        leftMotor2.setPower(0);
+                        changeMotor.setPower(-.8);
                         telemetry.addData("Transitioning from wheel mode to tread mode...", " ");
                     }
                 } else if(wheelsDown) {
                     while (wheelsIn.isPressed() == false) {
-                        changeMotor.setPower(-.8);
+                        rightMotor1.setPower(0);
+                        rightMotor2.setPower(0);
+                        leftMotor1.setPower(0);
+                        leftMotor2.setPower(0);
+                        changeMotor.setPower(.8);
                         telemetry.addData("Transitioning from tread mode to wheel mode...", " ");
                     }
                 } else if(wheelsUp == false && wheelsDown == false) {
@@ -84,6 +99,8 @@ public class Logans_New_Teleop extends OpMode {
             telemetry.addData("Tread Mode", " ");
         } else if(wheelsDown) {
             telemetry.addData("Wheel Mode", " ");
+        } else if (wheelsUp == false && wheelsDown == false) {
+            telemetry.addData("Neither touch sensor is pressed... :/", " ");
         }
 
         JoyThr = -gamepad1.left_stick_y;
