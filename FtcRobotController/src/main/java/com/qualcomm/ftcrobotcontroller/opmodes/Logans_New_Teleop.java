@@ -37,9 +37,7 @@ public class Logans_New_Teleop extends OpMode {
     double rightPow;
     double leftPow;
 
-    double sloMo;
-
-    int loopCount;
+    double sloMo = 1;
 
     boolean wheelsUp;
     boolean wheelsDown;
@@ -76,19 +74,17 @@ public class Logans_New_Teleop extends OpMode {
                     }
                 } else if(wheelsDown) {
                     while (wheelsIn.isPressed() == false) {
-                        changeMotor.setPower(.8);
+                        changeMotor.setPower(-.8);
                         telemetry.addData("Transitioning from tread mode to wheel mode...", " ");
                     }
                 } else if(wheelsUp == false && wheelsDown == false) {
                         telemetry.addData("It knows the controller button is pressed, but thinks that neither button sensor is pressed. Crap.", " ");
                 }
-
         } else if(wheelsUp) {
             telemetry.addData("Tread Mode", " ");
         } else if(wheelsDown) {
             telemetry.addData("Wheel Mode", " ");
         }
-
 
         JoyThr = -gamepad1.left_stick_y;
         JoyYaw = gamepad1.right_stick_x;
@@ -111,7 +107,14 @@ public class Logans_New_Teleop extends OpMode {
             leftPow = JoyThr;
         }
 
+        sloMo = 1 - gamepad1.right_trigger;
 
+        if(sloMo <= .30){
+            sloMo = .30;
+        }
+
+        rightPow = rightPow * sloMo;
+        leftPow = leftPow * sloMo;
 
         leftMotor1.setPower(leftPow);
         leftMotor2.setPower(-leftPow);
