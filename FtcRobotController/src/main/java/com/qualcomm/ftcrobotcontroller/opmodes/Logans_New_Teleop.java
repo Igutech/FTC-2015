@@ -17,8 +17,8 @@ public class Logans_New_Teleop extends OpMode {
     DcMotor rightMotor1;
     DcMotor rightMotor2;
     DcMotor changeMotor;
-    TouchSensor wheelsOut;
-    TouchSensor wheelsIn;
+    //TouchSensor wheelsOut;
+    //TouchSensor wheelsIn;
 
     int robotMode = 0;
     String nameMode;
@@ -39,8 +39,8 @@ public class Logans_New_Teleop extends OpMode {
 
     double sloMo = 1;
 
-    boolean wheelsUp;
-    boolean wheelsDown;
+    //boolean wheelsUp;
+    //boolean wheelsDown;
 
 
     @Override
@@ -51,30 +51,45 @@ public class Logans_New_Teleop extends OpMode {
         rightMotor1 = hardwareMap.dcMotor.get("right1");
         rightMotor2 = hardwareMap.dcMotor.get("right2");
 
-        changeMotor = hardwareMap.dcMotor.get("driveChange");
+        changeMotor = hardwareMap.dcMotor.get("worm1");
 
-        wheelsOut = hardwareMap.touchSensor.get("wheelsOut");
-        wheelsIn = hardwareMap.touchSensor.get("wheelsIn");
+        //wheelsOut = hardwareMap.touchSensor.get("wheelsDown");
+        //wheelsIn = hardwareMap.touchSensor.get("wheelsUp");
     }
 
     @Override
     public void loop() {
         //ModeChooser();
 
-        wheelsUp = wheelsIn.isPressed();
-        wheelsDown = wheelsOut.isPressed();
+        //wheelsUp = wheelsIn.isPressed();
+        //wheelsDown = wheelsOut.isPressed();
 
-        if(wheelsUp && wheelsDown) {
+        /*if(wheelsUp && wheelsDown) {
             telemetry.addData("The touch sensors are both appearing as touched at the same time.", "That's not good.");
-        } else if(gamepad1.left_trigger >= .5) {
+
+        } else */if(gamepad1.a) {
+            changeMotor.setPower(1);
+        }
+        else if(gamepad1.b)
+        {
+            changeMotor.setPower(-1);
+        }/*else if(gamepad1.left_trigger >= .5) {
                 if(wheelsUp) {
                     while(wheelsOut.isPressed() == false) {
-                        changeMotor.setPower(.8);
+                        rightMotor1.setPower(0);
+                        rightMotor2.setPower(0);
+                        leftMotor1.setPower(0);
+                        leftMotor2.setPower(0);
+                        changeMotor.setPower(-.8);
                         telemetry.addData("Transitioning from wheel mode to tread mode...", " ");
                     }
                 } else if(wheelsDown) {
                     while (wheelsIn.isPressed() == false) {
-                        changeMotor.setPower(-.8);
+                        rightMotor1.setPower(0);
+                        rightMotor2.setPower(0);
+                        leftMotor1.setPower(0);
+                        leftMotor2.setPower(0);
+                        changeMotor.setPower(.8);
                         telemetry.addData("Transitioning from tread mode to wheel mode...", " ");
                     }
                 } else if(wheelsUp == false && wheelsDown == false) {
@@ -84,7 +99,9 @@ public class Logans_New_Teleop extends OpMode {
             telemetry.addData("Tread Mode", " ");
         } else if(wheelsDown) {
             telemetry.addData("Wheel Mode", " ");
-        }
+        } else if (wheelsUp == false && wheelsDown == false) {
+            telemetry.addData("Neither touch sensor is pressed... :/", " ");
+        }*/
 
         JoyThr = -gamepad1.left_stick_y;
         JoyYaw = gamepad1.right_stick_x;
@@ -107,7 +124,11 @@ public class Logans_New_Teleop extends OpMode {
             leftPow = JoyThr;
         }
 
+
+
         sloMo = 1 - gamepad1.right_trigger;
+
+        telemetry.addData("Slow-Mo factor", sloMo);
 
         if(sloMo <= .30){
             sloMo = .30;
@@ -119,7 +140,7 @@ public class Logans_New_Teleop extends OpMode {
         leftMotor1.setPower(leftPow);
         leftMotor2.setPower(-leftPow);
 
-        rightMotor1.setPower(-rightPow);
+        rightMotor1.setPower(rightPow);
         rightMotor2.setPower(rightPow);
         //roboStatus();
         try {
