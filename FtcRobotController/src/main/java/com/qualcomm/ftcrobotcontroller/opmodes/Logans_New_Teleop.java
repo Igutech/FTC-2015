@@ -53,8 +53,8 @@ public class Logans_New_Teleop extends OpMode {
 
         changeMotor = hardwareMap.dcMotor.get("worm1");
 
-        wheelsOut = hardwareMap.touchSensor.get("wheelsout");
-        wheelsIn = hardwareMap.touchSensor.get("wheelsin");
+        wheelsOut = hardwareMap.touchSensor.get("wheelsDown");
+        wheelsIn = hardwareMap.touchSensor.get("wheelsUp");
     }
 
     @Override
