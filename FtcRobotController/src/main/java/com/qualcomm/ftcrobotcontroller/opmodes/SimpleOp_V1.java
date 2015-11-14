@@ -37,7 +37,7 @@ public class SimpleOp_V1 extends OpMode {
     public void init() {
         leftMotor1 = hardwareMap.dcMotor.get("left1");
         leftMotor2 = hardwareMap.dcMotor.get("left2");
-        wormGear =hardwareMap.dcMotor.get("wormGear");
+        wormGear =hardwareMap.dcMotor.get("worm1");
         rightMotor1 = hardwareMap.dcMotor.get("right1");
         rightMotor2 = hardwareMap.dcMotor.get("right2");
     }

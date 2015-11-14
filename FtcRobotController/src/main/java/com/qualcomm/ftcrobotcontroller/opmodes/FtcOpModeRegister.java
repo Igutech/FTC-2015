@@ -100,7 +100,7 @@ public class FtcOpModeRegister implements OpModeRegister {
     //manager.register("PushBotSquare", PushBotSquare.class);
     manager.register("Drive Up Ramp Autonomous", Drive_Up_Ramp_Auto.class);
     manager.register("New Bot Teleop", IguNewbotTeleop.class);
-
+    manager.register("SimpleOp1", SimpleOp_V1.class);
     
   }
 }
