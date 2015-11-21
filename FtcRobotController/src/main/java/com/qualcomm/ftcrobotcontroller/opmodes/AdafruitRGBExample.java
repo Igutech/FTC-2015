@@ -58,7 +58,7 @@ import com.qualcomm.robotcore.hardware.DigitalChannelController;
  *
  * The op mode assumes that the Core Device Interface Module
  * is configured with a name of "dim" and that the Adafruit color sensor
- * is configured as an I2C device with a name of "lady".
+ * is configured as an I2C device with a name of "color".
  *
  * It also assumes that the LED pin of the RGB sensor
  * is connected to the signal pin of digital port #5 (zero indexed)

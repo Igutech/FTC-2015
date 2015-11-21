@@ -1,9 +1,8 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
-import android.widget.Switch;
-
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
@@ -37,6 +36,8 @@ public class Logans_New_Teleop extends OpMode {
     double rightPow;
     double leftPow;
 
+    DcMotorDriver driver;
+
     double sloMo = 1;
 
     //boolean wheelsUp;
@@ -52,6 +53,14 @@ public class Logans_New_Teleop extends OpMode {
         rightMotor2 = hardwareMap.dcMotor.get("right2");
 
         changeMotor = hardwareMap.dcMotor.get("worm1");
+
+        driver = new DcMotorDriver(hardwareMap);
+
+        DcMotorController leftMotorController;
+        DcMotorController rightMotorController;
+
+        leftMotorController = hardwareMap.dcMotorController.get("leftMotorController");
+        rightMotorController = hardwareMap.dcMotorController.get("rightMotorController");
 
         //wheelsOut = hardwareMap.touchSensor.get("wheelsDown");
         //wheelsIn = hardwareMap.touchSensor.get("wheelsUp");
@@ -140,9 +149,16 @@ public class Logans_New_Teleop extends OpMode {
         leftMotor1.setPower(leftPow);
         leftMotor2.setPower(-leftPow);
 
-        rightMotor1.setPower(rightPow);
+        rightMotor1.setPower(-rightPow);
         rightMotor2.setPower(rightPow);
         //roboStatus();
+
+        //telemetry
+
+
+        telemetry.addData("Right Encoder Value: ", driver.getEncoderPosition("right"));
+        telemetry.addData("Left Encoder Value: ", driver.getEncoderPosition("left"));
+
         try {
             Thread.sleep(3);
         } catch (Exception e) {  }
