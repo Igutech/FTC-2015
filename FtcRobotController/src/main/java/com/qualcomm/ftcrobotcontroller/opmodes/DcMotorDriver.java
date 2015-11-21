@@ -1,6 +1,7 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 /**
@@ -14,11 +15,16 @@ public class DcMotorDriver {
     DcMotor rightMotor1;
     DcMotor rightMotor2;
 
+    DcMotorController leftMotorController;
+    DcMotorController rightMotorController;
+
     public DcMotorDriver(HardwareMap hardwareMap) {
         leftMotor1 = hardwareMap.dcMotor.get("left1");
         leftMotor2 = hardwareMap.dcMotor.get("left2");
         rightMotor1 = hardwareMap.dcMotor.get("right1");
         rightMotor2 = hardwareMap.dcMotor.get("right2");
+        leftMotorController = hardwareMap.dcMotorController.get("leftMotorController");
+        rightMotorController = hardwareMap.dcMotorController.get("rightMotorController");
     }
     public void driveForward(double power) {
         leftMotor1.setPower(power);
@@ -39,6 +45,42 @@ public class DcMotorDriver {
     public void driveLeftTrain(double power) {
         leftMotor1.setPower(power);
         leftMotor2.setPower(-power);
+    }
+    public void driveDistance(double centimeters) {
+
+    }
+    public double getEncoderPosition(String motor) {
+        double value = 0;
+        if (motor == "right") {
+            rightMotorController.setMotorControllerDeviceMode(DcMotorController.DeviceMode.READ_ONLY);
+            while (rightMotorController.getMotorControllerDeviceMode() != DcMotorController.DeviceMode.READ_ONLY) {
+                try {
+                    Thread.sleep(1);
+                } catch (Exception e) {   }
+            }
+            value = rightMotorController.getMotorCurrentPosition(1);
+            rightMotorController.setMotorControllerDeviceMode(DcMotorController.DeviceMode.WRITE_ONLY);
+            while (rightMotorController.getMotorControllerDeviceMode() != DcMotorController.DeviceMode.WRITE_ONLY) {
+                try {
+                    Thread.sleep(1);
+                } catch (Exception e) {   }
+            }
+        } else if (motor == "left") {
+            leftMotorController.setMotorControllerDeviceMode(DcMotorController.DeviceMode.READ_ONLY);
+            while (leftMotorController.getMotorControllerDeviceMode() != DcMotorController.DeviceMode.READ_ONLY) {
+                try {
+                    Thread.sleep(1);
+                } catch (Exception e) {   }
+            }
+            value = leftMotorController.getMotorCurrentPosition(1);
+            leftMotorController.setMotorControllerDeviceMode(DcMotorController.DeviceMode.WRITE_ONLY);
+            while (leftMotorController.getMotorControllerDeviceMode() != DcMotorController.DeviceMode.WRITE_ONLY) {
+                try {
+                    Thread.sleep(1);
+                } catch (Exception e) {   }
+            }
+        }
+        return value;
     }
 
 }

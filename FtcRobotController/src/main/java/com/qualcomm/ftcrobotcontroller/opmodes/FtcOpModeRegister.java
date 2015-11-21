@@ -61,16 +61,16 @@ public class FtcOpModeRegister implements OpModeRegister {
 //    manager.register ("PushBotAuto", PushBotAuto.class);
 //    manager.register ("PushBotManual", PushBotManual.class);
     //manager.register("MatrixK9TeleOp", MatrixK9TeleOp.class);
-    manager.register("K9Line", K9Line.class);
+    //manager.register("K9Line", K9Line.class);
 
 
 
     /*
      * Uncomment any of the following lines if you want to register an op mode.
      */
-    manager.register("MR Gyro Test", MRGyroTest.class);
+    //manager.register("MR Gyro Test", MRGyroTest.class);
 
-    manager.register("Color thingy Sahas", AdafruitRGBExample.class);
+    //manager.register("Color thingy Sahas", AdafruitRGBExample.class);
     //manager.register("MRRGBExample", MRRGBExample.class);
     //manager.register("AdafruitRGBExample", AdafruitRGBExample.class);
     //manager.register("ColorSensorDriver", ColorSensorDriver.class);
@@ -104,8 +104,8 @@ public class FtcOpModeRegister implements OpModeRegister {
     //manager.register("PushBotDriveTouch", PushBotDriveTouch.class);
     //manager.register("PushBotIrSeek", PushBotIrSeek.class);
     //manager.register("PushBotSquare", PushBotSquare.class);
-    manager.register("Drive Up Ramp Autonomous", Drive_Up_Ramp_Auto.class);
-    manager.register("New Bot Teleop", IguNewbotTeleop.class);
+    //manager.register("Drive Up Ramp Autonomous", Drive_Up_Ramp_Auto.class);
+    //manager.register("New Bot Teleop", IguNewbotTeleop.class);
     manager.register("Logan's New Teleop", Logans_New_Teleop.class);
 
     
