@@ -24,6 +24,8 @@ public class DcMotorDriver {
     long rightLastTime = 0;
     long leftLastTime = 0;
 
+    public static final double circumference = 1;
+
     public DcMotorDriver(HardwareMap hardwareMap) {
         leftMotor1 = hardwareMap.dcMotor.get("left1");
         leftMotor2 = hardwareMap.dcMotor.get("left2");
@@ -55,26 +57,41 @@ public class DcMotorDriver {
         leftMotor1.setPower(power);
         leftMotor2.setPower(-power);
     }
-    public void driveDistance(double centimeters) {
-
+    public void driveDistance(double centimeters, double speed) {
+        resetEncoder("right");
+        resetEncoder("left");
+        double requiredrotations = centimeters/circumference;
+        boolean requiredhit = false;
+        while (requiredhit == false) {
+            driveForward(speed);
+            if ((getEncoderPosition("right")+getEncoderPosition("left"))/2 > requiredrotations) {
+                requiredhit = true;
+            }
+        }
+        stopDriving();
+        resetEncoder("right");
+        resetEncoder("left");
     }
 
-    public void getEncoderPosition(String motor) {
+    public double getEncoderPosition(String motor) {
         java.util.Date time = new java.util.Date();
         if (motor == "right") {
             long newtime = time.getTime();
             if (newtime>rightLastTime+200) {
-                rightEncoderValue = getRawEncoderPosition("right");
+                rightEncoderValue += getRawEncoderPosition("right");
                 rightLastTime = time.getTime();
+                return rightEncoderValue;
             }
         }
         if (motor == "left") {
             long newtime = time.getTime();
             if (newtime>leftLastTime+200) {
-                rightEncoderValue = getRawEncoderPosition("left");
+                leftEncoderValue += getRawEncoderPosition("left");
                 leftLastTime = time.getTime();
+                return leftEncoderValue;
             }
         }
+        return 0;
     }
 
     public void resetEncoder(String motor) {
