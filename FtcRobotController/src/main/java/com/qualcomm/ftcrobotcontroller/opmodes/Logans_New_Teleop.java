@@ -46,71 +46,25 @@ public class Logans_New_Teleop extends OpMode {
 
     @Override
     public void init() {
-        leftMotor1 = hardwareMap.dcMotor.get("left1");
-        leftMotor2 = hardwareMap.dcMotor.get("left2");
-
-        rightMotor1 = hardwareMap.dcMotor.get("right1");
-        rightMotor2 = hardwareMap.dcMotor.get("right2");
 
         changeMotor = hardwareMap.dcMotor.get("worm1");
+
+
 
         driver = new DcMotorDriver(hardwareMap);
 
         DcMotorController leftMotorController;
         DcMotorController rightMotorController;
-
-        leftMotorController = hardwareMap.dcMotorController.get("leftMotorController");
-        rightMotorController = hardwareMap.dcMotorController.get("rightMotorController");
-
-        //wheelsOut = hardwareMap.touchSensor.get("wheelsDown");
-        //wheelsIn = hardwareMap.touchSensor.get("wheelsUp");
     }
 
     @Override
     public void loop() {
-        //ModeChooser();
-
-        //wheelsUp = wheelsIn.isPressed();
-        //wheelsDown = wheelsOut.isPressed();
-
-        /*if(wheelsUp && wheelsDown) {
-            telemetry.addData("The touch sensors are both appearing as touched at the same time.", "That's not good.");
-
-        } else */if(gamepad1.a) {
+if(gamepad1.a) {
             changeMotor.setPower(1);
         }
-        else if(gamepad1.b)
-        {
+        else if(gamepad1.b) {
             changeMotor.setPower(-1);
-        }/*else if(gamepad1.left_trigger >= .5) {
-                if(wheelsUp) {
-                    while(wheelsOut.isPressed() == false) {
-                        rightMotor1.setPower(0);
-                        rightMotor2.setPower(0);
-                        leftMotor1.setPower(0);
-                        leftMotor2.setPower(0);
-                        changeMotor.setPower(-.8);
-                        telemetry.addData("Transitioning from wheel mode to tread mode...", " ");
-                    }
-                } else if(wheelsDown) {
-                    while (wheelsIn.isPressed() == false) {
-                        rightMotor1.setPower(0);
-                        rightMotor2.setPower(0);
-                        leftMotor1.setPower(0);
-                        leftMotor2.setPower(0);
-                        changeMotor.setPower(.8);
-                        telemetry.addData("Transitioning from tread mode to wheel mode...", " ");
-                    }
-                } else if(wheelsUp == false && wheelsDown == false) {
-                        telemetry.addData("It knows the controller button is pressed, but thinks that neither button sensor is pressed. Crap.", " ");
-                }
-        } else if(wheelsUp) {
-            telemetry.addData("Tread Mode", " ");
-        } else if(wheelsDown) {
-            telemetry.addData("Wheel Mode", " ");
-        } else if (wheelsUp == false && wheelsDown == false) {
-            telemetry.addData("Neither touch sensor is pressed... :/", " ");
-        }*/
+        }
 
         JoyThr = -gamepad1.left_stick_y;
         JoyYaw = gamepad1.right_stick_x;
@@ -163,55 +117,5 @@ public class Logans_New_Teleop extends OpMode {
             Thread.sleep(3);
         } catch (Exception e) {  }
     }
-
-    /*public void roboStatus() {
-        switch (robotMode) {
-            case 0:
-                nameMode = "Regular Mode";
-                break;
-            case 1:
-                nameMode = "Transitioning...";
-                break;
-            case 2:
-                nameMode = "Track Mode";
-                break;
-            case 3:
-                nameMode = "High-Angle Mode";
-                break;
-            case 4:
-                nameMode = "Pullup Mode";
-                break;
-            case 5:
-                nameMode = "Tumble Mode";
-                break;
-            default:
-                nameMode = "Something isn't working...";
-                break;
-        }
-        telemetry.addData("RobotMode: ", nameMode);
-
-    }*/
-
-    /*public void ModeChooser() {
-        if (gamepad1.left_trigger >= .5 && robotMode != 0) {
-            robotMode = 0;
-        }
-        else if(Between mode 0 and mode 2)
-        {
-            robotMode = 1;
-        }
-        else if (gamepad1.left_trigger >= .5 && robotMode != 2) {
-            robotMode = 2;
-        }
-        else if(Pull up button)
-        {
-            robotMode = 4;
-        }
-
-        else if(Tumble mode)
-        {
-            robotMode = 5;
-        }
-        */
     }
 

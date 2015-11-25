@@ -18,6 +18,14 @@ public class DcMotorDriver {
     DcMotorController leftMotorController;
     DcMotorController rightMotorController;
 
+    double rightEncoderValue;
+    double leftEncoderValue;
+
+    long rightLastTime = 0;
+    long leftLastTime = 0;
+
+    public static final double circumference = 1;
+
     public DcMotorDriver(HardwareMap hardwareMap) {
         leftMotor1 = hardwareMap.dcMotor.get("left1");
         leftMotor2 = hardwareMap.dcMotor.get("left2");
@@ -25,6 +33,9 @@ public class DcMotorDriver {
         rightMotor2 = hardwareMap.dcMotor.get("right2");
         leftMotorController = hardwareMap.dcMotorController.get("leftMotorController");
         rightMotorController = hardwareMap.dcMotorController.get("rightMotorController");
+
+        rightEncoderValue = 0;
+        leftEncoderValue = 0;
     }
     public void driveForward(double power) {
         leftMotor1.setPower(power);
@@ -46,10 +57,52 @@ public class DcMotorDriver {
         leftMotor1.setPower(power);
         leftMotor2.setPower(-power);
     }
-    public void driveDistance(double centimeters) {
-
+    public void driveDistance(double centimeters, double speed) {
+        resetEncoder("right");
+        resetEncoder("left");
+        double requiredrotations = centimeters/circumference;
+        boolean requiredhit = false;
+        while (requiredhit == false) {
+            driveForward(speed);
+            if ((getEncoderPosition("right")+getEncoderPosition("left"))/2 > requiredrotations) {
+                requiredhit = true;
+            }
+        }
+        stopDriving();
+        resetEncoder("right");
+        resetEncoder("left");
     }
+
     public double getEncoderPosition(String motor) {
+        java.util.Date time = new java.util.Date();
+        if (motor == "right") {
+            long newtime = time.getTime();
+            if (newtime>rightLastTime+200) {
+                rightEncoderValue += getRawEncoderPosition("right");
+                rightLastTime = time.getTime();
+                return rightEncoderValue;
+            }
+        }
+        if (motor == "left") {
+            long newtime = time.getTime();
+            if (newtime>leftLastTime+200) {
+                leftEncoderValue += getRawEncoderPosition("left");
+                leftLastTime = time.getTime();
+                return leftEncoderValue;
+            }
+        }
+        return 0;
+    }
+
+    public void resetEncoder(String motor) {
+        if (motor == "right") {
+            rightEncoderValue = 0;
+        } else if (motor == "left") {
+            leftEncoderValue = 0;
+        }
+    }
+
+    public double getRawEncoderPosition(String motor) {
         double value = 0;
         if (motor == "right") {
             rightMotorController.setMotorControllerDeviceMode(DcMotorController.DeviceMode.READ_ONLY);
