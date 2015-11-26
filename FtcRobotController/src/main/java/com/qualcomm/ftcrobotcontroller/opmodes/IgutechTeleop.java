@@ -100,11 +100,9 @@ if(gamepad1.a) {
         rightPow = rightPow * sloMo;
         leftPow = leftPow * sloMo;
 
-        leftMotor1.setPower(leftPow);
-        leftMotor2.setPower(-leftPow);
+        driver.driveLeftTrain(leftPow);
 
-        rightMotor1.setPower(-rightPow);
-        rightMotor2.setPower(rightPow);
+        driver.driveRightTrain(rightPow);
         //roboStatus();
 
         //telemetry
