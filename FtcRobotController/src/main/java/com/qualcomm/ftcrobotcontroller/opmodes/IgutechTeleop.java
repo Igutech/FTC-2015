@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.TouchSensor;
 /**
  * Created by Logan on 11/13/2015.
  */
-public class Logans_New_Teleop extends OpMode {
+public class IgutechTeleop extends OpMode {
 
     DcMotor leftMotor1;
     DcMotor leftMotor2;
