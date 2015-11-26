@@ -66,8 +66,8 @@ if(gamepad1.a) {
             changeMotor.setPower(-1);
         }
 
-        JoyThr = -gamepad1.left_stick_y;
-        JoyYaw = gamepad1.right_stick_x;
+        JoyThr = gamepad1.left_stick_y;
+        JoyYaw = -gamepad1.right_stick_x;
 
         if (JoyThr == 0) {
             rightPow = JoyYaw;
