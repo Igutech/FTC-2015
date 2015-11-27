@@ -51,7 +51,7 @@ public class IgutechTeleop extends OpMode {
 
 
 
-        driver = new DcMotorDriver(hardwareMap);
+        driver = new DcMotorDriver(hardwareMap, true);
 
         DcMotorController leftMotorController;
         DcMotorController rightMotorController;

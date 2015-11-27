@@ -26,16 +26,36 @@ public class DcMotorDriver {
 
     public static final double circumference = 1;
 
-    public DcMotorDriver(HardwareMap hardwareMap) {
+    private void setup(HardwareMap hardwareMap, boolean useEncoders) {
         leftMotor1 = hardwareMap.dcMotor.get("left1");
         leftMotor2 = hardwareMap.dcMotor.get("left2");
         rightMotor1 = hardwareMap.dcMotor.get("right1");
         rightMotor2 = hardwareMap.dcMotor.get("right2");
+
+        if (!useEncoders){
+            leftMotor1.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+            leftMotor2.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+            rightMotor1.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+            rightMotor2.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        } else {
+            leftMotor1.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+            leftMotor2.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+            rightMotor1.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+            rightMotor2.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        }
+
         leftMotorController = hardwareMap.dcMotorController.get("leftMotorController");
         rightMotorController = hardwareMap.dcMotorController.get("rightMotorController");
 
         rightEncoderValue = 0;
         leftEncoderValue = 0;
+    }
+
+    public DcMotorDriver(HardwareMap hardwareMap, boolean useEncoders) {
+        setup(hardwareMap,useEncoders);
+    }
+    public DcMotorDriver(HardwareMap hardwareMap) {
+        setup(hardwareMap, true);
     }
     public void driveForward(double power) {
         leftMotor1.setPower(power);
