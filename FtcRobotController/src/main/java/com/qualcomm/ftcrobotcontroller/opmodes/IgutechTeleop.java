@@ -108,9 +108,6 @@ if(gamepad1.a) {
         //telemetry
 
 
-        telemetry.addData("Right Encoder Value: ", driver.getEncoderPosition("right"));
-        telemetry.addData("Left Encoder Value: ", driver.getEncoderPosition("left"));
-
         try {
             Thread.sleep(3);
         } catch (Exception e) {  }
