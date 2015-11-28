@@ -69,6 +69,12 @@ if(gamepad1.a) {
         JoyThr = gamepad1.left_stick_y;
         JoyYaw = -gamepad1.right_stick_x;
 
+        if (JoyThr > .90) {
+            JoyThr = .90;
+        } else if (JoyThr < -.90) {
+            JoyThr = -.90;
+        }
+
         if (JoyThr == 0) {
             rightPow = JoyYaw;
             leftPow = -JoyYaw;
