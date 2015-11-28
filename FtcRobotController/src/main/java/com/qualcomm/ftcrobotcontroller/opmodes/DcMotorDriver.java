@@ -94,22 +94,20 @@ public class DcMotorDriver {
     }
 
     public double getEncoderPosition(String motor) {
-        java.util.Date time = new java.util.Date();
+        long newtime = System.nanoTime();
         if (motor == "right") {
-            long newtime = time.getTime();
-            if (newtime>rightLastTime+200) {
+            if (newtime>rightLastTime+200000000) {
                 rightEncoderValue += getRawEncoderPosition("right");
-                rightLastTime = time.getTime();
-                return rightEncoderValue;
+                rightLastTime = newtime;
             }
+            return rightEncoderValue;
         }
         if (motor == "left") {
-            long newtime = time.getTime();
-            if (newtime>leftLastTime+200) {
+            if (newtime>leftLastTime+200000000) {
                 leftEncoderValue += getRawEncoderPosition("left");
-                leftLastTime = time.getTime();
-                return leftEncoderValue;
+                leftLastTime = newtime;
             }
+            return leftEncoderValue;
         }
         return 0;
     }
