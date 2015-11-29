@@ -40,6 +40,8 @@ public class IgutechTeleop extends OpMode {
 
     double sloMo = 1;
 
+    double offset;
+
     //boolean wheelsUp;
     //boolean wheelsDown;
 
@@ -64,7 +66,7 @@ public class IgutechTeleop extends OpMode {
             changeMotor.setPower(-1);
         }
 
-        JoyThr = gamepad1.left_stick_y;
+        JoyThr = -gamepad1.left_stick_y;
         JoyYaw = -gamepad1.right_stick_x;
 
         if (JoyThr > .90) {
@@ -73,23 +75,26 @@ public class IgutechTeleop extends OpMode {
             JoyThr = -.90;
         }
 
-        if (JoyThr == 0) {
-            rightPow = JoyYaw;
-            leftPow = -JoyYaw;
-        } else if (JoyYaw == 0) {
-            rightPow = -JoyThr;
-            leftPow = -JoyThr;
-        } else if (JoyYaw < 0 && JoyYaw >= -1) {
-            leftPow = ((2 * JoyYaw) + 1) * JoyThr;
-            rightPow = JoyThr;
-            //Joyyaw will be -1 through 0
-            //if the joyyaw = -0.5,  0
-            //if the joyyaw = -0.75, -.5
-            //if the joyyaw = -1.0,  -1
-        } else if (JoyYaw > 0 && JoyYaw <= 1) {
-            rightPow = ((-2 * JoyYaw) + 1) * JoyThr;
-            leftPow = JoyThr;
+        rightPow = JoyThr + (JoyYaw * .5);
+        leftPow = JoyThr + (-JoyYaw * .5);
+
+        if (rightPow > 1) {
+            leftPow -= (rightPow - 1.0);
+            rightPow = 1.0;
         }
+        if (leftPow > 1) {
+            rightPow -= (leftPow - 1.0);
+            leftPow = 1.0;
+        }
+        if (rightPow < -1) {
+            leftPow += (rightPow + 1.0);
+            rightPow = -1.0;
+        }
+        if (leftPow < -1) {
+            rightPow += (leftPow + 1.0);
+            leftPow = -1.0;
+        }
+
 
 
         sloMo = 1 - gamepad1.right_trigger;
