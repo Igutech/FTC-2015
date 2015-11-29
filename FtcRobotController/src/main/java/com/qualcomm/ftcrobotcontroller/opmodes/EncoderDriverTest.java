@@ -25,18 +25,26 @@ public class EncoderDriverTest extends LinearOpMode {
         rightMotorController = hardwareMap.dcMotorController.get("rightMotorController");
         leftMotor2 = hardwareMap.dcMotor.get("left2");
         rightMotor2 = hardwareMap.dcMotor.get("right2");
-        rightMotor2.setDirection(DcMotor.Direction.REVERSE);
+        leftMotor2.setDirection(DcMotor.Direction.REVERSE);
 
 
         //driving goes here
-        driveDistance(1000, 1000, 0.25);
-        driveDistance(1000, 1000, 0.6);
-        driveDistance(-500,500,0.25);
-        driveDistance(-700,-700,0.25);
+        driveDistance(198, 198, 0.35);
+        driveDistance(0, 29, 0.35);
+        driveDistance(82, 82, 0.35);
+        driveDistance(0,0,0);
 
     }
-    public void driveDistance(int enc1, int enc2, double power) throws InterruptedException
+    public void driveDistance(double ldist, double rdist, double power) throws InterruptedException
     {
+        int enc1;
+        int enc2;
+
+        enc1 = (int)Math.round(ldist*33.65);
+        enc2 = (int)Math.round(rdist*33.65);
+
+
+
         leftMotor2.setMode(DcMotorController.RunMode.RESET_ENCODERS);
         rightMotor2.setMode(DcMotorController.RunMode.RESET_ENCODERS);
         waitOneFullHardwareCycle();
@@ -63,6 +71,7 @@ public class EncoderDriverTest extends LinearOpMode {
             {
                 counter = 2;
             }
+            waitOneFullHardwareCycle();
         }
         waitOneFullHardwareCycle();
         leftMotorController.setMotorControllerDeviceMode(DcMotorController.DeviceMode.WRITE_ONLY); //Change to read
