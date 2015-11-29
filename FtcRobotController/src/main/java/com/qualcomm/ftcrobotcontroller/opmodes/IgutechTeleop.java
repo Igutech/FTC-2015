@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 /**
@@ -18,6 +19,8 @@ public class IgutechTeleop extends OpMode {
     DcMotor changeMotor;
     //TouchSensor wheelsOut;
     //TouchSensor wheelsIn;
+
+    Servo armServo;
 
     int robotMode = 0;
     String nameMode;
@@ -51,11 +54,16 @@ public class IgutechTeleop extends OpMode {
 
         changeMotor = hardwareMap.dcMotor.get("worm1");
 
+        armServo = hardwareMap.servo.get("armservo");
+        armServo.scaleRange(0,1);
+
 
         driver = new DcMotorDriver(hardwareMap, true);
 
         DcMotorController leftMotorController;
         DcMotorController rightMotorController;
+
+        armServo.setPosition(0);
     }
 
     @Override
@@ -64,6 +72,12 @@ public class IgutechTeleop extends OpMode {
             changeMotor.setPower(1);
         } else if (gamepad1.b) {
             changeMotor.setPower(-1);
+        }
+
+        if (gamepad1.x) { //move the servo to "1"
+            armServo.setPosition(1);
+        } else { //move the servo to "0"
+            armServo.setPosition(0);
         }
 
         JoyThr = -gamepad1.left_stick_y;
