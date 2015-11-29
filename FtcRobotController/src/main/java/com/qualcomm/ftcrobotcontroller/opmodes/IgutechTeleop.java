@@ -50,7 +50,6 @@ public class IgutechTeleop extends OpMode {
         changeMotor = hardwareMap.dcMotor.get("worm1");
 
 
-
         driver = new DcMotorDriver(hardwareMap, true);
 
         DcMotorController leftMotorController;
@@ -59,10 +58,9 @@ public class IgutechTeleop extends OpMode {
 
     @Override
     public void loop() {
-if(gamepad1.a) {
+        if (gamepad1.a) {
             changeMotor.setPower(1);
-        }
-        else if(gamepad1.b) {
+        } else if (gamepad1.b) {
             changeMotor.setPower(-1);
         }
 
@@ -94,12 +92,11 @@ if(gamepad1.a) {
         }
 
 
-
         sloMo = 1 - gamepad1.right_trigger;
 
         telemetry.addData("Slow-Mo factor", sloMo);
 
-        if(sloMo <= .30){
+        if (sloMo <= .30) {
             sloMo = .30;
         }
 
@@ -116,7 +113,8 @@ if(gamepad1.a) {
 
         try {
             Thread.sleep(3);
-        } catch (Exception e) {  }
+        } catch (Exception e) {
+        }
     }
-    }
+}
 
