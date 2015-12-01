@@ -63,16 +63,16 @@ public class IgutechTeleop extends OpMode {
         armMotor1 = hardwareMap.dcMotor.get("arm1");
         armMotor2 = hardwareMap.dcMotor.get("arm2");
 
-        armServo = hardwareMap.servo.get("armservo");
-        armServo.setDirection(Servo.Direction.FORWARD);
-        armServo.scaleRange(-1,1);
+        //armServo = hardwareMap.servo.get("armservo");
+        //armServo.setDirection(Servo.Direction.FORWARD);
+        //armServo.scaleRange(-1,1);
 
         driver = new DcMotorDriver(hardwareMap, true);
 
         DcMotorController leftMotorController;
         DcMotorController rightMotorController;
 
-        armServo.setPosition(0);
+        //armServo.setPosition(0);
     }
 
     @Override
@@ -82,6 +82,8 @@ public class IgutechTeleop extends OpMode {
             changeMotor.setPower(1);
         } else if (gamepad1.b) {
             changeMotor.setPower(-1);
+        } else {
+            changeMotor.setPower(0);
         }
 
 
@@ -139,7 +141,7 @@ public class IgutechTeleop extends OpMode {
         armMotor1.setPower(armMovement);
         armMotor2.setPower(armMovement);
 
-        armServo.setPosition(armServoMovement);
+        //armServo.setPosition(armServoMovement);
 
         driver.driveLeftTrain(leftPow);
 
@@ -148,9 +150,9 @@ public class IgutechTeleop extends OpMode {
 
         //telemetry
 
-        try {
-            Thread.sleep(3);
-        } catch (Exception e) {
-        }
+        //try {
+        //    Thread.sleep(3);
+        //} catch (Exception e) {
+        //}
     }
 }
