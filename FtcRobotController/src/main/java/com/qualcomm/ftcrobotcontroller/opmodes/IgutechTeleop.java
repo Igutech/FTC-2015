@@ -39,7 +39,13 @@ public class IgutechTeleop extends OpMode {
     double rightPow;
     double leftPow;
 
+    DcMotor armMotor1;
+    DcMotor armMotor2;
+
     DcMotorDriver driver;
+
+    double armServoMovement;
+    double armMovement;
 
     double sloMo = 1;
 
@@ -54,9 +60,12 @@ public class IgutechTeleop extends OpMode {
 
         changeMotor = hardwareMap.dcMotor.get("worm1");
 
-        armServo = hardwareMap.servo.get("armservo");
-        armServo.scaleRange(0,1);
+        armMotor1 = hardwareMap.dcMotor.get("arm1");
+        armMotor2 = hardwareMap.dcMotor.get("arm2");
 
+        armServo = hardwareMap.servo.get("armservo");
+        armServo.setDirection(Servo.Direction.FORWARD);
+        armServo.scaleRange(-1,1);
 
         driver = new DcMotorDriver(hardwareMap, true);
 
@@ -68,26 +77,28 @@ public class IgutechTeleop extends OpMode {
 
     @Override
     public void loop() {
+
         if (gamepad1.a) {
             changeMotor.setPower(1);
         } else if (gamepad1.b) {
             changeMotor.setPower(-1);
         }
 
-        if (gamepad1.x) { //move the servo to "1"
-            armServo.setPosition(1);
-        } else { //move the servo to "0"
-            armServo.setPosition(0);
-        }
+
 
         JoyThr = -gamepad1.left_stick_y;
         JoyYaw = -gamepad1.right_stick_x;
+
+        armMovement = gamepad2.left_stick_y;
+        armServoMovement = gamepad2.right_stick_x;
 
         if (JoyThr > .90) {
             JoyThr = .90;
         } else if (JoyThr < -.90) {
             JoyThr = -.90;
         }
+
+
 
         rightPow = JoyThr + (JoyYaw * .5);
         leftPow = JoyThr + (-JoyYaw * .5);
@@ -122,6 +133,14 @@ public class IgutechTeleop extends OpMode {
         rightPow = rightPow * sloMo;
         leftPow = leftPow * sloMo;
 
+        armMotor1.setDirection(DcMotor.Direction.FORWARD);
+        armMotor2.setDirection(DcMotor.Direction.REVERSE);
+
+        armMotor1.setPower(armMovement);
+        armMotor2.setPower(armMovement);
+
+        armServo.setPosition(armServoMovement);
+
         driver.driveLeftTrain(leftPow);
 
         driver.driveRightTrain(rightPow);
@@ -129,11 +148,9 @@ public class IgutechTeleop extends OpMode {
 
         //telemetry
 
-
         try {
             Thread.sleep(3);
         } catch (Exception e) {
         }
     }
 }
-

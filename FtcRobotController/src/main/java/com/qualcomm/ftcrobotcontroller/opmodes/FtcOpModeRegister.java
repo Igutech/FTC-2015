@@ -109,6 +109,10 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("Igutech Teleop", IgutechTeleop.class);
     manager.register("Encoder Driver Test", EncoderDriverTest.class);
       manager.register("Test", NxtTeleOp.class);
+      manager.register("Blue Left Ramp Autonomous", IguBlueAutoRampLeft.class);
+      manager.register("Blue Right Ramp Autonomous", IguBlueAutoRampRight.class);
+      manager.register("Red Left Ramp Autonomous", IguRedAutoRampLeft.class);
+      manager.register("Red Right Ramp Autonomous", IguRedAutoRampRight.class);
     
   }
 }
