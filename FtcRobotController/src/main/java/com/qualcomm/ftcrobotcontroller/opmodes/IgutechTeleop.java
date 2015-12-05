@@ -70,21 +70,21 @@ public class IgutechTeleop extends OpMode {
         armMotor1.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
         armMotor2.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
 
-        DIM = hardwareMap.deviceInterfaceModule.get("dim");
+        //DIM = hardwareMap.deviceInterfaceModule.get("dim");
 
-        //armServo = hardwareMap.servo.get("armservo");
-        //armServo.setDirection(Servo.Direction.FORWARD);
-        //armServo.scaleRange(-1,1);
+        armServo = hardwareMap.servo.get("armservo");
+        armServo.setDirection(Servo.Direction.FORWARD);
+
 
         driver = new DcMotorDriver(hardwareMap, true);
 
         DcMotorController leftMotorController;
         DcMotorController rightMotorController;
 
-        DIM.setDigitalChannelMode(0, DigitalChannelController.Mode.OUTPUT);
-        DIM.setDigitalChannelMode(1, DigitalChannelController.Mode.OUTPUT);
+        //DIM.setDigitalChannelMode(0, DigitalChannelController.Mode.OUTPUT);
+        //DIM.setDigitalChannelMode(1, DigitalChannelController.Mode.OUTPUT);
 
-        //armServo.setPosition(0);
+        armServo.setPosition(.5);
     }
 
     @Override
@@ -141,18 +141,21 @@ public class IgutechTeleop extends OpMode {
 
         if(gamepad2.x)
         {
-            DIM.setDigitalChannelState(0, true);
-            DIM.setDigitalChannelState(1, false);
+            armServo.setPosition(1);
+            //DIM.setDigitalChannelState(0, true);
+            //DIM.setDigitalChannelState(1, false);
         }
         else if(gamepad2.b)
         {
-            DIM.setDigitalChannelState(0, false);
-            DIM.setDigitalChannelState(1, true);
+            armServo.setPosition(0);
+            //DIM.setDigitalChannelState(0, false);
+            //DIM.setDigitalChannelState(1, true);
         }
         else
         {
-            DIM.setDigitalChannelState(0, false);
-            DIM.setDigitalChannelState(1, false);
+            armServo.setPosition(.5);
+            //DIM.setDigitalChannelState(0, false);
+            //DIM.setDigitalChannelState(1, false);
         }
 
         sloMo = 1 - gamepad1.right_trigger;
