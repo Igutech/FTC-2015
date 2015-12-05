@@ -3,15 +3,18 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
+import com.qualcomm.robotcore.hardware.DigitalChannelController;
 
 /**
  * Created by Logan on 11/13/2015.
  */
 public class IgutechTeleop extends OpMode {
 
+    DeviceInterfaceModule DIM;
     DcMotor leftMotor1;
     DcMotor leftMotor2;
     DcMotor rightMotor1;
@@ -44,7 +47,6 @@ public class IgutechTeleop extends OpMode {
 
     DcMotorDriver driver;
 
-    double armServoMovement;
     double armMovement;
 
     double sloMo = 1;
@@ -63,6 +65,8 @@ public class IgutechTeleop extends OpMode {
         armMotor1 = hardwareMap.dcMotor.get("arm1");
         armMotor2 = hardwareMap.dcMotor.get("arm2");
 
+        DIM = hardwareMap.deviceInterfaceModule.get("dim");
+
         //armServo = hardwareMap.servo.get("armservo");
         //armServo.setDirection(Servo.Direction.FORWARD);
         //armServo.scaleRange(-1,1);
@@ -71,6 +75,9 @@ public class IgutechTeleop extends OpMode {
 
         DcMotorController leftMotorController;
         DcMotorController rightMotorController;
+
+        DIM.setDigitalChannelMode(0, DigitalChannelController.Mode.OUTPUT);
+        DIM.setDigitalChannelMode(1, DigitalChannelController.Mode.OUTPUT);
 
         //armServo.setPosition(0);
     }
@@ -92,7 +99,6 @@ public class IgutechTeleop extends OpMode {
         JoyYaw = -gamepad1.right_stick_x;
 
         armMovement = gamepad2.left_stick_y;
-        armServoMovement = gamepad2.right_stick_x;
 
         if (JoyThr > .90) {
             JoyThr = .90;
@@ -122,7 +128,21 @@ public class IgutechTeleop extends OpMode {
             leftPow = -1.0;
         }
 
-
+        if(gamepad2.dpad_left)
+        {
+            DIM.setDigitalChannelState(0, true);
+            DIM.setDigitalChannelState(1, false);
+        }
+        else if(gamepad2.dpad_right)
+        {
+            DIM.setDigitalChannelState(0, false);
+            DIM.setDigitalChannelState(1, true);
+        }
+        else
+        {
+            DIM.setDigitalChannelState(0, false);
+            DIM.setDigitalChannelState(1, false);
+        }
 
         sloMo = 1 - gamepad1.right_trigger;
 
@@ -140,8 +160,6 @@ public class IgutechTeleop extends OpMode {
 
         armMotor1.setPower(armMovement);
         armMotor2.setPower(armMovement);
-
-        //armServo.setPosition(armServoMovement);
 
         driver.driveLeftTrain(leftPow);
 
