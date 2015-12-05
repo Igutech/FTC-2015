@@ -65,6 +65,9 @@ public class IgutechTeleop extends OpMode {
         armMotor1 = hardwareMap.dcMotor.get("arm1");
         armMotor2 = hardwareMap.dcMotor.get("arm2");
 
+        armMotor1.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        armMotor2.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+
         DIM = hardwareMap.deviceInterfaceModule.get("dim");
 
         //armServo = hardwareMap.servo.get("armservo");
@@ -158,8 +161,8 @@ public class IgutechTeleop extends OpMode {
         armMotor1.setDirection(DcMotor.Direction.FORWARD);
         armMotor2.setDirection(DcMotor.Direction.REVERSE);
 
-        armMotor1.setPower(armMovement);
-        armMotor2.setPower(armMovement);
+        armMotor1.setPower(armMovement*.3);
+        armMotor2.setPower(armMovement*.3);
 
         driver.driveLeftTrain(leftPow);
 
