@@ -131,12 +131,12 @@ public class IgutechTeleop extends OpMode {
             leftPow = -1.0;
         }
 
-        if(gamepad2.dpad_left)
+        if(gamepad2.x)
         {
             DIM.setDigitalChannelState(0, true);
             DIM.setDigitalChannelState(1, false);
         }
-        else if(gamepad2.dpad_right)
+        else if(gamepad2.b)
         {
             DIM.setDigitalChannelState(0, false);
             DIM.setDigitalChannelState(1, true);
