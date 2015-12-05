@@ -105,10 +105,10 @@ public class IgutechTeleop extends OpMode {
 
         armMovement = gamepad2.left_stick_y;
 
-        if(armMovement > 0) {
+        if(-armMovement > 0) {
             armscaling = .3;
-        } else if(armMovement < 0) {
-            armscaling = .2;
+        } else if(-armMovement < 0) {
+            armscaling = .3;
         }
 
         if (JoyThr > .90) {
