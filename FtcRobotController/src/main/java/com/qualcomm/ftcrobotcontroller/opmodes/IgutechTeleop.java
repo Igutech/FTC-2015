@@ -53,6 +53,8 @@ public class IgutechTeleop extends OpMode {
 
     double offset;
 
+    double armscaling;
+
     //boolean wheelsUp;
     //boolean wheelsDown;
 
@@ -102,6 +104,12 @@ public class IgutechTeleop extends OpMode {
         JoyYaw = -gamepad1.right_stick_x;
 
         armMovement = gamepad2.left_stick_y;
+
+        if(armMovement > 0) {
+            armscaling = .3;
+        } else if(armMovement < 0) {
+            armscaling = .2;
+        }
 
         if (JoyThr > .90) {
             JoyThr = .90;
@@ -161,8 +169,8 @@ public class IgutechTeleop extends OpMode {
         armMotor1.setDirection(DcMotor.Direction.FORWARD);
         armMotor2.setDirection(DcMotor.Direction.REVERSE);
 
-        armMotor1.setPower(armMovement*.3);
-        armMotor2.setPower(armMovement*.3);
+        armMotor1.setPower(armMovement*armscaling);
+        armMotor2.setPower(armMovement*armscaling);
 
         driver.driveLeftTrain(leftPow);
 
