@@ -60,8 +60,11 @@ public class IguRedAutoRampLeft extends LinearOpMode {
         waitOneFullHardwareCycle();
         waitOneFullHardwareCycle();
         waitOneFullHardwareCycle();
+        waitOneFullHardwareCycle();
         leftMotor2.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
         rightMotor2.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+        waitOneFullHardwareCycle();
+        waitOneFullHardwareCycle();
         waitOneFullHardwareCycle();
         leftMotor2.setTargetPosition(enc1);
         rightMotor2.setTargetPosition(enc2);
@@ -77,12 +80,15 @@ public class IguRedAutoRampLeft extends LinearOpMode {
         waitOneFullHardwareCycle();
         while(counter == 1)
         {
-            if(isCloseto(leftMotor2.getCurrentPosition(), enc1) && isCloseto(rightMotor2.getCurrentPosition(),enc2))
+            if(Math.abs(leftMotor2.getCurrentPosition()) > Math.abs(enc1)-30 && Math.abs(rightMotor2.getCurrentPosition()) > Math.abs(enc2)-30)
             {
                 counter = 2;
             }
             waitOneFullHardwareCycle();
         }
+        waitOneFullHardwareCycle();
+        waitOneFullHardwareCycle();
+        waitOneFullHardwareCycle();
         waitOneFullHardwareCycle();
         leftMotorController.setMotorControllerDeviceMode(DcMotorController.DeviceMode.WRITE_ONLY); //Change to read
         rightMotorController.setMotorControllerDeviceMode(DcMotorController.DeviceMode.WRITE_ONLY);
@@ -92,16 +98,31 @@ public class IguRedAutoRampLeft extends LinearOpMode {
         leftMotor2.setMode(DcMotorController.RunMode.RESET_ENCODERS);
         rightMotor2.setMode(DcMotorController.RunMode.RESET_ENCODERS);
         waitOneFullHardwareCycle();
+        waitOneFullHardwareCycle();
+        waitOneFullHardwareCycle();
+        waitOneFullHardwareCycle();
+        waitOneFullHardwareCycle();
         leftMotorController.setMotorControllerDeviceMode(DcMotorController.DeviceMode.READ_ONLY); //Change to read
         rightMotorController.setMotorControllerDeviceMode(DcMotorController.DeviceMode.READ_ONLY);
+        waitOneFullHardwareCycle();
+        waitOneFullHardwareCycle();
+        waitOneFullHardwareCycle();
+        waitOneFullHardwareCycle();
         waitOneFullHardwareCycle();
         telemetry.addData("Currentvalue", leftMotor2.getCurrentPosition());
         waitOneFullHardwareCycle();
         leftMotorController.setMotorControllerDeviceMode(DcMotorController.DeviceMode.WRITE_ONLY); //Change to read
         rightMotorController.setMotorControllerDeviceMode(DcMotorController.DeviceMode.WRITE_ONLY);
         waitOneFullHardwareCycle();
+        waitOneFullHardwareCycle();
+        waitOneFullHardwareCycle();
+        waitOneFullHardwareCycle();
         leftMotor2.setMode(DcMotorController.RunMode.RESET_ENCODERS);
         rightMotor2.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        waitOneFullHardwareCycle();
+        waitOneFullHardwareCycle();
+        waitOneFullHardwareCycle();
+        waitOneFullHardwareCycle();
         counter = 1;
     }
     public Boolean isCloseto(int number1, int number2)
