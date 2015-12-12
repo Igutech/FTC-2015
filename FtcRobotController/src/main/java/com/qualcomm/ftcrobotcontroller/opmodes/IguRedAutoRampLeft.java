@@ -26,12 +26,24 @@ public class IguRedAutoRampLeft extends LinearOpMode {
         rightMotor2 = hardwareMap.dcMotor.get("right2");
         leftMotor2.setDirection(DcMotor.Direction.REVERSE);
 
+        waitForStart();
 
         //driving goes here
+
+        driveDistance(850, 850, 1);
+        driveDistance(0, 150, 1);
+        driveDistance(50, 0, 1);
+        driveDistance(-425, -425, -1);
+        driveDistance(0, 150, 1);
+        driveDistance(1000, 1000, 1);
+        driveDistance(0,0,0);
+
+        /*
         driveDistance(198, 198, 0.35);
         driveDistance(0, 29, 0.35);
         driveDistance(82, 82, 0.35);
         driveDistance(0,0,0);
+        */
     }
     public void driveDistance(double ldist, double rdist, double power) throws InterruptedException
     {
