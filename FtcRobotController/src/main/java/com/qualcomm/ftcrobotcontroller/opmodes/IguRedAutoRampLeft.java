@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.Servo;
 
 /**
  * Created by Igutech-02 on 11/14/2015.
@@ -17,6 +18,8 @@ public class IguRedAutoRampLeft extends LinearOpMode {
     DcMotor leftMotor2, rightMotor2;
     DcMotorController leftMotorController, rightMotorController;
     int counter = 1;
+    Servo climberservo;
+
     @Override
     public void runOpMode() throws InterruptedException
     {
@@ -24,19 +27,17 @@ public class IguRedAutoRampLeft extends LinearOpMode {
         rightMotorController = hardwareMap.dcMotorController.get("rightMotorController");
         leftMotor2 = hardwareMap.dcMotor.get("left2");
         rightMotor2 = hardwareMap.dcMotor.get("right2");
+
+        climberservo = hardwareMap.servo.get("climber");
         leftMotor2.setDirection(DcMotor.Direction.REVERSE);
 
         waitForStart();
 
         //driving goes here
 
-        driveDistance(850, 850, 1);
-        driveDistance(0, 150, 1);
-        driveDistance(50, 0, 1);
-        driveDistance(-425, -425, -1);
-        driveDistance(0, 150, 1);
-        driveDistance(1000, 1000, 1);
-        driveDistance(0,0,0);
+        climberservo.setPosition(.1);
+
+        driveDistance(-850, -850, -1);
 
         /*
         driveDistance(198, 198, 0.35);
