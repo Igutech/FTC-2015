@@ -24,6 +24,7 @@ public class IgutechTeleop extends OpMode {
     //TouchSensor wheelsIn;
 
     Servo armServo;
+    Servo climberServo;
 
     int robotMode = 0;
     String nameMode;
@@ -73,6 +74,7 @@ public class IgutechTeleop extends OpMode {
         //DIM = hardwareMap.deviceInterfaceModule.get("dim");
 
         armServo = hardwareMap.servo.get("armservo");
+        climberServo = hardwareMap.servo.get("climber");
         armServo.setDirection(Servo.Direction.FORWARD);
 
 
@@ -85,17 +87,24 @@ public class IgutechTeleop extends OpMode {
         //DIM.setDigitalChannelMode(1, DigitalChannelController.Mode.OUTPUT);
 
         armServo.setPosition(.5);
+        climberServo.setPosition(0);
     }
 
     @Override
     public void loop() {
 
-        if (gamepad1.a) {
+        if (gamepad2.left_bumper) {
             changeMotor.setPower(1);
-        } else if (gamepad1.b) {
+        } else if (gamepad2.right_bumper) {
             changeMotor.setPower(-1);
         } else {
             changeMotor.setPower(0);
+        }
+
+        if (gamepad2.a) {
+            climberServo.setPosition(1);
+        } else {
+            climberServo.setPosition(0);
         }
 
 
