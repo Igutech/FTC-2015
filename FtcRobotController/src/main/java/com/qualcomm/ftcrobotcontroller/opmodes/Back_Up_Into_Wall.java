@@ -11,23 +11,49 @@ import com.qualcomm.robotcore.hardware.UltrasonicSensor;
  */
 public class Back_Up_Into_Wall extends LinearOpMode {
     DcMotor Left, Right;
-    UltrasonicSensor Ultra1, Ultra2;
-    double U1, U2;
+    UltrasonicSensor UltraL, UltraR;
+    double UL, UR, PreviousUL, PreviousUR;
+    boolean FirstTry = true;
 
     @Override
     public void runOpMode() throws InterruptedException {
 
         Left = hardwareMap.dcMotor.get("left2");
         Right = hardwareMap.dcMotor.get("right2");
-        Ultra1 = hardwareMap.ultrasonicSensor.get("Ultra1");
-        Ultra2 = hardwareMap.ultrasonicSensor.get("Ultra2");
+        UltraL = hardwareMap.ultrasonicSensor.get("Ultra1");
+        UltraR = hardwareMap.ultrasonicSensor.get("Ultra2");
         while (true) {
-            U1 = Ultra1.getUltrasonicLevel();
-            U2 = Ultra2.getUltrasonicLevel();
+            UL = UltraL.getUltrasonicLevel();
+            UR = UltraR.getUltrasonicLevel();
 
-            telemetry.addData("Ultra1", U1);
-            telemetry.addData("Ultra2", U2);
+            telemetry.addData("Left Ultrasonic Sensor:", UL);
+            telemetry.addData("Right Ultrasonic Sensor:", UR);
+
+            if (FirstTry == false) {
+                if (UL == 0 && UR == 0) {
+                    Left.setPower(0);
+                    Right.setPower(0);
+                }
+                else if (UL == 0 || UL == 255) {
+                    UL = PreviousUL;
+                }
+                else if (UR == 0 || UR == 255) {
+                    UR = PreviousUR;
+                }
+                if (UL > UR) {
+                    Left.setPower(-.4);
+                    Right.setPower(0);
+                }
+                if (UR > UL) {
+                    Left.setPower(0);
+                    Right.setPower(-.4);
+                }
+                if (UL == UR) {
+                    Left.setPower(-.4);
+                    Right.setPower(-.4);
+                }
+            }
+            FirstTry = false;
         }
     }
-
 }
