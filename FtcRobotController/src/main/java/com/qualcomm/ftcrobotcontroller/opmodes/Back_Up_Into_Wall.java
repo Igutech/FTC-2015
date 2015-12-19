@@ -43,17 +43,17 @@ public class Back_Up_Into_Wall extends LinearOpMode {
                 if (UL > UR) {
                     Left.setPower(-.4);
                     Right.setPower(0);
-                }
-                if (UR > UL) {
+                } else if (UR > UL) {
                     Left.setPower(0);
                     Right.setPower(-.4);
-                }
-                if (UL == UR) {
+                } else if (UL == UR) {
                     Left.setPower(-.4);
                     Right.setPower(-.4);
                 }
             }
             FirstTry = false;
+            PreviousUL = UL;
+            PreviousUR = UR;
         }
     }
 }

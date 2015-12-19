@@ -9,6 +9,8 @@ import com.qualcomm.robotcore.hardware.DcMotorController;
  */
 public class IguDriveStraight extends LinearOpMode {
     DcMotor leftMotor2, rightMotor2;
+    DcMotor armMotor1;
+    DcMotor armMotor2;
     DcMotorController leftMotorController, rightMotorController;
     int counter = 1;
     @Override
@@ -18,11 +20,24 @@ public class IguDriveStraight extends LinearOpMode {
         rightMotorController = hardwareMap.dcMotorController.get("rightMotorController");
         leftMotor2 = hardwareMap.dcMotor.get("left2");
         rightMotor2 = hardwareMap.dcMotor.get("right2");
+        armMotor1 = hardwareMap.dcMotor.get("arm1");
+        armMotor2 = hardwareMap.dcMotor.get("arm2");
         leftMotor2.setDirection(DcMotor.Direction.REVERSE);
+        armMotor1.setDirection(DcMotor.Direction.FORWARD);
+        armMotor2.setDirection(DcMotor.Direction.REVERSE);
 
 
         //driving goes here
-        driveDistance(2000, 2000, 0.4);
+        driveDistance(-890, -890, -1);
+        driveDistance(0, 46, 1);
+        driveDistance(-46, 0, -1);
+        driveDistance(-70, -70, -1);
+        armMotor1.setPower(-.3);
+        armMotor2.setPower(-.3);
+        Thread.sleep(500);
+        armMotor1.setPower(0);
+        armMotor2.setPower(0);
+        //left reverse, right forward
     }
     public void driveDistance(double ldist, double rdist, double power) throws InterruptedException
     {
