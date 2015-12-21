@@ -112,7 +112,7 @@ public class IgutechTeleop extends OpMode {
         JoyThr = -gamepad1.left_stick_y;
         JoyYaw = -gamepad1.right_stick_x;
 
-        armMovement = gamepad2.left_stick_y;
+        armMovement = -gamepad2.left_stick_y;
 
         if(-armMovement > 0) {
             armscaling = .3;
