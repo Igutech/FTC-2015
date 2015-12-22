@@ -64,6 +64,7 @@ public class IgutechTeleop extends OpMode {
     public void init() {
 
         changeMotor = hardwareMap.dcMotor.get("worm1");
+        changeMotor.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
 
         armMotor1 = hardwareMap.dcMotor.get("arm1");
         armMotor2 = hardwareMap.dcMotor.get("arm2");
@@ -94,9 +95,9 @@ public class IgutechTeleop extends OpMode {
     public void loop() {
 
         if (gamepad2.left_bumper) {
-            changeMotor.setPower(1);
+            changeMotor.setPower(.25);
         } else if (gamepad2.right_bumper) {
-            changeMotor.setPower(-1);
+            changeMotor.setPower(-.25);
         } else {
             changeMotor.setPower(0);
         }
