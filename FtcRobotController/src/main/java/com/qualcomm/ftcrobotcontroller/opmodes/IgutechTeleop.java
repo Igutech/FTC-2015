@@ -88,7 +88,7 @@ public class IgutechTeleop extends OpMode {
         //DIM.setDigitalChannelMode(1, DigitalChannelController.Mode.OUTPUT);
 
         armServo.setPosition(.5);
-        climberServo.setPosition(0);
+        climberServo.setPosition(.7);
     }
 
     @Override
@@ -105,7 +105,7 @@ public class IgutechTeleop extends OpMode {
         if (gamepad2.a) {
             climberServo.setPosition(1);
         } else {
-            climberServo.setPosition(0);
+            climberServo.setPosition(.7);
         }
 
 
