@@ -24,16 +24,30 @@ public class ServoTestingAutonomas extends LinearOpMode{
         waitForStart();
         servo.setPosition(.2);
         Thread.sleep(3000);
-        servo.setPosition(.9);
-        Thread.sleep(3000);
-        servo.setPosition(.2);
-        Thread.sleep(3000);
 
         //time to start the testing of speed control.
 
-        for (double i = .20; i < .9; i+=.01){
+        for (double i = .20; i < .7; i+=.0025){
             servo.setPosition(i);
-            Thread.sleep(10);
+            Thread.sleep(5);
         }
+        servo.setPosition(.6);
+        Thread.sleep(100);
+        servo.setPosition(.7);
+        Thread.sleep(100);
+        servo.setPosition(.6);
+        Thread.sleep(100);
+        servo.setPosition(.7);
+        Thread.sleep(100);
+        servo.setPosition(.6);
+        Thread.sleep(100);
+        servo.setPosition(.7);
+        Thread.sleep(100);
+
+        for (double i = .7; i < .9; i+=0.00125) {
+            servo.setPosition(i);
+            Thread.sleep(5);
+        }
+
     }
 }
