@@ -3,6 +3,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.Servo;
 
 /**
  * Created by Igutech-02 on 11/14/2015.
@@ -11,6 +12,7 @@ public class IguDriveStraight extends LinearOpMode {
     DcMotor leftMotor2, rightMotor2;
     DcMotor armMotor1;
     DcMotor armMotor2;
+    Servo servo;
     DcMotorController leftMotorController, rightMotorController;
     int counter = 1;
     @Override
@@ -25,6 +27,7 @@ public class IguDriveStraight extends LinearOpMode {
         leftMotor2.setDirection(DcMotor.Direction.REVERSE);
         armMotor1.setDirection(DcMotor.Direction.FORWARD);
         armMotor2.setDirection(DcMotor.Direction.REVERSE);
+        servo = hardwareMap.servo.get("climber");
 
 
         //driving goes here
@@ -37,6 +40,27 @@ public class IguDriveStraight extends LinearOpMode {
         Thread.sleep(500);
         armMotor1.setPower(0);
         armMotor2.setPower(0);
+        for (double i = .20; i < .7; i+=.0025){
+            servo.setPosition(i);
+            Thread.sleep(5);
+        }
+        servo.setPosition(.6);
+        Thread.sleep(100);
+        servo.setPosition(.7);
+        Thread.sleep(100);
+        servo.setPosition(.6);
+        Thread.sleep(100);
+        servo.setPosition(.7);
+        Thread.sleep(100);
+        servo.setPosition(.6);
+        Thread.sleep(100);
+        servo.setPosition(.7);
+        Thread.sleep(100);
+
+        for (double i = .7; i < .9; i+=0.00125) {
+            servo.setPosition(i);
+            Thread.sleep(5);
+        }
         //left reverse, right forward
     }
     public void driveDistance(double ldist, double rdist, double power) throws InterruptedException
