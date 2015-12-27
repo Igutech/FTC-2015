@@ -92,9 +92,9 @@ public class IgutechTeleop extends OpMode {
     public void loop() {
 
         if (gamepad2.left_bumper) {
-            changeMotor.setPower(.25);
+            changeMotor.setPower(1);
         } else if (gamepad2.right_bumper) {
-            changeMotor.setPower(-.25);
+            changeMotor.setPower(-1);
         } else {
             changeMotor.setPower(0);
         }
