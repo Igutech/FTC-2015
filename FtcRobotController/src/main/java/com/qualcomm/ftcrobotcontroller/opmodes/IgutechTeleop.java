@@ -138,11 +138,11 @@ public class IgutechTeleop extends OpMode {
             leftPow = 1.0;
         }
         if (rightPow < -1) {
-            leftPow += (rightPow + 1.0);
+            leftPow += (-1.0 - rightPow);
             rightPow = -1.0;
         }
         if (leftPow < -1) {
-            rightPow += (leftPow + 1.0);
+            rightPow += (-1.0 - leftPow);
             leftPow = -1.0;
         }
 
