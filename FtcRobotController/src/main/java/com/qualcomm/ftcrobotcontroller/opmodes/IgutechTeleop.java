@@ -69,9 +69,6 @@ public class IgutechTeleop extends OpMode {
         armMotor1 = hardwareMap.dcMotor.get("arm1");
         armMotor2 = hardwareMap.dcMotor.get("arm2");
 
-        armMotor1.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
-        armMotor2.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
-
         //DIM = hardwareMap.deviceInterfaceModule.get("dim");
 
         armServo = hardwareMap.servo.get("armservo");
