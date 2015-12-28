@@ -33,15 +33,24 @@ public class IguDriveStraight extends LinearOpMode {
 
 
         //driving goes here
-        driveDistance(-890, -890, -1);
-        driveDistance(0, 46, 1);
-        driveDistance(-46, 0, -1);
-        driveDistance(-70, -70, -1);
+        driveDistance(-960, -960, -1);
+        Thread.sleep(1000);
+        driveDistance(70, 70, 1);
+        Thread.sleep(1000);
+        driveDistance(0, 90, 1);
+        Thread.sleep(1000);
+        //driveDistance(-75, 0, -1);
         armMotor1.setPower(-.3);
         armMotor2.setPower(-.3);
         Thread.sleep(500);
         armMotor1.setPower(0);
         armMotor2.setPower(0);
+        Thread.sleep(1000);
+        driveDistance(-100, -100, -0.5);
+        Thread.sleep(1000);
+
+
+
         for (double i = .20; i < .7; i+=.0025){
             servo.setPosition(i);
             Thread.sleep(5);
