@@ -12,7 +12,7 @@ public class IguDriveStraight extends LinearOpMode {
     DcMotor leftMotor2, rightMotor2;
     DcMotor armMotor1;
     DcMotor armMotor2;
-    Servo servo;
+    Servo servo, deliveryservo;
     DcMotorController leftMotorController, rightMotorController;
     int counter = 1;
     @Override
@@ -28,6 +28,8 @@ public class IguDriveStraight extends LinearOpMode {
         armMotor1.setDirection(DcMotor.Direction.FORWARD);
         armMotor2.setDirection(DcMotor.Direction.REVERSE);
         servo = hardwareMap.servo.get("climber");
+        deliveryservo = hardwareMap.servo.get("armservo");
+        deliveryservo.setPosition(.5);
 
 
         //driving goes here
