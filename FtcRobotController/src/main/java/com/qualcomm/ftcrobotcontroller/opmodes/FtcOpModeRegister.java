@@ -116,7 +116,7 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("Blue Right Ramp Autonomous", IguBlueAutoRampRight.class);
     manager.register("Red Left Ramp Autonomous", IguRedAutoRampLeft.class);
     manager.register("Red Right Ramp Autonomous", IguRedAutoRampRight.class);
-    manager.register("Drive Straight Autonomous FOR TREAD MODE", IguDriveStraight.class);
+    manager.register("Auto-RED-4_0-Climber", Auto-RED-4_0-Climber.class);
     manager.register("Back Up Into Wall Using Ultrasonic Sensors", Back_Up_Into_Wall.class);
   }
 }

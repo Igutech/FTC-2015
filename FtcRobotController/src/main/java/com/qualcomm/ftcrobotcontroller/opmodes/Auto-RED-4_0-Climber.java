@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 /**
  * Created by Igutech-02 on 11/14/2015.
  */
-public class IguDriveStraight extends LinearOpMode {
+public class Auto-RED-4_0-Climber extends LinearOpMode {
     DcMotor leftMotor2, rightMotor2;
     DcMotor armMotor1;
     DcMotor armMotor2;
