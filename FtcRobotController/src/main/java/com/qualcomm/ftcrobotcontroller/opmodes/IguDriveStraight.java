@@ -135,7 +135,7 @@ public class IguDriveStraight extends LinearOpMode {
     }
     public Boolean isCloseto(int number1, int number2)
     {
-        if(number1 - number2 < 15 && number1 - number2 > -15)
+        if(Math.abs(number1) >= Math.abs(number2))
         {
             return true;
         }
