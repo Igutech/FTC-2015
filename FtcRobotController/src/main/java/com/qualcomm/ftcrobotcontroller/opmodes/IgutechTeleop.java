@@ -15,10 +15,8 @@ import com.qualcomm.robotcore.hardware.DigitalChannelController;
 public class IgutechTeleop extends OpMode {
 
     DeviceInterfaceModule DIM;
-    DcMotor leftMotor1;
-    DcMotor leftMotor2;
-    DcMotor rightMotor1;
-    DcMotor rightMotor2;
+    DcMotor leftMotor;
+    DcMotor rightMotor;
     DcMotor changeMotor;
     //TouchSensor wheelsOut;
     //TouchSensor wheelsIn;
@@ -68,15 +66,16 @@ public class IgutechTeleop extends OpMode {
 
         armMotor1 = hardwareMap.dcMotor.get("arm1");
         armMotor2 = hardwareMap.dcMotor.get("arm2");
+        leftMotor = hardwareMap.dcMotor.get("left2");
+        rightMotor = hardwareMap.dcMotor.get("right2");
+        leftMotor.setDirection(DcMotor.Direction.REVERSE);
+        rightMotor.setDirection(DcMotor.Direction.FORWARD);
 
         //DIM = hardwareMap.deviceInterfaceModule.get("dim");
 
         armServo = hardwareMap.servo.get("armservo");
         climberServo = hardwareMap.servo.get("climber");
         armServo.setDirection(Servo.Direction.FORWARD);
-
-
-        driver = new DcMotorDriver(hardwareMap, true);
 
         DcMotorController leftMotorController;
         DcMotorController rightMotorController;
@@ -85,7 +84,7 @@ public class IgutechTeleop extends OpMode {
         //DIM.setDigitalChannelMode(1, DigitalChannelController.Mode.OUTPUT);
 
         armServo.setPosition(.5);
-        climberServo.setPosition(.7);
+
     }
 
     @Override
@@ -117,6 +116,24 @@ public class IgutechTeleop extends OpMode {
         } else if(-armMovement < 0) {
             armscaling = .3;
         }
+
+        /*if(gamepad2.right_trigger > .3)
+        {
+            RightFlipper.setPosition(1);
+        }
+        else if(gamepad2.right_trigger < .3)
+        {
+            RightFlipper.setPosition(0);
+        }
+
+        if(gamepad2.left_trigger > .3)
+        {
+            LeftFlipper.setPosition(1);
+        }
+        else if(gamepad2.left_trigger < .3)
+        {
+            LeftFlipper.setPosition(0);
+        }*/
 
         if (JoyThr > .90) {
             JoyThr = .90;
@@ -182,9 +199,8 @@ public class IgutechTeleop extends OpMode {
         armMotor1.setPower(armMovement*armscaling);
         armMotor2.setPower(armMovement*armscaling);
 
-        driver.driveLeftTrain(leftPow);
-
-        driver.driveRightTrain(rightPow);
+        leftMotor.setPower(leftPow);
+        rightMotor.setPower(rightPow);
         //roboStatus();
 
         //telemetry

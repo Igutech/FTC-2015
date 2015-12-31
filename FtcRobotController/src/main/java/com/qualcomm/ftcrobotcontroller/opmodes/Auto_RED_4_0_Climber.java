@@ -8,11 +8,11 @@ import com.qualcomm.robotcore.hardware.Servo;
 /**
  * Created by Igutech-02 on 11/14/2015.
  */
-public class Auto-RED-4_0-Climber extends LinearOpMode {
+public class Auto_RED_4_0_Climber extends LinearOpMode {
     DcMotor leftMotor2, rightMotor2;
     DcMotor armMotor1;
     DcMotor armMotor2;
-    Servo servo, deliveryservo;
+    Servo servo, deliveryServo;
     DcMotorController leftMotorController, rightMotorController;
     int counter = 1;
     @Override
@@ -28,51 +28,41 @@ public class Auto-RED-4_0-Climber extends LinearOpMode {
         armMotor1.setDirection(DcMotor.Direction.FORWARD);
         armMotor2.setDirection(DcMotor.Direction.REVERSE);
         servo = hardwareMap.servo.get("climber");
-        deliveryservo = hardwareMap.servo.get("armservo");
-        deliveryservo.setPosition(.5);
+        deliveryServo = hardwareMap.servo.get("armservo");
+        deliveryServo.setPosition(.5);
 
 
         //driving goes here
-        driveDistance(-960, -960, -1);
-        Thread.sleep(1000);
-        driveDistance(70, 70, 1);
-        Thread.sleep(1000);
-        driveDistance(0, 90, 1);
-        Thread.sleep(1000);
+        driveDistance(-975, -975, -.5); //Drives backwards further than necessary.
+        Thread.sleep(300);
+        driveDistance(105, 105, .5);
+        Thread.sleep(300);
+        driveDistance(0, 95, .5);
+        Thread.sleep(300);
         //driveDistance(-75, 0, -1);
-        armMotor1.setPower(-.3);
-        armMotor2.setPower(-.3);
-        Thread.sleep(500);
+        armMotor1.setPower(-.25);
+        armMotor2.setPower(-.25);
+        Thread.sleep(700);
         armMotor1.setPower(0);
         armMotor2.setPower(0);
-        Thread.sleep(1000);
-        driveDistance(-100, -100, -0.5);
-        Thread.sleep(1000);
-
+        Thread.sleep(300);
+        driveDistance(-170, -170, -.5);
+        Thread.sleep(300);
 
 
         for (double i = .20; i < .7; i+=.0025){
             servo.setPosition(i);
             Thread.sleep(5);
         }
-        servo.setPosition(.6);
-        Thread.sleep(100);
-        servo.setPosition(.7);
-        Thread.sleep(100);
-        servo.setPosition(.6);
-        Thread.sleep(100);
-        servo.setPosition(.7);
-        Thread.sleep(100);
-        servo.setPosition(.6);
-        Thread.sleep(100);
-        servo.setPosition(.7);
-        Thread.sleep(100);
 
         for (double i = .7; i < .9; i+=0.00125) {
             servo.setPosition(i);
             Thread.sleep(5);
         }
         //left reverse, right forward
+        driveDistance(100, 100, 1);
+        Thread.sleep(1000);
+        servo.setPosition(0);
     }
     public void driveDistance(double ldist, double rdist, double power) throws InterruptedException
     {
@@ -144,4 +134,5 @@ public class Auto-RED-4_0-Climber extends LinearOpMode {
             return false;
         }
     }
+
 }
