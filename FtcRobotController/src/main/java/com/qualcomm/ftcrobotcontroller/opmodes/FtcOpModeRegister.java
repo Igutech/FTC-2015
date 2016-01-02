@@ -107,17 +107,18 @@ public class FtcOpModeRegister implements OpModeRegister {
     //manager.register("Drive Up Ramp Autonomous", Drive_Up_Ramp_Auto.class);
     //manager.register("New Bot Teleop", IguNewbotTeleop.class);
 
-    manager.register("Servo Testing", ServoTestingAutonomas.class);
+    //manager.register("Servo Testing", ServoTestingAutonomas.class);
 
     manager.register("Igutech Teleop", IgutechTeleop.class);
-    manager.register("Encoder Driver Test", EncoderDriverTest.class);
-    manager.register("Test", NxtTeleOp.class);
-    manager.register("Blue Left Ramp Autonomous", IguBlueAutoRampLeft.class);
-    manager.register("Blue Right Ramp Autonomous", IguBlueAutoRampRight.class);
-    manager.register("Red Left Ramp Autonomous", IguRedAutoRampLeft.class);
-    manager.register("Red Right Ramp Autonomous", IguRedAutoRampRight.class);
+    //manager.register("Encoder Driver Test", EncoderDriverTest.class);
+    //manager.register("Test", NxtTeleOp.class);
+    //manager.register("Blue Left Ramp Autonomous", IguBlueAutoRampLeft.class);
+    //manager.register("Blue Right Ramp Autonomous", IguBlueAutoRampRight.class);
+    //manager.register("Red Left Ramp Autonomous", IguRedAutoRampLeft.class);
+    //manager.register("Red Right Ramp Autonomous", IguRedAutoRampRight.class);
     manager.register("Auto-RED-4_0-Climber", Auto_RED_4_0_Climber.class);
     manager.register("Auto-BLUE-4_0-Climber", Auto_BLUE_4_0_Climber.class);
-    manager.register("Back Up Into Wall Using Ultrasonic Sensors", Back_Up_Into_Wall.class);
+    manager.register("Auto-RED-2_0-Climber", Auto_RED_2_0_Climber.class);
+    //manager.register("Back Up Into Wall Using Ultrasonic Sensors", Back_Up_Into_Wall.class);
   }
 }
