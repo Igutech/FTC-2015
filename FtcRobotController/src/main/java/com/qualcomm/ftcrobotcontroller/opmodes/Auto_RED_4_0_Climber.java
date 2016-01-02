@@ -31,7 +31,7 @@ public class Auto_RED_4_0_Climber extends LinearOpMode {
         deliveryServo = hardwareMap.servo.get("armservo");
         deliveryServo.setPosition(.5);
 
-
+        waitForStart();
         //driving goes here
         driveDistance(-975, -975, -.5); //Drives backwards further than necessary.
         Thread.sleep(300);
