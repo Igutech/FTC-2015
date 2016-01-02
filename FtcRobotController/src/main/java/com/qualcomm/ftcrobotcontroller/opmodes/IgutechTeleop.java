@@ -98,11 +98,11 @@ public class IgutechTeleop extends OpMode {
             changeMotor.setPower(0);
         }
 
-        if (gamepad2.a) {
+        /*if (gamepad2.a) {
             climberServo.setPosition(1);
         } else {
             climberServo.setPosition(.7);
-        }
+        }*/
 
 
 

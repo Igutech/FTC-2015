@@ -46,7 +46,7 @@ public class Auto_RED_4_0_Climber extends LinearOpMode {
         armMotor1.setPower(0);
         armMotor2.setPower(0);
         Thread.sleep(300);
-        driveDistance(-170, -170, -.5);
+        driveDistance(-130, -130, -.5);
         Thread.sleep(300);
 
 
@@ -125,7 +125,7 @@ public class Auto_RED_4_0_Climber extends LinearOpMode {
     }
     public Boolean isCloseto(int number1, int number2)
     {
-        if(Math.abs(number1) >= Math.abs(number2))
+        if(Math.abs(number1) >= Math.abs(number2)-10)
         {
             return true;
         }
