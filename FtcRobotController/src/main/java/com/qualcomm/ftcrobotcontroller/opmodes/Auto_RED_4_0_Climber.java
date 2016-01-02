@@ -33,12 +33,12 @@ public class Auto_RED_4_0_Climber extends LinearOpMode {
 
         waitForStart();
         //driving goes here
-        driveDistance(-975, -975, -.5); //Drives backwards further than necessary.
-        Thread.sleep(300);
-        driveDistance(105, 105, .5);
-        Thread.sleep(300);
-        driveDistance(0, 95, .5);
-        Thread.sleep(300);
+        driveDistance(-960, -960, -1); //Drives backwards further than necessary.
+        Thread.sleep(100);
+        driveDistance(90, 90, 1);
+        Thread.sleep(100);
+        driveDistance(0, 95, .75);
+        Thread.sleep(100);
         //driveDistance(-75, 0, -1);
         armMotor1.setPower(-.25);
         armMotor2.setPower(-.25);
@@ -46,22 +46,22 @@ public class Auto_RED_4_0_Climber extends LinearOpMode {
         armMotor1.setPower(0);
         armMotor2.setPower(0);
         Thread.sleep(300);
-        driveDistance(-130, -130, -.5);
-        Thread.sleep(300);
+        driveDistance(-126, -126, -.5);
+        Thread.sleep(100);
 
 
-        for (double i = .20; i < .7; i+=.0025){
+        for (double i = .20; i < .7; i+=.00125){
             servo.setPosition(i);
             Thread.sleep(5);
         }
 
-        for (double i = .7; i < .9; i+=0.00125) {
+        for (double i = .7; i < .9; i+=0.000575) {
             servo.setPosition(i);
             Thread.sleep(5);
         }
         //left reverse, right forward
         driveDistance(100, 100, 1);
-        Thread.sleep(1000);
+        Thread.sleep(100);
         servo.setPosition(0);
     }
     public void driveDistance(double ldist, double rdist, double power) throws InterruptedException
