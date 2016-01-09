@@ -62,6 +62,7 @@ public class Auto_BLUE_4_0_Climber extends LinearOpMode {
         //left reverse, right forward
         driveDistance(100, 100, 1);
         Thread.sleep(100);
+        servo.setPosition(.7);
     }
     public void driveDistance(double ldist, double rdist, double power) throws InterruptedException
     {
