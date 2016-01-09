@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<Robot>
+    <LegacyModuleController name="Legacy Module 1" serialNumber="AL00XPJS">
+        <MotorController name="mc0" port="0">
+            <Motor name="arm1" port="1" />
+            <Motor name="arm2" port="2" />
+        </MotorController>
+        <MotorController name="rightMotorController" port="1">
+            <Motor name="right1" port="1" />
+            <Motor name="right2" port="2" />
+        </MotorController>
+        <MotorController name="leftMotorController" port="2">
+            <Motor name="left1" port="1" />
+            <Motor name="left2" port="2" />
+        </MotorController>
+        <MotorController name="mc4" port="3">
+            <Motor name="worm1" port="1" />
+        </MotorController>
+        <ServoController name="sc5" port="4">
+            <Servo name="armservo" port="1" />
+            <Servo name="climber" port="2" />
+        </ServoController>
+    </LegacyModuleController>
+    <LegacyModuleController name="Legacy Module 2" serialNumber="AL00YD7Z">
+        <UltrasonicSensor name="Ultra1" port="4" />
+        <UltrasonicSensor name="Ultra2" port="5" />
+    </LegacyModuleController>
+</Robot>
