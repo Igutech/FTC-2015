@@ -54,6 +54,8 @@ public class IgutechTeleop extends OpMode {
 
     double armscaling;
 
+    int state=1;
+
     //boolean wheelsUp;
     //boolean wheelsDown;
 
@@ -83,6 +85,8 @@ public class IgutechTeleop extends OpMode {
         //DIM.setDigitalChannelMode(0, DigitalChannelController.Mode.OUTPUT);
         //DIM.setDigitalChannelMode(1, DigitalChannelController.Mode.OUTPUT);
 
+        climberServo.setPosition(.7);
+
         armServo.setPosition(.5);
 
     }
@@ -96,6 +100,17 @@ public class IgutechTeleop extends OpMode {
             changeMotor.setPower(-1);
         } else {
             changeMotor.setPower(0);
+        }
+
+        if (gamepad2.a || state==0) {
+            climberServo.setPosition(.2);
+            state=0;
+        } else if (gamepad2.y || state==2) {
+            climberServo.setPosition(.9);
+            state=2;
+        }
+        if (state == 1) {
+            climberServo.setPosition(.7);
         }
 
         /*if (gamepad2.a) {
