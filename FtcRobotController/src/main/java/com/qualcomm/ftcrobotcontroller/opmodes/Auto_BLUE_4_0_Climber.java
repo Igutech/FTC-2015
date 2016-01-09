@@ -50,19 +50,22 @@ public class Auto_BLUE_4_0_Climber extends LinearOpMode {
         Thread.sleep(100);
 
 
-        for (double i = .20; i < .7; i+=.00125){
+        for (double i = .20; i < .7; i+=.0025){
             servo.setPosition(i);
             Thread.sleep(5);
         }
 
-        for (double i = .7; i < .9; i+=0.000575) {
+        for (double i = .7; i < 1; i+=0.0025) {
             servo.setPosition(i);
             Thread.sleep(5);
         }
         //left reverse, right forward
         driveDistance(100, 100, 1);
         Thread.sleep(100);
-        servo.setPosition(.7);
+        for (double i = 1; i > .7; i-=0.0035) {
+            servo.setPosition(i);
+            Thread.sleep(5);
+        }
     }
     public void driveDistance(double ldist, double rdist, double power) throws InterruptedException
     {
