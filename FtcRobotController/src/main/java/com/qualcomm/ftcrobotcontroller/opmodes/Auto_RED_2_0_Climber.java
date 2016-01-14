@@ -46,7 +46,7 @@ public class Auto_RED_2_0_Climber extends LinearOpMode {
         //driveDistance(-75, 0, -1);
         armMotor1.setPower(-.25);
         armMotor2.setPower(-.25);
-        Thread.sleep(700);
+        Thread.sleep(1400);
         armMotor1.setPower(0);
         armMotor2.setPower(0);
         Thread.sleep(300);

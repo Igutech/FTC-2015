@@ -42,7 +42,7 @@ public class Auto_BLUE_4_0_Climber extends LinearOpMode {
         //driveDistance(-75, 0, -1);
         armMotor1.setPower(-.25);
         armMotor2.setPower(-.25);
-        Thread.sleep(700);
+        Thread.sleep(1400);
         armMotor1.setPower(0);
         armMotor2.setPower(0);
         Thread.sleep(300);
@@ -55,7 +55,7 @@ public class Auto_BLUE_4_0_Climber extends LinearOpMode {
             Thread.sleep(5);
         }
 
-        for (double i = .7; i < 1; i+=0.0025) {
+        for (double i = .7; i < 1; i+=0.0035) {
             servo.setPosition(i);
             Thread.sleep(5);
         }

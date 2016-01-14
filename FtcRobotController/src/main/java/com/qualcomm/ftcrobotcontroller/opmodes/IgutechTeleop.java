@@ -105,10 +105,12 @@ public class IgutechTeleop extends OpMode {
         if (gamepad2.a || state==0) {
             climberServo.setPosition(.2);
             state=0;
-        } else if (gamepad2.y || state==2) {
-            climberServo.setPosition(.9);
+        }
+        if (gamepad2.y || state==2) {
+            climberServo.setPosition(1);
             state=2;
         }
+
         if (state == 1) {
             climberServo.setPosition(.7);
         }
