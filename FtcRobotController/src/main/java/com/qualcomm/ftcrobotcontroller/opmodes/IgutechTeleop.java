@@ -54,7 +54,6 @@ public class IgutechTeleop extends OpMode {
 
     double armscaling;
 
-    int state=1;
 
     //boolean wheelsUp;
     //boolean wheelsDown;
@@ -102,17 +101,11 @@ public class IgutechTeleop extends OpMode {
             changeMotor.setPower(0);
         }
 
-        if (gamepad2.a || state==0) {
+        if (gamepad2.a) {
             climberServo.setPosition(.2);
-            state=0;
         }
-        if (gamepad2.y || state==2) {
+        if (gamepad2.y) {
             climberServo.setPosition(1);
-            state=2;
-        }
-
-        if (state == 1) {
-            climberServo.setPosition(.7);
         }
 
         /*if (gamepad2.a) {
