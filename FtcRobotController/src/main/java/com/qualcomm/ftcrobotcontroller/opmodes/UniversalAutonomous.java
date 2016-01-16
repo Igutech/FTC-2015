@@ -5,19 +5,42 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.Servo;
 
-/**
- * Created by Igutech-02 on 11/14/2015.
+ /**
+ * Created by Kevin on 1/15/2016.
  */
-public class Auto_RED_4_0_Climber extends LinearOpMode {
-    DcMotor leftMotor2, rightMotor2;
-    DcMotor armMotor1;
-    DcMotor armMotor2;
-    Servo servo, deliveryServo;
-    DcMotorController leftMotorController, rightMotorController;
-    int counter = 1;
-    @Override
-    public void runOpMode() throws InterruptedException
-    {
+public class UniversalAutonomous extends LinearOpMode {
+
+    static DcMotor leftMotor2, rightMotor2;
+    static DcMotor armMotor1;
+    static DcMotor armMotor2;
+    static Servo servo, deliveryServo;
+    static DcMotorController leftMotorController, rightMotorController;
+    static int counter = 1;
+
+    public void runOpMode() throws InterruptedException {
+        initialize();
+        waitForStart();
+
+        if (true) {
+            RED_40();
+        } else if (false) {
+
+        }
+
+        universalAuto();
+    }
+
+    public void RED_40() throws InterruptedException {
+        driveDistance(-960, -960, -1); //Drives backwards further than necessary.
+        Thread.sleep(100);
+        driveDistance(90, 90, 1);
+        Thread.sleep(100);
+        driveDistance(0, 95, .75);
+        Thread.sleep(100);
+    }
+
+    public void initialize() {
+
         leftMotorController = hardwareMap.dcMotorController.get("leftMotorController");
         rightMotorController = hardwareMap.dcMotorController.get("rightMotorController");
         leftMotor2 = hardwareMap.dcMotor.get("left2");
@@ -30,16 +53,10 @@ public class Auto_RED_4_0_Climber extends LinearOpMode {
         servo = hardwareMap.servo.get("climber");
         deliveryServo = hardwareMap.servo.get("armservo");
         deliveryServo.setPosition(.5);
+    }
 
-        waitForStart();
-        //driving goes here
-        driveDistance(-960, -960, -1); //Drives backwards further than necessary.
-        Thread.sleep(100);
-        driveDistance(90, 90, 1);
-        Thread.sleep(100);
-        driveDistance(0, 95, .75);
-        Thread.sleep(100);
-        //driveDistance(-75, 0, -1);
+    public void universalAuto() throws InterruptedException {
+
         armMotor1.setPower(-.25);
         armMotor2.setPower(-.25);
         Thread.sleep(1400);
@@ -67,6 +84,7 @@ public class Auto_RED_4_0_Climber extends LinearOpMode {
             Thread.sleep(5);
         }
     }
+
     public void driveDistance(double ldist, double rdist, double power) throws InterruptedException
     {
         int enc1;
@@ -97,10 +115,8 @@ public class Auto_RED_4_0_Climber extends LinearOpMode {
         leftMotorController.setMotorControllerDeviceMode(DcMotorController.DeviceMode.READ_ONLY); //Change to read
         rightMotorController.setMotorControllerDeviceMode(DcMotorController.DeviceMode.READ_ONLY);
         waitOneFullHardwareCycle();
-        while(counter == 1)
-        {
-            if(isCloseto(leftMotor2.getCurrentPosition(), enc1) && isCloseto(rightMotor2.getCurrentPosition(),enc2))
-            {
+        while (counter == 1) {
+            if (isCloseto(leftMotor2.getCurrentPosition(), enc1) && isCloseto(rightMotor2.getCurrentPosition(), enc2)) {
                 counter = 2;
             }
             waitOneFullHardwareCycle();
@@ -126,7 +142,8 @@ public class Auto_RED_4_0_Climber extends LinearOpMode {
         rightMotor2.setMode(DcMotorController.RunMode.RESET_ENCODERS);
         counter = 1;
     }
-    public Boolean isCloseto(int number1, int number2)
+
+    public static Boolean isCloseto(int number1, int number2)
     {
         if(Math.abs(number1) >= Math.abs(number2)-10)
         {
@@ -137,5 +154,4 @@ public class Auto_RED_4_0_Climber extends LinearOpMode {
             return false;
         }
     }
-
 }
