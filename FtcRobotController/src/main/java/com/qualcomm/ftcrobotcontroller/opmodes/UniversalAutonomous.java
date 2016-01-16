@@ -17,14 +17,44 @@ public class UniversalAutonomous extends LinearOpMode {
     static DcMotorController leftMotorController, rightMotorController;
     static int counter = 1;
 
+    String team = "";
+    int pos = 0;
+
     public void runOpMode() throws InterruptedException {
         initialize();
+
+        while (!gamepad1.start) { //wait for the start button to be pressed on the controller
+            telemetry.addData("Alliance", team);
+            telemetry.addData("Start Position", pos);
+            if (gamepad1.b) {
+                team="red";
+            } else if (gamepad1.x) {
+                team="blue";
+            }
+            if (gamepad1.y) {
+                pos=2;
+            } else if (gamepad1.a) {
+                pos=4;
+            }
+        }
+
+        telemetry.addData("READY FOR START!", "");
+        telemetry.addData("PUSH START BUTTON ON PHONE TO BEGIN", "");
+
         waitForStart();
 
-        if (true) {
-            RED_40();
-        } else if (false) {
-
+        if (team.equals("red")) {
+            if (pos==4) {
+                RED_40();
+            } else if (pos==2) {
+                RED_20();
+            }
+        } else if (team.equals("blue")) {
+            if (pos==4) {
+                BLUE_40();
+            } else if (pos==2) {
+                //BLUE_20(); //NOT YET WRITTEN
+            }
         }
 
         universalAuto();
@@ -33,6 +63,28 @@ public class UniversalAutonomous extends LinearOpMode {
     public void RED_40() throws InterruptedException {
         driveDistance(-960, -960, -1); //Drives backwards further than necessary.
         Thread.sleep(100);
+        driveDistance(90, 90, 1);
+        Thread.sleep(100);
+        driveDistance(0, 95, .75);
+        Thread.sleep(100);
+    }
+
+    public void BLUE_40() throws InterruptedException {
+        driveDistance(-960, -960, -1); //Drives backwards further than necessary.
+        Thread.sleep(100);
+        driveDistance(90, 90, 1);
+        Thread.sleep(100);
+        driveDistance(95, 0, .75);
+        Thread.sleep(100);
+    }
+
+    public void RED_20() throws InterruptedException {
+        driveDistance(-280, -280, -1); //Drives backwards further than necessary.
+        Thread.sleep(100);
+        driveDistance(-93, 0, 1);
+        Thread.sleep(100);
+        driveDistance(-560, -560, -1); //Drives backwards further than necessary.
+        Thread.sleep(1000);
         driveDistance(90, 90, 1);
         Thread.sleep(100);
         driveDistance(0, 95, .75);
