@@ -53,7 +53,7 @@ public class UniversalAutonomous extends LinearOpMode {
             if (pos==4) {
                 BLUE_40();
             } else if (pos==2) {
-                //BLUE_20(); //NOT YET WRITTEN
+                BLUE_20();
             }
         }
 
@@ -90,6 +90,19 @@ public class UniversalAutonomous extends LinearOpMode {
         driveDistance(0, 95, .75);
         Thread.sleep(100);
     }
+
+     public void BLUE_20() throws InterruptedException {
+         driveDistance(-280, -280, -1); //Drives backwards further than necessary.
+         Thread.sleep(100);
+         driveDistance(0, -93, 1);
+         Thread.sleep(100);
+         driveDistance(-560, -560, -1); //Drives backwards further than necessary.
+         Thread.sleep(1000);
+         driveDistance(90, 90, 1);
+         Thread.sleep(100);
+         driveDistance(95, 0, .75);
+         Thread.sleep(100);
+     }
 
     public void initialize() {
 
