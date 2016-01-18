@@ -18,13 +18,18 @@ public class Back_Up_Into_Wall extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        Left = hardwareMap.dcMotor.get("left2");
-        Right = hardwareMap.dcMotor.get("right2");
-        UltraL = hardwareMap.ultrasonicSensor.get("Ultra1");
-        UltraR = hardwareMap.ultrasonicSensor.get("Ultra2");
+        Right = hardwareMap.dcMotor.get("left2");
+        Left = hardwareMap.dcMotor.get("right2");
+        Right.setDirection(DcMotor.Direction.REVERSE);
+        UltraL = hardwareMap.ultrasonicSensor.get("UltraL");
+        UltraR = hardwareMap.ultrasonicSensor.get("UltraR");
         while (true) {
             UL = UltraL.getUltrasonicLevel();
+            Thread.sleep(100);
             UR = UltraR.getUltrasonicLevel();
+            Thread.sleep(100);
+
+            waitForStart();
 
             telemetry.addData("Left Ultrasonic Sensor:", UL);
             telemetry.addData("Right Ultrasonic Sensor:", UR);
@@ -33,11 +38,9 @@ public class Back_Up_Into_Wall extends LinearOpMode {
                 if (UL == 0 && UR == 0) {
                     Left.setPower(0);
                     Right.setPower(0);
-                }
-                else if (UL == 0 || UL == 255) {
+                } else if (UL == 0 || UL == 255) {
                     UL = PreviousUL;
-                }
-                else if (UR == 0 || UR == 255) {
+                } else if (UR == 0 || UR == 255) {
                     UR = PreviousUR;
                 }
                 if (UL > UR) {
