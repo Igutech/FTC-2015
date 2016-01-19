@@ -124,7 +124,7 @@ public class UniversalAutonomous extends LinearOpMode {
 
         armMotor1.setPower(-.25);
         armMotor2.setPower(-.25);
-        Thread.sleep(1400);
+        Thread.sleep(700);
         armMotor1.setPower(0);
         armMotor2.setPower(0);
         Thread.sleep(300);
