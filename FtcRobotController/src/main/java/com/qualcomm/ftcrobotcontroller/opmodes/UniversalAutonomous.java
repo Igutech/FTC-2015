@@ -10,12 +10,12 @@ import com.qualcomm.robotcore.hardware.Servo;
  */
 public class UniversalAutonomous extends LinearOpMode {
 
-    static DcMotor leftMotor2, rightMotor2;
-    static DcMotor armMotor1;
-    static DcMotor armMotor2;
-    static Servo servo, deliveryServo;
-    static DcMotorController leftMotorController, rightMotorController;
-    static int counter = 1;
+    DcMotor leftMotor2, rightMotor2;
+    DcMotor armMotor1;
+    DcMotor armMotor2;
+    Servo servo, deliveryServo;
+    DcMotorController leftMotorController, rightMotorController;
+    int counter = 1;
 
     String team = "";
     int pos = 0;
