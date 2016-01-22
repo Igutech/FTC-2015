@@ -1,11 +1,14 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.UltrasonicSensor;
 
- /**
+/**
  * Created by Kevin on 1/15/2016.
  */
 public class UniversalAutonomous extends LinearOpMode {
@@ -13,9 +16,13 @@ public class UniversalAutonomous extends LinearOpMode {
     DcMotor leftMotor2, rightMotor2;
     DcMotor armMotor1;
     DcMotor armMotor2;
+    UltrasonicSensor UltraL, UltraR;
+    ColorSensor ColorSensor;
+    LightSensor LightSensor;
     Servo servo, deliveryServo;
     DcMotorController leftMotorController, rightMotorController;
     int counter = 1;
+    boolean debugMode = false;
 
     String team = "";
     int pos = 0;
@@ -26,16 +33,25 @@ public class UniversalAutonomous extends LinearOpMode {
         while (!gamepad1.start) { //wait for the start button to be pressed on the controller
             telemetry.addData("Alliance", team);
             telemetry.addData("Start Position", pos);
-            if (gamepad1.b) {
-                team="red";
-            } else if (gamepad1.x) {
-                team="blue";
+            telemetry.addData("Debug Mode", debugMode);
+
+            if (gamepad1.dpad_up) {
+                debugMode = true;
+            } else if (gamepad1.dpad_down) {
+                debugMode = false;
             }
-            if (gamepad1.y) {
-                pos=2;
-            } else if (gamepad1.a) {
-                pos=4;
-            }
+
+                if (gamepad1.b) {
+                    team = "red";
+                } else if (gamepad1.x) {
+                    team = "blue";
+                }
+                if (gamepad1.y) {
+                    pos = 2;
+                } else if (gamepad1.a) {
+                    pos = 4;
+                }
+
         }
 
         telemetry.addData("READY FOR START!", "");
@@ -55,10 +71,40 @@ public class UniversalAutonomous extends LinearOpMode {
             } else if (pos==2) {
                 BLUE_20();
             }
+        } else if (debugMode) {
+            DebugMode();
         }
 
-        universalAuto();
+        if(!debugMode) {
+            universalAuto();
+        }
     }
+
+     public void DebugMode() throws InterruptedException {
+         while (!gamepad1.dpad_down) {
+             //2 ultrasonic, 1 light, 1 color
+             double UL, UR, Light;
+             int Hue, Red, Blue, Green;
+             UL = UltraL.getUltrasonicLevel();
+             waitOneFullHardwareCycle();
+             UR = UltraR.getUltrasonicLevel();
+             waitOneFullHardwareCycle();
+             ColorSensor.enableLed(true);
+             Hue = ColorSensor.argb();
+             Red = ColorSensor.red();
+             Blue = ColorSensor.blue();
+             Green = ColorSensor.green();
+             Light = LightSensor.getLightDetected();
+
+             telemetry.addData("Left Ultrasonic Sensor:", UL);
+             telemetry.addData("Right Ultrasonic Sensor:", UR);
+             telemetry.addData("Color Sensor Hue:", Hue);
+             telemetry.addData("Color Sensor Red:", Red);
+             telemetry.addData("Color Sensor Blue:", Blue);
+             telemetry.addData("Color Sensor Green:", Green);
+             telemetry.addData("Light Sensor:", Light);
+         }
+     }
 
     public void RED_40() throws InterruptedException {
         driveDistance(-960, -960, -1); //Drives backwards further than necessary.
@@ -118,6 +164,10 @@ public class UniversalAutonomous extends LinearOpMode {
         servo = hardwareMap.servo.get("climber");
         deliveryServo = hardwareMap.servo.get("armservo");
         deliveryServo.setPosition(.5);
+        UltraL = hardwareMap.ultrasonicSensor.get("UltraL");
+        UltraR = hardwareMap.ultrasonicSensor.get("UltraR");
+        ColorSensor = hardwareMap.colorSensor.get("color");
+        LightSensor = hardwareMap.lightSensor.get("light");
     }
 
     public void universalAuto() throws InterruptedException {
