@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.UltrasonicSensor;
@@ -21,6 +22,9 @@ public class UniversalAutonomous extends LinearOpMode {
     LightSensor LightSensor;
     Servo servo, deliveryServo;
     DcMotorController leftMotorController, rightMotorController;
+    DeviceInterfaceModule dim;
+    ColorSensor adafruit;
+
     int counter = 1;
     boolean debugMode = false;
 
@@ -89,19 +93,25 @@ public class UniversalAutonomous extends LinearOpMode {
              waitOneFullHardwareCycle();
              UR = UltraR.getUltrasonicLevel();
              waitOneFullHardwareCycle();
-             ColorSensor.enableLed(true);
+             /*ColorSensor.enableLed(true);
              Hue = ColorSensor.argb();
              Red = ColorSensor.red();
              Blue = ColorSensor.blue();
-             Green = ColorSensor.green();
+             Green = ColorSensor.green();*/
              Light = LightSensor.getLightDetected();
+             Red = adafruit.red();
+             Blue = adafruit.blue();
+             Green = adafruit.green();
+             Hue = adafruit.argb();
 
              telemetry.addData("Left Ultrasonic Sensor:", UL);
              telemetry.addData("Right Ultrasonic Sensor:", UR);
+
              telemetry.addData("Color Sensor Hue:", Hue);
              telemetry.addData("Color Sensor Red:", Red);
              telemetry.addData("Color Sensor Blue:", Blue);
              telemetry.addData("Color Sensor Green:", Green);
+
              telemetry.addData("Light Sensor:", Light);
          }
      }
@@ -166,8 +176,10 @@ public class UniversalAutonomous extends LinearOpMode {
         deliveryServo.setPosition(.5);
         UltraL = hardwareMap.ultrasonicSensor.get("UltraL");
         UltraR = hardwareMap.ultrasonicSensor.get("UltraR");
-        ColorSensor = hardwareMap.colorSensor.get("color");
+        //ColorSensor = hardwareMap.colorSensor.get("color");
         LightSensor = hardwareMap.lightSensor.get("light");
+        dim = hardwareMap.deviceInterfaceModule.get("dim");
+        adafruit = hardwareMap.colorSensor.get("color");
     }
 
     public void universalAuto() throws InterruptedException {
