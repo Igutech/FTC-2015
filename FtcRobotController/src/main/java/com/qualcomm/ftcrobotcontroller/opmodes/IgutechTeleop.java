@@ -25,6 +25,9 @@ public class IgutechTeleop extends OpMode {
     Servo climberServo;
     Servo magicRelease;
 
+    Servo redFlipper;
+    Servo blueFlipper;
+
     int robotMode = 0;
     String nameMode;
     /*
@@ -55,6 +58,8 @@ public class IgutechTeleop extends OpMode {
 
     double armscaling;
 
+    String team;
+
 
     //boolean wheelsUp;
     //boolean wheelsDown;
@@ -78,6 +83,8 @@ public class IgutechTeleop extends OpMode {
         armServo = hardwareMap.servo.get("armservo");
         climberServo = hardwareMap.servo.get("climber");
         magicRelease = hardwareMap.servo.get("magicRelease");
+        redFlipper = hardwareMap.servo.get("redFlipper");
+        blueFlipper = hardwareMap.servo.get("blueFlipper");
         armServo.setDirection(Servo.Direction.FORWARD);
 
         DcMotorController leftMotorController;
@@ -89,11 +96,28 @@ public class IgutechTeleop extends OpMode {
         climberServo.setPosition(.5);
         magicRelease.setPosition(0);
         armServo.setPosition(.5);
+        redFlipper.setPosition(0);
+        blueFlipper.setPosition(0);
+
+        while (!gamepad1.start) {
+            telemetry.addData("Alliance", team);
+            if (gamepad1.b) {
+                team = "red";
+            } else if (gamepad1.x) {
+                team = "blue";
+            }
+        }
 
     }
 
     @Override
     public void loop() {
+
+        if (team.equals("red")) {
+            redFlipper.setPosition(1);
+        } else {
+            blueFlipper.setPosition(1);
+        }
 
         if (gamepad2.left_bumper) {
             changeMotor.setPower(1);
