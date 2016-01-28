@@ -23,6 +23,7 @@ public class IgutechTeleop extends OpMode {
 
     Servo armServo;
     Servo climberServo;
+    Servo magicRelease;
 
     int robotMode = 0;
     String nameMode;
@@ -76,6 +77,7 @@ public class IgutechTeleop extends OpMode {
 
         armServo = hardwareMap.servo.get("armservo");
         climberServo = hardwareMap.servo.get("climber");
+        magicRelease = hardwareMap.servo.get("magicRelease");
         armServo.setDirection(Servo.Direction.FORWARD);
 
         DcMotorController leftMotorController;
@@ -85,7 +87,7 @@ public class IgutechTeleop extends OpMode {
         //DIM.setDigitalChannelMode(1, DigitalChannelController.Mode.OUTPUT);
 
         climberServo.setPosition(.5);
-
+        magicRelease.setPosition(0);
         armServo.setPosition(.5);
 
     }
@@ -109,6 +111,9 @@ public class IgutechTeleop extends OpMode {
         }
         if (gamepad2.dpad_left || gamepad2.dpad_right) {
             climberServo.setPosition(.5);
+        }
+        if (gamepad1.a && gamepad2.back) {
+            magicRelease.setPosition(1);
         }
 
         /*if (gamepad2.a) {
