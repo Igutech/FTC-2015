@@ -48,6 +48,8 @@ public class IgutechTeleop extends OpMode {
     DcMotor armMotor1;
     DcMotor armMotor2;
 
+    DcMotor winch;
+
     DcMotorDriver driver;
 
     double armMovement;
@@ -75,6 +77,7 @@ public class IgutechTeleop extends OpMode {
         armMotor2 = hardwareMap.dcMotor.get("arm2");
         leftMotor = hardwareMap.dcMotor.get("left2");
         rightMotor = hardwareMap.dcMotor.get("right2");
+        winch = hardwareMap.dcMotor.get("winch");
         leftMotor.setDirection(DcMotor.Direction.REVERSE);
         rightMotor.setDirection(DcMotor.Direction.FORWARD);
 
@@ -138,6 +141,12 @@ public class IgutechTeleop extends OpMode {
         }
         if (gamepad1.a && gamepad2.back) {
             magicRelease.setPosition(1);
+        }
+
+        if (gamepad2.left_trigger > .9) {
+            winch.setPower(1);
+        } else {
+            winch.setPower(0);
         }
 
         /*if (gamepad2.a) {
