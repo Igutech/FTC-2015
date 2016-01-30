@@ -60,7 +60,9 @@ public class IgutechTeleop extends OpMode {
 
     double armscaling;
 
-    String team;
+    String team = "";
+
+    boolean firstLoop = true;
 
 
     //boolean wheelsUp;
@@ -85,11 +87,13 @@ public class IgutechTeleop extends OpMode {
 
         armServo = hardwareMap.servo.get("armservo");
         climberServo = hardwareMap.servo.get("climber");
+
         magicRelease = hardwareMap.servo.get("magicRelease");
+        /*
         redFlipper = hardwareMap.servo.get("redFlipper");
         blueFlipper = hardwareMap.servo.get("blueFlipper");
         armServo.setDirection(Servo.Direction.FORWARD);
-
+        */
         DcMotorController leftMotorController;
         DcMotorController rightMotorController;
 
@@ -97,30 +101,38 @@ public class IgutechTeleop extends OpMode {
         //DIM.setDigitalChannelMode(1, DigitalChannelController.Mode.OUTPUT);
 
         climberServo.setPosition(.5);
-        magicRelease.setPosition(0);
+        magicRelease.setPosition(.85);
         armServo.setPosition(.5);
-        redFlipper.setPosition(0);
-        blueFlipper.setPosition(0);
+        //redFlipper.setPosition(0);
+        //blueFlipper.setPosition(0);
 
-        while (!gamepad1.start) {
-            telemetry.addData("Alliance", team);
-            if (gamepad1.b) {
-                team = "red";
-            } else if (gamepad1.x) {
-                team = "blue";
-            }
-        }
+
+
+
 
     }
 
     @Override
     public void loop() {
+        /*
+        if (firstLoop) {
+            while (!gamepad1.start) {
+                telemetry.addData("Alliance", team);
+                if (gamepad1.b) {
+                    team = "red";
+                } else if (gamepad1.x) {
+                    team = "blue";
+                }
+            }
+            firstLoop=false;
+        }
 
         if (team.equals("red")) {
             redFlipper.setPosition(1);
         } else {
             blueFlipper.setPosition(1);
         }
+        */
 
         if (gamepad2.left_bumper) {
             changeMotor.setPower(1);
@@ -139,12 +151,16 @@ public class IgutechTeleop extends OpMode {
         if (gamepad2.dpad_left || gamepad2.dpad_right) {
             climberServo.setPosition(.5);
         }
-        if (gamepad1.a && gamepad2.back) {
-            magicRelease.setPosition(1);
+        if (gamepad1.a && gamepad2.a) {
+            magicRelease.setPosition(0);
+        } else {
+            magicRelease.setPosition(.85);
         }
 
         if (gamepad2.left_trigger > .9) {
             winch.setPower(1);
+        } else if (gamepad2.right_trigger > .9) {
+            winch.setPower(-1);
         } else {
             winch.setPower(0);
         }
