@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.hardware.DigitalChannelController;
 
 /**
- * Created by Logan on 11/13/2015.
+ * Created by The team.
  */
 public class IgutechTeleop extends OpMode {
 
@@ -18,8 +18,6 @@ public class IgutechTeleop extends OpMode {
     DcMotor leftMotor;
     DcMotor rightMotor;
     DcMotor changeMotor;
-    //TouchSensor wheelsOut;
-    //TouchSensor wheelsIn;
 
     Servo armServo;
     Servo climberServo;
@@ -30,14 +28,6 @@ public class IgutechTeleop extends OpMode {
 
     int robotMode = 0;
     String nameMode;
-    /*
-    0 - regular driving
-    1 - transitioning to tracks
-    2 - Low mountain mode
-    3 - High mountain mode
-    4 - Pullup mode
-    5 - Tumble mode (we don't want this!)
-     */
 
     double JoyThr;
     double JoyYaw;
@@ -64,14 +54,8 @@ public class IgutechTeleop extends OpMode {
 
     boolean firstLoop = true;
 
-
-    //boolean wheelsUp;
-    //boolean wheelsDown;
-
-
     @Override
     public void init() {
-
         changeMotor = hardwareMap.dcMotor.get("worm1");
         changeMotor.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
 
@@ -97,43 +81,39 @@ public class IgutechTeleop extends OpMode {
         DcMotorController leftMotorController;
         DcMotorController rightMotorController;
 
-        //DIM.setDigitalChannelMode(0, DigitalChannelController.Mode.OUTPUT);
-        //DIM.setDigitalChannelMode(1, DigitalChannelController.Mode.OUTPUT);
-
         climberServo.setPosition(.5);
         magicRelease.setPosition(.85);
         armServo.setPosition(.5);
         //redFlipper.setPosition(0);
         //blueFlipper.setPosition(0);
-
-
-
-
-
     }
 
     @Override
     public void loop() {
-        /*
-        if (firstLoop) {
-            while (!gamepad1.start) {
-                telemetry.addData("Alliance", team);
-                if (gamepad1.b) {
-                    team = "red";
-                } else if (gamepad1.x) {
-                    team = "blue";
-                }
-            }
-            firstLoop=false;
-        }
+        colorChoosing(); //The currently unused servo control software
+        unusedCode();    //Currently unused code that's commented out
+        servoControls(); //Code which controls all the servos
+        motorControls(); //Code which controls all the motors
 
-        if (team.equals("red")) {
-            redFlipper.setPosition(1);
-        } else {
-            blueFlipper.setPosition(1);
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void servoControls()
+    {
+        //This is where all the servo controlling runs
+        if(gamepad2.x)
+        {
+            armServo.setPosition(1);
+            //DIM.setDigitalChannelState(0, true);
+            //DIM.setDigitalChannelState(1, false);
         }
-        */
-
+        else if(gamepad2.b)
+        {
+            armServo.setPosition(0);
+        }
+        else
+        {
+            armServo.setPosition(.5);
+        }
         if (gamepad2.left_bumper) {
             changeMotor.setPower(1);
         } else if (gamepad2.right_bumper) {
@@ -156,6 +136,20 @@ public class IgutechTeleop extends OpMode {
         } else {
             magicRelease.setPosition(.85);
         }
+    }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void motorControls() {
+        //This is where the driving and arm movement is
+        JoyThr = -gamepad1.left_stick_y;
+        JoyYaw = -gamepad1.right_stick_x;
+
+        armMovement = -gamepad2.left_stick_y;
+
+        if (-armMovement > 0) {
+            armscaling = .3;
+        } else if (-armMovement < 0) {
+            armscaling = .3;
+        }
 
         if (gamepad2.left_trigger > .9) {
             winch.setPower(1);
@@ -165,49 +159,11 @@ public class IgutechTeleop extends OpMode {
             winch.setPower(0);
         }
 
-        /*if (gamepad2.a) {
-            climberServo.setPosition(1);
-        } else {
-            climberServo.setPosition(.7);
-        }*/
-
-
-
-        JoyThr = -gamepad1.left_stick_y;
-        JoyYaw = -gamepad1.right_stick_x;
-
-        armMovement = -gamepad2.left_stick_y;
-
-        if(-armMovement > 0) {
-            armscaling = .3;
-        } else if(-armMovement < 0) {
-            armscaling = .3;
-        }
-
-        /*if(gamepad2.right_trigger > .3)
-        {
-            RightFlipper.setPosition(1);
-        }
-        else if(gamepad2.right_trigger < .3)
-        {
-            RightFlipper.setPosition(0);
-        }
-
-        if(gamepad2.left_trigger > .3)
-        {
-            LeftFlipper.setPosition(1);
-        }
-        else if(gamepad2.left_trigger < .3)
-        {
-            LeftFlipper.setPosition(0);
-        }*/
-
         if (JoyThr > .90) {
             JoyThr = .90;
         } else if (JoyThr < -.90) {
             JoyThr = -.90;
         }
-
 
 
         rightPow = JoyThr + (JoyYaw * .5);
@@ -230,24 +186,6 @@ public class IgutechTeleop extends OpMode {
             leftPow = -1.0;
         }
 
-        if(gamepad2.x)
-        {
-            armServo.setPosition(1);
-            //DIM.setDigitalChannelState(0, true);
-            //DIM.setDigitalChannelState(1, false);
-        }
-        else if(gamepad2.b)
-        {
-            armServo.setPosition(0);
-            //DIM.setDigitalChannelState(0, false);
-            //DIM.setDigitalChannelState(1, true);
-        }
-        else
-        {
-            armServo.setPosition(.5);
-            //DIM.setDigitalChannelState(0, false);
-            //DIM.setDigitalChannelState(1, false);
-        }
 
         sloMo = 1 - gamepad1.right_trigger;
 
@@ -263,18 +201,37 @@ public class IgutechTeleop extends OpMode {
         armMotor1.setDirection(DcMotor.Direction.FORWARD);
         armMotor2.setDirection(DcMotor.Direction.REVERSE);
 
-        armMotor1.setPower(armMovement*armscaling);
-        armMotor2.setPower(armMovement*armscaling);
+        armMotor1.setPower(armMovement * armscaling);
+        armMotor2.setPower(armMovement * armscaling);
 
         leftMotor.setPower(leftPow);
         rightMotor.setPower(rightPow);
-        //roboStatus();
 
-        //telemetry
+    }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void colorChoosing() {
+        /*
+        if (firstLoop) {
+            while (!gamepad1.start) {
+                telemetry.addData("Alliance", team);
+                if (gamepad1.b) {
+                    team = "red";
+                } else if (gamepad1.x) {
+                    team = "blue";
+                }
+            }
+            firstLoop=false;
+        }
 
-        //try {
-        //    Thread.sleep(3);
-        //} catch (Exception e) {
-        //}
+        if (team.equals("red")) {
+            redFlipper.setPosition(1);
+        } else {
+            blueFlipper.setPosition(1);
+        }
+        */
+    }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void unusedCode() {
+
     }
 }
