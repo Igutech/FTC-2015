@@ -15,40 +15,15 @@ import com.qualcomm.robotcore.hardware.DigitalChannelController;
 public class IgutechTeleop extends OpMode {
 
     DeviceInterfaceModule DIM;
-    DcMotor leftMotor;
-    DcMotor rightMotor;
-    DcMotor changeMotor;
-
-    Servo armServo;
-    Servo climberServo;
-    Servo magicRelease;
-
-    Servo redFlipper;
-    Servo blueFlipper;
-
-    int robotMode = 0;
+    DcMotor leftMotor, rightMotor, armMotor1, armMotor2, winch;
+    Servo armServo, climberServo, magicRelease, redFlipper, blueFlipper;
     String nameMode;
 
-    double JoyThr;
-    double JoyYaw;
-
-    double rightPow;
-    double leftPow;
-
-    DcMotor armMotor1;
-    DcMotor armMotor2;
-
-    DcMotor winch;
+    double JoyThr, JoyYaw, rightPow, leftPow, armMovement, armscaling, offset;
 
     DcMotorDriver driver;
 
-    double armMovement;
-
     double sloMo = 1;
-
-    double offset;
-
-    double armscaling;
 
     String team = "";
 
@@ -56,8 +31,6 @@ public class IgutechTeleop extends OpMode {
 
     @Override
     public void init() {
-        changeMotor = hardwareMap.dcMotor.get("worm1");
-        changeMotor.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
 
         armMotor1 = hardwareMap.dcMotor.get("arm1");
         armMotor2 = hardwareMap.dcMotor.get("arm2");
@@ -114,14 +87,14 @@ public class IgutechTeleop extends OpMode {
         {
             armServo.setPosition(.5);
         }
-        if (gamepad2.left_bumper) {
+       /* if (gamepad2.left_bumper) {
             changeMotor.setPower(1);
         } else if (gamepad2.right_bumper) {
             changeMotor.setPower(-1);
         } else {
             changeMotor.setPower(0);
         }
-
+*/
         if (gamepad2.dpad_down) {
             climberServo.setPosition(0);
         }
