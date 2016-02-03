@@ -15,7 +15,7 @@ import com.qualcomm.robotcore.hardware.DigitalChannelController;
 public class IgutechTeleop extends OpMode {
 
     DeviceInterfaceModule DIM;
-    DcMotor leftMotor, rightMotor, armMotor1, armMotor2, winch;
+    DcMotor leftMotor, rightMotor, armMotor1, armMotor2, winch, brush;
     Servo armServo, climberServo, magicRelease, redFlipper, blueFlipper;
     String nameMode;
 
@@ -87,14 +87,7 @@ public class IgutechTeleop extends OpMode {
         {
             armServo.setPosition(.5);
         }
-       /* if (gamepad2.left_bumper) {
-            changeMotor.setPower(1);
-        } else if (gamepad2.right_bumper) {
-            changeMotor.setPower(-1);
-        } else {
-            changeMotor.setPower(0);
-        }
-*/
+
         if (gamepad2.dpad_down) {
             climberServo.setPosition(0);
         }
@@ -112,7 +105,7 @@ public class IgutechTeleop extends OpMode {
     }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void motorControls() {
-        //This is where the driving and arm movement is
+        //This is where the arm, winch, and brush movement is along with driving control
         JoyThr = -gamepad1.left_stick_y;
         JoyYaw = -gamepad1.right_stick_x;
 
@@ -130,6 +123,14 @@ public class IgutechTeleop extends OpMode {
             winch.setPower(-1);
         } else {
             winch.setPower(0);
+        }
+        //this is the code for the brushes
+        if (gamepad2.left_bumper) {
+            brush.setPower(1);//full forward and backwards are used
+        } else if (gamepad2.right_bumper) {
+            brush.setPower(-1);
+        } else {
+            brush.setPower(0);
         }
 
         if (JoyThr > .90) {
