@@ -46,11 +46,8 @@ public class IgutechTeleop extends OpMode {
         climberServo = hardwareMap.servo.get("climber");
 
         magicRelease = hardwareMap.servo.get("magicRelease");
-        /*
         redFlipper = hardwareMap.servo.get("redFlipper");
         blueFlipper = hardwareMap.servo.get("blueFlipper");
-        armServo.setDirection(Servo.Direction.FORWARD);
-        */
         DcMotorController leftMotorController;
         DcMotorController rightMotorController;
 
@@ -76,8 +73,6 @@ public class IgutechTeleop extends OpMode {
         if(gamepad2.x)
         {
             armServo.setPosition(1);
-            //DIM.setDigitalChannelState(0, true);
-            //DIM.setDigitalChannelState(1, false);
         }
         else if(gamepad2.b)
         {
@@ -101,6 +96,16 @@ public class IgutechTeleop extends OpMode {
             magicRelease.setPosition(0);
         } else {
             magicRelease.setPosition(.85);
+        }
+        if (gamepad2.left_trigger >= .3) {
+            redFlipper.setPosition(.5);
+        } else {
+            redFlipper.setPosition(.98);
+        }
+        if (gamepad2.right_trigger >= .3) {
+            blueFlipper.setPosition(.5);
+        } else {
+            blueFlipper.setPosition(.98);
         }
     }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
