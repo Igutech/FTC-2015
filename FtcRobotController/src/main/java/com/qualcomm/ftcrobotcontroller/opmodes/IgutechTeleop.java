@@ -15,8 +15,8 @@ import com.qualcomm.robotcore.hardware.DigitalChannelController;
 public class IgutechTeleop extends OpMode {
 
     DeviceInterfaceModule DIM;
-    DcMotor leftMotor, rightMotor, armMotor1, armMotor2, winch, brush;
-    Servo armServo, climberServo, magicRelease, redFlipper, blueFlipper;
+    DcMotor leftMotor, rightMotor, armMotor1, armMotor2, winch, brush; //define DC motors
+    Servo armServo, climberServo, magicRelease, redFlipper, blueFlipper; //define servos
     String nameMode;
 
     double JoyThr, JoyYaw, rightPow, leftPow, armMovement, armscaling, offset;
@@ -73,7 +73,7 @@ public class IgutechTeleop extends OpMode {
     public void servoControls()
     {
         //This is where all the servo controlling runs
-        if(gamepad2.x)
+        if(gamepad2.x) //move the servo that drops blocks from the arm
         {
             armServo.setPosition(1);
             //DIM.setDigitalChannelState(0, true);
@@ -88,7 +88,7 @@ public class IgutechTeleop extends OpMode {
             armServo.setPosition(.5);
         }
 
-        if (gamepad2.dpad_down) {
+        if (gamepad2.dpad_down) { //Control climber release servo
             climberServo.setPosition(0);
         }
         if (gamepad2.dpad_up) {
@@ -97,7 +97,7 @@ public class IgutechTeleop extends OpMode {
         if (gamepad2.dpad_left || gamepad2.dpad_right) {
             climberServo.setPosition(.5);
         }
-        if (gamepad1.a && gamepad2.a) {
+        if (gamepad1.a && gamepad2.a) { //Magic release servo
             magicRelease.setPosition(0);
         } else {
             magicRelease.setPosition(.85);
@@ -111,13 +111,13 @@ public class IgutechTeleop extends OpMode {
 
         armMovement = -gamepad2.left_stick_y;
 
-        if (-armMovement > 0) {
+        if (-armMovement > 0) { //properly scale the arm
             armscaling = .3;
         } else if (-armMovement < 0) {
             armscaling = .3;
         }
 
-        if (gamepad2.left_trigger > .9) {
+        if (gamepad2.left_trigger > .9) { //activate the winch system
             winch.setPower(1);
         } else if (gamepad2.right_trigger > .9) {
             winch.setPower(-1);
@@ -132,6 +132,21 @@ public class IgutechTeleop extends OpMode {
         } else {
             brush.setPower(0);
         }
+
+        /*
+        ##########################################
+        #      Below Code drives the robot       #
+        #+----+----------------------------------+#
+        #| 1. | Limit the throttle to 90% in     |#
+        #|    | either direction                 |#
+        #| 2. | Factor in yaw                    |#
+        #| 3. | Scale back left and right powers |#
+        #|    | so we don't violate the          |#
+        #|    | 1 < x > -1 rule                  |#
+        #| 4. | Factor in slo-mo setting         |#
+        #+----+----------------------------------+#
+        ##########################################
+        */
 
         if (JoyThr > .90) {
             JoyThr = .90;
@@ -163,9 +178,8 @@ public class IgutechTeleop extends OpMode {
 
         sloMo = 1 - gamepad1.right_trigger;
 
-        telemetry.addData("Slow-Mo factor", sloMo);
-
-        if (sloMo <= .30) {
+        telemetry.addData("Slow-Mo factor", sloMo); //Read the slo-mo value to the Telemetry
+        if (sloMo <= .30) { //Limit the slo-mo factor to not pass 30%
             sloMo = .30;
         }
 
@@ -175,10 +189,10 @@ public class IgutechTeleop extends OpMode {
         armMotor1.setDirection(DcMotor.Direction.FORWARD);
         armMotor2.setDirection(DcMotor.Direction.REVERSE);
 
-        armMotor1.setPower(armMovement * armscaling);
+        armMotor1.setPower(armMovement * armscaling); //Write arm movements to the motors.
         armMotor2.setPower(armMovement * armscaling);
 
-        leftMotor.setPower(leftPow);
+        leftMotor.setPower(leftPow); //Write driving movements to the motors.
         rightMotor.setPower(rightPow);
 
     }
