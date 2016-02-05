@@ -14,7 +14,6 @@ import com.qualcomm.robotcore.hardware.DigitalChannelController;
  */
 public class IgutechTeleop extends OpMode {
 
-    DeviceInterfaceModule DIM;
     DcMotor leftMotor, rightMotor, armMotor1, armMotor2, winch, brush; //define DC motors
     Servo armServo, climberServo, magicRelease, redFlipper, blueFlipper; //define servos
     String nameMode;
@@ -40,7 +39,6 @@ public class IgutechTeleop extends OpMode {
         leftMotor.setDirection(DcMotor.Direction.REVERSE);
         rightMotor.setDirection(DcMotor.Direction.FORWARD);
 
-        //DIM = hardwareMap.deviceInterfaceModule.get("dim");
 
         armServo = hardwareMap.servo.get("armservo");
         climberServo = hardwareMap.servo.get("climber");
@@ -48,8 +46,6 @@ public class IgutechTeleop extends OpMode {
         magicRelease = hardwareMap.servo.get("magicRelease");
         redFlipper = hardwareMap.servo.get("redFlipper");
         blueFlipper = hardwareMap.servo.get("blueFlipper");
-        DcMotorController leftMotorController;
-        DcMotorController rightMotorController;
 
         climberServo.setPosition(.5);
         magicRelease.setPosition(.85);
@@ -66,7 +62,7 @@ public class IgutechTeleop extends OpMode {
         motorControls(); //Code which controls all the motors
 
     }
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     public void servoControls()
     {
         //This is where all the servo controlling runs
@@ -108,7 +104,7 @@ public class IgutechTeleop extends OpMode {
             blueFlipper.setPosition(.98);
         }
     }
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     public void motorControls() {
         //This is where the arm, winch, and brush movement is along with driving control
         JoyThr = -gamepad1.left_stick_y;
@@ -201,7 +197,7 @@ public class IgutechTeleop extends OpMode {
         rightMotor.setPower(rightPow);
 
     }
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     public void colorChoosing() {
         /*
         if (firstLoop) {
@@ -223,7 +219,7 @@ public class IgutechTeleop extends OpMode {
         }
         */
     }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     public void unusedCode() {
 
     }
