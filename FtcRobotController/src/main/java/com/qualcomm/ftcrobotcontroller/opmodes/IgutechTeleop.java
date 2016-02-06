@@ -36,6 +36,7 @@ public class IgutechTeleop extends OpMode {
         leftMotor = hardwareMap.dcMotor.get("left2");
         rightMotor = hardwareMap.dcMotor.get("right2");
         winch = hardwareMap.dcMotor.get("winch");
+        brush = hardwareMap.dcMotor.get("worm1");
         leftMotor.setDirection(DcMotor.Direction.REVERSE);
         rightMotor.setDirection(DcMotor.Direction.FORWARD);
 
@@ -112,7 +113,7 @@ public class IgutechTeleop extends OpMode {
 
         armMovement = -gamepad2.left_stick_y;
 
-        if (-armMovement > 0) { //properly scale the arm
+        if (-armMovement > 0) {
             armscaling = .3;
         } else if (-armMovement < 0) {
             armscaling = .3;
