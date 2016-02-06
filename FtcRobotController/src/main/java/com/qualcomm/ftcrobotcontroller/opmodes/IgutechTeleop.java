@@ -47,12 +47,13 @@ public class IgutechTeleop extends OpMode {
         magicRelease = hardwareMap.servo.get("magicRelease");
         redFlipper = hardwareMap.servo.get("redFlipper");
         blueFlipper = hardwareMap.servo.get("blueFlipper");
+        blueFlipper.setDirection(Servo.Direction.REVERSE);
 
         climberServo.setPosition(.5);
         magicRelease.setPosition(.85);
         armServo.setPosition(.5);
-        //redFlipper.setPosition(0);
-        //blueFlipper.setPosition(0);
+        redFlipper.setPosition(0.4);
+        blueFlipper.setPosition(0.55);
     }
 
     @Override
@@ -94,15 +95,19 @@ public class IgutechTeleop extends OpMode {
         } else {
             magicRelease.setPosition(.85);
         }
-        if (gamepad2.left_trigger >= .3) {
-            redFlipper.setPosition(.5);
+        if (gamepad2.right_stick_x >= .3) {
+            redFlipper.setPosition(.23);
+            telemetry.addData("Right Flipper:"," Active");
         } else {
-            redFlipper.setPosition(.98);
+            redFlipper.setPosition(0.4);
+            telemetry.addData("Right Flipper:"," Inactive");
         }
-        if (gamepad2.right_trigger >= .3) {
-            blueFlipper.setPosition(.5);
+        if (gamepad2.right_stick_x <= -.3) {
+            blueFlipper.setPosition(.38);
+            telemetry.addData("Left Flipper:"," Active");
         } else {
-            blueFlipper.setPosition(.98);
+            blueFlipper.setPosition(.55);
+            telemetry.addData("Left Flipper:"," Inactive");
         }
     }
 
