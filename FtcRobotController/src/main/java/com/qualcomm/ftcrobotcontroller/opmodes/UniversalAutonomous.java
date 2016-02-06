@@ -21,8 +21,9 @@ public class UniversalAutonomous extends LinearOpMode {
     ColorSensor ColorSensor;
     LightSensor LightSensor;
     Servo servo, deliveryServo;
+    Servo redFlipper;
+    Servo blueFlipper;
     DcMotorController leftMotorController, rightMotorController;
-    DeviceInterfaceModule dim;
     ColorSensor adafruit;
 
     int counter = 1;
@@ -179,8 +180,11 @@ public class UniversalAutonomous extends LinearOpMode {
         UltraR = hardwareMap.ultrasonicSensor.get("UltraR");
         //ColorSensor = hardwareMap.colorSensor.get("color");
         LightSensor = hardwareMap.lightSensor.get("light");
-        dim = hardwareMap.deviceInterfaceModule.get("dim");
         adafruit = hardwareMap.colorSensor.get("color");
+        redFlipper = hardwareMap.servo.get("redFlipper");
+        blueFlipper = hardwareMap.servo.get("blueFlipper");
+        redFlipper.setPosition(0.4);
+        blueFlipper.setPosition(0.55);
     }
 
     public void universalAuto() throws InterruptedException {
