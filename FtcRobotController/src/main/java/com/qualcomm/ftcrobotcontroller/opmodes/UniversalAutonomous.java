@@ -98,6 +98,7 @@ public class UniversalAutonomous extends LinearOpMode {
              Red = ColorSensor.red();
              Blue = ColorSensor.blue();
              Green = ColorSensor.green();*/
+             LightSensor.enableLed(true);
              Light = LightSensor.getLightDetected();
              Red = adafruit.red();
              Blue = adafruit.blue();
