@@ -24,7 +24,7 @@ public class UniversalAutonomous extends LinearOpMode {
     Servo redFlipper;
     Servo blueFlipper;
     DcMotorController leftMotorController, rightMotorController;
-    ColorSensor adafruit;
+    //ColorSensor adafruit;
 
     int counter = 1;
     boolean debugMode = false;
@@ -101,18 +101,18 @@ public class UniversalAutonomous extends LinearOpMode {
              Green = ColorSensor.green();*/
              LightSensor.enableLed(true);
              Light = LightSensor.getLightDetected();
-             Red = adafruit.red();
+             /*Red = adafruit.red();
              Blue = adafruit.blue();
              Green = adafruit.green();
-             Hue = adafruit.argb();
+             Hue = adafruit.argb();*/
 
              telemetry.addData("Left Ultrasonic Sensor:", UL);
              telemetry.addData("Right Ultrasonic Sensor:", UR);
 
-             telemetry.addData("Color Sensor Hue:", Hue);
+             /*telemetry.addData("Color Sensor Hue:", Hue);
              telemetry.addData("Color Sensor Red:", Red);
              telemetry.addData("Color Sensor Blue:", Blue);
-             telemetry.addData("Color Sensor Green:", Green);
+             telemetry.addData("Color Sensor Green:", Green);*/
 
              telemetry.addData("Light Sensor:", Light);
          }
@@ -180,7 +180,7 @@ public class UniversalAutonomous extends LinearOpMode {
         UltraR = hardwareMap.ultrasonicSensor.get("UltraR");
         //ColorSensor = hardwareMap.colorSensor.get("color");
         LightSensor = hardwareMap.lightSensor.get("light");
-        adafruit = hardwareMap.colorSensor.get("color");
+        //adafruit = hardwareMap.colorSensor.get("color");
         redFlipper = hardwareMap.servo.get("redFlipper");
         blueFlipper = hardwareMap.servo.get("blueFlipper");
         redFlipper.setPosition(0.4);
