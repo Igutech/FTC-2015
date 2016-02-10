@@ -2,12 +2,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorController;
-import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.TouchSensor;
-import com.qualcomm.robotcore.hardware.DigitalChannelController;
 
 /**
  * Created by The team.
@@ -20,7 +15,6 @@ public class IgutechTeleop extends OpMode {
 
     double JoyThr, JoyYaw, rightPow, leftPow, armMovement, armscaling, offset;
 
-    DcMotorDriver driver;
 
     double sloMo = 1;
 
