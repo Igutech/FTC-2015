@@ -103,7 +103,7 @@ public class IgutechTeleop extends OpMode {
             telemetry.addData("Right Flipper:"," Inactive");
         }
         if (gamepad2.right_stick_x <= -.3) {
-            blueFlipper.setPosition(.38);
+            blueFlipper.setPosition(.3);
             telemetry.addData("Left Flipper:"," Active");
         } else {
             blueFlipper.setPosition(.55);
