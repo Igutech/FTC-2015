@@ -23,6 +23,7 @@ public class UniversalAutonomous extends LinearOpMode {
     Servo servo, deliveryServo;
     Servo redFlipper;
     Servo blueFlipper;
+    Servo magicRelease;
     DcMotorController leftMotorController, rightMotorController;
     //ColorSensor adafruit;
 
@@ -183,8 +184,10 @@ public class UniversalAutonomous extends LinearOpMode {
         //adafruit = hardwareMap.colorSensor.get("color");
         redFlipper = hardwareMap.servo.get("redFlipper");
         blueFlipper = hardwareMap.servo.get("blueFlipper");
+        magicRelease = hardwareMap.servo.get("magicRelease");
         redFlipper.setPosition(0.4);
         blueFlipper.setPosition(0.55);
+        magicRelease.setPosition(.85);
     }
 
     public void universalAuto() throws InterruptedException {
