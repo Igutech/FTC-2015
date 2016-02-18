@@ -250,6 +250,7 @@ public class UniversalAutonomous extends LinearOpMode {
         leftMotorController.setMotorControllerDeviceMode(DcMotorController.DeviceMode.READ_ONLY); //Change to read
         rightMotorController.setMotorControllerDeviceMode(DcMotorController.DeviceMode.READ_ONLY);
         waitOneFullHardwareCycle();
+        Thread.sleep(100);
         while (counter == 1) {
             if (isCloseto(leftMotor2.getCurrentPosition(), enc1) && isCloseto(rightMotor2.getCurrentPosition(), enc2)) {
                 counter = 2;
