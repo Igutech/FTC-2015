@@ -44,7 +44,7 @@ public class IgutechTeleop extends OpMode {
         blueFlipper.setDirection(Servo.Direction.REVERSE);
 
         climberServo.setPosition(.5);
-        magicRelease.setPosition(.85);
+        magicRelease.setPosition(.25);
         armServo.setPosition(.5);
         redFlipper.setPosition(0.4);
         blueFlipper.setPosition(0.55);
@@ -85,9 +85,9 @@ public class IgutechTeleop extends OpMode {
             climberServo.setPosition(.5);
         }
         if (gamepad1.a && gamepad2.a) { //Magic release servo
-            magicRelease.setPosition(0);
+            magicRelease.setPosition(.75);
         } else {
-            magicRelease.setPosition(.85);
+            magicRelease.setPosition(.25);
         }
         if (gamepad2.right_stick_x >= .3) {
             redFlipper.setPosition(.23);
