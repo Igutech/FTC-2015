@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class IgutechTeleop extends OpMode {
 
     DcMotor leftMotor, rightMotor, armMotor1, armMotor2, winch, brush; //define DC motors
-    Servo armServo, climberServo, magicRelease, redFlipper, blueFlipper; //define servos
+    Servo armServo, climberServo, magicRelease; //define servos
     String nameMode;
 
     double JoyThr, JoyYaw, rightPow, leftPow, armMovement, armscaling, offset;
@@ -39,15 +39,10 @@ public class IgutechTeleop extends OpMode {
         climberServo = hardwareMap.servo.get("climber");
 
         magicRelease = hardwareMap.servo.get("magicRelease");
-        redFlipper = hardwareMap.servo.get("redFlipper");
-        blueFlipper = hardwareMap.servo.get("blueFlipper");
-        blueFlipper.setDirection(Servo.Direction.REVERSE);
 
         climberServo.setPosition(.5);
         magicRelease.setPosition(.25);
         armServo.setPosition(.5);
-        redFlipper.setPosition(0.4);
-        blueFlipper.setPosition(0.55);
     }
 
     @Override
@@ -88,20 +83,6 @@ public class IgutechTeleop extends OpMode {
             magicRelease.setPosition(.75);
         } else {
             magicRelease.setPosition(.25);
-        }
-        if (gamepad2.right_stick_x >= .3) {
-            redFlipper.setPosition(.23);
-            telemetry.addData("Right Flipper:"," Active");
-        } else {
-            redFlipper.setPosition(0.4);
-            telemetry.addData("Right Flipper:"," Inactive");
-        }
-        if (gamepad2.right_stick_x <= -.3) {
-            blueFlipper.setPosition(.3);
-            telemetry.addData("Left Flipper:"," Active");
-        } else {
-            blueFlipper.setPosition(.55);
-            telemetry.addData("Left Flipper:"," Inactive");
         }
     }
 
