@@ -27,7 +27,6 @@ public class UniversalAutonomous extends LinearOpMode {
     DcMotorController leftMotorController, rightMotorController;
     //ColorSensor adafruit;
 
-    int counter = 1;
     boolean debugMode = false;
 
     String team = "";
@@ -56,6 +55,8 @@ public class UniversalAutonomous extends LinearOpMode {
                     pos = 2;
                 } else if (gamepad1.a) {
                     pos = 4;
+                } else if (gamepad1.b) {
+
                 }
 
         }
@@ -224,6 +225,7 @@ public class UniversalAutonomous extends LinearOpMode {
     {
         int enc1;
         int enc2;
+        boolean distanceCheck = true;
 
         enc1 = (int)Math.round(ldist*33.65);
         enc2 = (int)Math.round(rdist*33.65);
@@ -232,6 +234,10 @@ public class UniversalAutonomous extends LinearOpMode {
 
         leftMotor2.setMode(DcMotorController.RunMode.RESET_ENCODERS);
         rightMotor2.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        waitOneFullHardwareCycle();
+        waitOneFullHardwareCycle();
+        waitOneFullHardwareCycle();
+        waitOneFullHardwareCycle();
         waitOneFullHardwareCycle();
         waitOneFullHardwareCycle();
         waitOneFullHardwareCycle();
@@ -251,9 +257,9 @@ public class UniversalAutonomous extends LinearOpMode {
         rightMotorController.setMotorControllerDeviceMode(DcMotorController.DeviceMode.READ_ONLY);
         waitOneFullHardwareCycle();
         Thread.sleep(100);
-        while (counter == 1) {
+        while (distanceCheck) {
             if (isCloseto(leftMotor2.getCurrentPosition(), enc1) && isCloseto(rightMotor2.getCurrentPosition(), enc2)) {
-                counter = 2;
+                distanceCheck = false;
             }
             waitOneFullHardwareCycle();
         }
@@ -276,12 +282,74 @@ public class UniversalAutonomous extends LinearOpMode {
         waitOneFullHardwareCycle();
         leftMotor2.setMode(DcMotorController.RunMode.RESET_ENCODERS);
         rightMotor2.setMode(DcMotorController.RunMode.RESET_ENCODERS);
-        counter = 1;
+    }
+
+    public void turnDistance(double lDist, double rDist, double lPow, double rPow) throws InterruptedException
+    {
+        int enc1;
+        int enc2;
+        boolean distanceCheck = true;
+
+        enc1 = (int)Math.round(lDist*33.65);
+        enc2 = (int)Math.round(rDist*33.65);
+
+
+
+        leftMotor2.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        rightMotor2.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        waitOneFullHardwareCycle();
+        waitOneFullHardwareCycle();
+        waitOneFullHardwareCycle();
+        waitOneFullHardwareCycle();
+        waitOneFullHardwareCycle();
+        waitOneFullHardwareCycle();
+        waitOneFullHardwareCycle();
+        leftMotor2.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+        rightMotor2.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+        waitOneFullHardwareCycle();
+        leftMotor2.setTargetPosition(enc1);
+        rightMotor2.setTargetPosition(enc2);
+        leftMotor2.setPower(lPow);
+        rightMotor2.setPower(rPow);
+        waitOneFullHardwareCycle();
+        waitOneFullHardwareCycle();
+        waitOneFullHardwareCycle();
+        waitOneFullHardwareCycle();
+        waitOneFullHardwareCycle();
+        leftMotorController.setMotorControllerDeviceMode(DcMotorController.DeviceMode.READ_ONLY); //Change to read
+        rightMotorController.setMotorControllerDeviceMode(DcMotorController.DeviceMode.READ_ONLY);
+        waitOneFullHardwareCycle();
+        Thread.sleep(100);
+        while (distanceCheck) {
+            if (isCloseto(leftMotor2.getCurrentPosition(), enc1) && isCloseto(rightMotor2.getCurrentPosition(), enc2)) {
+                distanceCheck = false;
+            }
+            waitOneFullHardwareCycle();
+        }
+        waitOneFullHardwareCycle();
+        leftMotorController.setMotorControllerDeviceMode(DcMotorController.DeviceMode.WRITE_ONLY); //Change to read
+        rightMotorController.setMotorControllerDeviceMode(DcMotorController.DeviceMode.WRITE_ONLY);
+        waitOneFullHardwareCycle();
+        leftMotor2.setPower(0);
+        rightMotor2.setPower(0);
+        leftMotor2.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        rightMotor2.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        waitOneFullHardwareCycle();
+        leftMotorController.setMotorControllerDeviceMode(DcMotorController.DeviceMode.READ_ONLY); //Change to read
+        rightMotorController.setMotorControllerDeviceMode(DcMotorController.DeviceMode.READ_ONLY);
+        waitOneFullHardwareCycle();
+        telemetry.addData("Currentvalue", leftMotor2.getCurrentPosition());
+        waitOneFullHardwareCycle();
+        leftMotorController.setMotorControllerDeviceMode(DcMotorController.DeviceMode.WRITE_ONLY); //Change to read
+        rightMotorController.setMotorControllerDeviceMode(DcMotorController.DeviceMode.WRITE_ONLY);
+        waitOneFullHardwareCycle();
+        leftMotor2.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        rightMotor2.setMode(DcMotorController.RunMode.RESET_ENCODERS);
     }
 
     public static Boolean isCloseto(int number1, int number2)
     {
-        if(Math.abs(number1) >= Math.abs(number2)-10)
+        if(Math.abs(number1) >= Math.abs(number2) - 10)
         {
             return true;
         }

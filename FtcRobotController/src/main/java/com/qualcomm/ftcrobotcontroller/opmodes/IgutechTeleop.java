@@ -1,7 +1,9 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.Servo;
 
 /**
@@ -11,6 +13,7 @@ public class IgutechTeleop extends OpMode {
 
     DcMotor leftMotor, rightMotor, armMotor1, armMotor2, winch, brush; //define DC motors
     Servo armServo, climberServo, magicRelease, climbAssist; //define servos
+    DcMotorController leftMotorController, rightMotorController;
     String nameMode;
 
     double JoyThr, JoyYaw, rightPow, leftPow, armMovement, armscaling, offset;
@@ -27,12 +30,18 @@ public class IgutechTeleop extends OpMode {
 
         armMotor1 = hardwareMap.dcMotor.get("arm1");
         armMotor2 = hardwareMap.dcMotor.get("arm2");
+        armMotor1.setDirection(DcMotor.Direction.FORWARD);
+        armMotor2.setDirection(DcMotor.Direction.REVERSE);
+        armMotor1.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        armMotor2.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
         leftMotor = hardwareMap.dcMotor.get("left2");
         rightMotor = hardwareMap.dcMotor.get("right2");
         winch = hardwareMap.dcMotor.get("winch");
         brush = hardwareMap.dcMotor.get("worm1");
         leftMotor.setDirection(DcMotor.Direction.REVERSE);
         rightMotor.setDirection(DcMotor.Direction.FORWARD);
+        leftMotorController = hardwareMap.dcMotorController.get("leftMotorController");
+        rightMotorController = hardwareMap.dcMotorController.get("rightMotorController");
 
 
         armServo = hardwareMap.servo.get("armservo");
@@ -89,7 +98,7 @@ public class IgutechTeleop extends OpMode {
         if (gamepad1.right_trigger > .7) {
             climbAssist.setPosition(1);
         } else if (gamepad1.right_bumper) {
-            climbAssist.setPoistion(0);
+            climbAssist.setPosition(0);
         } else {
             climbAssist.setPosition(.5);
         }
@@ -176,9 +185,6 @@ public class IgutechTeleop extends OpMode {
 
         rightPow = rightPow * sloMo;
         leftPow = leftPow * sloMo;
-
-        armMotor1.setDirection(DcMotor.Direction.FORWARD);
-        armMotor2.setDirection(DcMotor.Direction.REVERSE);
 
         armMotor1.setPower(armMovement * armscaling); //Write arm movements to the motors.
         armMotor2.setPower(armMovement * armscaling);
