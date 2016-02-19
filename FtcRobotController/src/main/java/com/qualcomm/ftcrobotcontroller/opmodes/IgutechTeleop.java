@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class IgutechTeleop extends OpMode {
 
     DcMotor leftMotor, rightMotor, armMotor1, armMotor2, winch, brush; //define DC motors
-    Servo armServo, climberServo, magicRelease; //define servos
+    Servo armServo, climberServo, magicRelease, climbAssist; //define servos
     String nameMode;
 
     double JoyThr, JoyYaw, rightPow, leftPow, armMovement, armscaling, offset;
@@ -37,6 +37,7 @@ public class IgutechTeleop extends OpMode {
 
         armServo = hardwareMap.servo.get("armservo");
         climberServo = hardwareMap.servo.get("climber");
+        climbAssist = hardwareMap.servo.get("climbAssist");
 
         magicRelease = hardwareMap.servo.get("magicRelease");
 
@@ -83,6 +84,14 @@ public class IgutechTeleop extends OpMode {
             magicRelease.setPosition(.75);
         } else {
             magicRelease.setPosition(.25);
+        }
+
+        if (gamepad1.right_trigger > .7) {
+            climbAssist.setPosition(1);
+        } else if (gamepad1.right_bumper) {
+            climbAssist.setPoistion(0);
+        } else {
+            climbAssist.setPosition(.5);
         }
     }
 
