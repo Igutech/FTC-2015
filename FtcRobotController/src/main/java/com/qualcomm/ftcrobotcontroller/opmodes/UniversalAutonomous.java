@@ -20,10 +20,7 @@ public class UniversalAutonomous extends LinearOpMode {
     UltrasonicSensor UltraL, UltraR;
     ColorSensor ColorSensor;
     LightSensor LightSensor;
-    Servo servo, deliveryServo;
-    Servo redFlipper;
-    Servo blueFlipper;
-    Servo magicRelease;
+    Servo servo, deliveryServo, redFlipper, blueFlipper, magicRelease, climbAssist;
     DcMotorController leftMotorController, rightMotorController;
     //ColorSensor adafruit;
 
@@ -185,9 +182,12 @@ public class UniversalAutonomous extends LinearOpMode {
         redFlipper = hardwareMap.servo.get("redFlipper");
         blueFlipper = hardwareMap.servo.get("blueFlipper");
         magicRelease = hardwareMap.servo.get("magicRelease");
+        climbAssist = hardwareMap.servo.get("climbAssist");
         redFlipper.setPosition(0.4);
         blueFlipper.setPosition(0.55);
         magicRelease.setPosition(.85);
+        climbAssist.setPosition(.44);
+        servo.setPosition(.2);
     }
 
     public void universalAuto() throws InterruptedException {
@@ -202,7 +202,7 @@ public class UniversalAutonomous extends LinearOpMode {
         Thread.sleep(100);
 
 
-        for (double i = .20; i < .7; i+=.0025){
+        for (double i = .20; i < .7; i+=.0025) {
             servo.setPosition(i);
             Thread.sleep(5);
         }
@@ -252,7 +252,7 @@ public class UniversalAutonomous extends LinearOpMode {
         waitOneFullHardwareCycle();
         Thread.sleep(100);
         while (counter == 1) {
-            if (isCloseto(leftMotor2.getCurrentPosition(), enc1) && isCloseto(rightMotor2.getCurrentPosition(), enc2)) {
+            if (!leftMotor2.isBusy() && !rightMotor2.isBusy()) {
                 counter = 2;
             }
             waitOneFullHardwareCycle();

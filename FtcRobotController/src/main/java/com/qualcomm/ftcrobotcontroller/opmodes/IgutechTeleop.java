@@ -47,9 +47,9 @@ public class IgutechTeleop extends OpMode {
         armServo = hardwareMap.servo.get("armservo");
         climberServo = hardwareMap.servo.get("climber");
         climbAssist = hardwareMap.servo.get("climbAssist");
-
         magicRelease = hardwareMap.servo.get("magicRelease");
 
+        climbAssist.setPosition(.44);
         climberServo.setPosition(.5);
         magicRelease.setPosition(.25);
         armServo.setPosition(.5);
