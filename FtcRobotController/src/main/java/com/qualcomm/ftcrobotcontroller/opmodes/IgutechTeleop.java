@@ -95,12 +95,12 @@ public class IgutechTeleop extends OpMode {
             magicRelease.setPosition(.25);
         }
 
-        if (gamepad1.right_trigger > .7) {
+        if (gamepad1.left_trigger > .7) {
             climbAssist.setPosition(1);
-        } else if (gamepad1.right_bumper) {
+        } else if (gamepad1.left_bumper) {
             climbAssist.setPosition(0);
         } else {
-            climbAssist.setPosition(.5);
+            climbAssist.setPosition(.44);
         }
     }
 
