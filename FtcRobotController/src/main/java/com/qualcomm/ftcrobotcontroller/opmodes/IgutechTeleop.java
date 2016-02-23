@@ -13,8 +13,14 @@ public class IgutechTeleop extends OpMode {
 
     DcMotor leftMotor, rightMotor, armMotor1, armMotor2, winch, brush; //define DC motors
     Servo armServo, climberServo, magicRelease, climbAssist; //define servos
-    DcMotorController leftMotorController, rightMotorController;
-    String nameMode;
+    DcMotorController leftMotorController, rightMotorController, armcontroller;
+    String nameMode, status;
+    int statusTicker = 0;
+    int ticktimer = 0;
+    long previoustick;
+    long setTime;
+    int toggleswitch =1;
+    int targetPos = 0;
 
     double JoyThr, JoyYaw, rightPow, leftPow, armMovement, armscaling, offset;
 
@@ -32,8 +38,8 @@ public class IgutechTeleop extends OpMode {
         armMotor2 = hardwareMap.dcMotor.get("arm2");
         armMotor1.setDirection(DcMotor.Direction.FORWARD);
         armMotor2.setDirection(DcMotor.Direction.REVERSE);
-        armMotor1.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        armMotor2.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        armMotor1.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        armMotor2.setMode(DcMotorController.RunMode.RESET_ENCODERS);
         leftMotor = hardwareMap.dcMotor.get("left2");
         rightMotor = hardwareMap.dcMotor.get("right2");
         winch = hardwareMap.dcMotor.get("winch");
@@ -42,13 +48,13 @@ public class IgutechTeleop extends OpMode {
         rightMotor.setDirection(DcMotor.Direction.FORWARD);
         leftMotorController = hardwareMap.dcMotorController.get("leftMotorController");
         rightMotorController = hardwareMap.dcMotorController.get("rightMotorController");
-
+        armcontroller = hardwareMap.dcMotorController.get("armcontroller");
 
         armServo = hardwareMap.servo.get("armservo");
         climberServo = hardwareMap.servo.get("climber");
         climbAssist = hardwareMap.servo.get("climbAssist");
         magicRelease = hardwareMap.servo.get("magicRelease");
-
+        setTime = System.currentTimeMillis();
         climbAssist.setPosition(.44);
         climberServo.setPosition(.5);
         magicRelease.setPosition(.25);
@@ -57,11 +63,56 @@ public class IgutechTeleop extends OpMode {
 
     @Override
     public void loop() {
-        colorChoosing(); //The currently unused servo control software
-        unusedCode();    //Currently unused code that's commented out
+        //colorChoosing(); //The currently unused servo control software
+        //unusedCode();    //Currently unused code that's commented out
         servoControls(); //Code which controls all the servos
         motorControls(); //Code which controls all the motors
+        experimentalArm(); //code with experiment
+        status();//shows robot status
 
+    }
+
+    public void experimentalArm()
+    {
+        if(appclock()<2000)
+        {
+            armMotor1.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+            armMotor2.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+            //things to do in first 1 second
+            statusTicker = 1; //set status to reset encoders
+        }
+        /*if(appclock()>1000 && appclock()<2000)
+        {
+            armcontroller.setMotorControllerDeviceMode(DcMotorController.DeviceMode.READ_ONLY);
+            //things to do in seconds 1-2
+            statusTicker = 1; //set status to reset encoders
+        }*/
+        if(appclock()>2000)
+        {
+            if(toggleswitch ==1)
+            {
+                previoustick = appclock();
+                previoustick = previoustick + 50;
+                toggleswitch = 0;
+            }
+            if(toggleswitch == 0)
+            {
+                if(appclock() >= previoustick)
+                {
+                    ticktimer++;
+                    targetPos = targetPos - Math.round(30 * gamepad2.left_stick_y) ;
+                    toggleswitch =1;
+                }
+            }
+            telemetry.addData("Target Value: ", targetPos);
+
+            armMotor1.setTargetPosition(targetPos);
+            armMotor2.setTargetPosition(targetPos);
+            armMotor1.setPower(gamepad2.left_stick_y);
+            armMotor2.setPower(gamepad2.left_stick_y);
+            //things to do after 2 seconds
+            statusTicker = 2; //status is running
+        }
     }
 
     public void servoControls()
@@ -89,8 +140,9 @@ public class IgutechTeleop extends OpMode {
         if (gamepad2.dpad_left || gamepad2.dpad_right) {
             climberServo.setPosition(.5);
         }
+
         if (gamepad1.a && gamepad2.a) { //Magic release servo
-            magicRelease.setPosition(.75);
+            magicRelease.setPosition(.55);
         } else {
             magicRelease.setPosition(.25);
         }
@@ -109,13 +161,13 @@ public class IgutechTeleop extends OpMode {
         JoyThr = -gamepad1.left_stick_y;
         JoyYaw = -gamepad1.right_stick_x;
 
-        armMovement = -gamepad2.left_stick_y;
+        //armMovement = -gamepad2.left_stick_y;
 
-        if (-armMovement > 0) {
+        /*if (-armMovement > 0) {
             armscaling = .3;
         } else if (-armMovement < 0) {
             armscaling = .3;
-        }
+        }*/
 
         if (gamepad2.left_trigger > .9) { //activate the winch system
             winch.setPower(1);
@@ -218,5 +270,24 @@ public class IgutechTeleop extends OpMode {
 
     public void unusedCode() {
 
+    }
+
+    public void status()
+    {
+        if(statusTicker == 1)
+        {
+            status = "Reseting arm encoders";
+        }
+        if(statusTicker == 2)
+        {
+            status = "Arm Live in ServoMode";
+        }
+
+        telemetry.addData("Status: ", status);
+    }
+
+    public long appclock()
+    {
+        return System.currentTimeMillis()-setTime;
     }
 }
