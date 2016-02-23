@@ -92,7 +92,7 @@ public class IgutechTeleop extends OpMode {
             if(toggleswitch ==1)
             {
                 previoustick = appclock();
-                previoustick = previoustick + 50;
+                previoustick = previoustick + 10;
                 toggleswitch = 0;
             }
             if(toggleswitch == 0)
@@ -100,7 +100,7 @@ public class IgutechTeleop extends OpMode {
                 if(appclock() >= previoustick)
                 {
                     ticktimer++;
-                    targetPos = targetPos - Math.round(30 * gamepad2.left_stick_y) ;
+                    targetPos = targetPos - ((Math.round(10 * gamepad2.left_stick_y)/10)*10);
                     toggleswitch =1;
                 }
             }
@@ -108,8 +108,16 @@ public class IgutechTeleop extends OpMode {
 
             armMotor1.setTargetPosition(targetPos);
             armMotor2.setTargetPosition(targetPos);
-            armMotor1.setPower(gamepad2.left_stick_y);
-            armMotor2.setPower(gamepad2.left_stick_y);
+            //setting the power of the armsystem
+            if(Math.abs(gamepad2.left_stick_y)>0.03)
+            {
+                armMotor1.setPower(gamepad2.left_stick_y); //the motor moves at stick speed
+                armMotor2.setPower(gamepad2.left_stick_y);
+            }else{
+                armMotor1.setPower(1); //obviously if the stick isn't being moved, the motor holds
+                armMotor2.setPower(1);
+            }
+
             //things to do after 2 seconds
             statusTicker = 2; //status is running
         }
