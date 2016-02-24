@@ -21,6 +21,8 @@ public class IgutechTeleop extends OpMode {
     long setTime;
     int toggleswitch =1;
     int targetPos = 0;
+    int switchingmodes = 0;
+    int switchingmodespast = 0;
 
     double JoyThr, JoyYaw, rightPow, leftPow, armMovement, armscaling, offset;
 
@@ -66,6 +68,15 @@ public class IgutechTeleop extends OpMode {
         //colorChoosing(); //The currently unused servo control software
         //unusedCode();    //Currently unused code that's commented out
         servoControls(); //Code which controls all the servos
+
+        //togglemodes code
+        if(gamepad2.left_stick_button){
+           if(switchingmodes==switchingmodespast){if(switchingmodes==1){switchingmodes=0;}else{switchingmodes=1;}}
+        }else{switchingmodespast=switchingmodes;}
+
+
+
+
         motorControls(); //Code which controls all the motors
         experimentalArm(); //code with experiment
         status();//shows robot status
@@ -74,21 +85,24 @@ public class IgutechTeleop extends OpMode {
 
     public void experimentalArm()
     {
-        if(appclock()<2000)
+        if(appclock()<1500)
         {
-            armMotor1.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
-            armMotor2.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+            armMotor1.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+            armMotor2.setMode(DcMotorController.RunMode.RESET_ENCODERS);
             //things to do in first 1 second
             statusTicker = 1; //set status to reset encoders
         }
-        /*if(appclock()>1000 && appclock()<2000)
+        if(appclock()>1500 && appclock()<3000)
         {
-            armcontroller.setMotorControllerDeviceMode(DcMotorController.DeviceMode.READ_ONLY);
+            armMotor1.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+            armMotor2.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
             //things to do in seconds 1-2
             statusTicker = 1; //set status to reset encoders
-        }*/
-        if(appclock()>2000)
+        }
+        if(appclock()>3000)
         {
+            armMotor1.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+            armMotor2.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
             if(toggleswitch ==1)
             {
                 previoustick = appclock();
@@ -290,6 +304,10 @@ public class IgutechTeleop extends OpMode {
         {
             status = "Arm Live in ServoMode";
         }
+
+        //these show the current arm mode
+        if(switchingmodes == 1 && switchingmodespast == 1){telemetry.addData("Toggle mode ", "LOCK MODE");}
+        if(switchingmodes == 0 && switchingmodespast == 0){telemetry.addData("Toggle mode ", "FREE MODE");}
 
         telemetry.addData("Status: ", status);
     }
