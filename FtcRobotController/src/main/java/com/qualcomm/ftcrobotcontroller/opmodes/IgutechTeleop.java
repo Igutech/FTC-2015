@@ -25,6 +25,8 @@ public class IgutechTeleop extends OpMode {
     int switchingmodespast = 0;
     Boolean wasThereJustSwitch = false;
 
+    double idleServoPos = .438;
+
     double JoyThr, JoyYaw, rightPow, leftPow, armMovement, armscaling, offset;
 
 
@@ -58,7 +60,7 @@ public class IgutechTeleop extends OpMode {
         climbAssist = hardwareMap.servo.get("climbAssist");
         magicRelease = hardwareMap.servo.get("magicRelease");
         setTime = System.currentTimeMillis();
-        climbAssist.setPosition(.44);
+        climbAssist.setPosition(idleServoPos);
         climberServo.setPosition(.5);
         magicRelease.setPosition(.25);
         armServo.setPosition(.5);
@@ -202,7 +204,7 @@ public class IgutechTeleop extends OpMode {
         } else if (gamepad1.left_bumper) {
             climbAssist.setPosition(0);
         } else {
-            climbAssist.setPosition(.44);
+            climbAssist.setPosition(idleServoPos);
         }
     }
 
