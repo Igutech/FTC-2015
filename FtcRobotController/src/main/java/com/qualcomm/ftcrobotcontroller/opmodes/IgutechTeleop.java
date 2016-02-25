@@ -23,6 +23,7 @@ public class IgutechTeleop extends OpMode {
     int targetPos = 0;
     int switchingmodes = 0;
     int switchingmodespast = 0;
+    Boolean wasThereJustSwitch = false;
 
     double JoyThr, JoyYaw, rightPow, leftPow, armMovement, armscaling, offset;
 
@@ -40,8 +41,8 @@ public class IgutechTeleop extends OpMode {
         armMotor2 = hardwareMap.dcMotor.get("arm2");
         armMotor1.setDirection(DcMotor.Direction.FORWARD);
         armMotor2.setDirection(DcMotor.Direction.REVERSE);
-        armMotor1.setMode(DcMotorController.RunMode.RESET_ENCODERS);
-        armMotor2.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        armMotor1.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        armMotor2.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
         leftMotor = hardwareMap.dcMotor.get("left2");
         rightMotor = hardwareMap.dcMotor.get("right2");
         winch = hardwareMap.dcMotor.get("winch");
@@ -69,16 +70,43 @@ public class IgutechTeleop extends OpMode {
         //unusedCode();    //Currently unused code that's commented out
         servoControls(); //Code which controls all the servos
 
-        //togglemodes code
+        //toggle modes code
         if(gamepad2.left_stick_button){
            if(switchingmodes==switchingmodespast){if(switchingmodes==1){switchingmodes=0;}else{switchingmodes=1;}}
         }else{switchingmodespast=switchingmodes;}
 
+        if(switchingmodes == 1 && switchingmodespast == 1){
+            //LOCK MODE CODE FOR ARM!!!
+            if(wasThereJustSwitch)
+            {
+                setTime = System.currentTimeMillis();
+                wasThereJustSwitch = false;
+            }
 
+            telemetry.addData("Time", appclock());
+            experimentalArm();
+        }
+        if(switchingmodes == 0 && switchingmodespast == 0){
+            //FREE MODE CODE FOR ARM!!!
+            armMotor2.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+            armMotor1.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+
+            wasThereJustSwitch = true;
+            armMovement = -gamepad2.left_stick_y;
+
+            if (-armMovement > 0) {
+                armscaling = .3;
+            }else if (-armMovement < 0) {
+                armscaling = .3;
+            }
+
+            //Move arm
+            armMotor1.setPower(armMovement * armscaling); //Write arm movements to the motors.
+            armMotor2.setPower(armMovement * armscaling);
+        }
 
 
         motorControls(); //Code which controls all the motors
-        experimentalArm(); //code with experiment
         status();//shows robot status
 
     }
@@ -183,14 +211,6 @@ public class IgutechTeleop extends OpMode {
         JoyThr = -gamepad1.left_stick_y;
         JoyYaw = -gamepad1.right_stick_x;
 
-        //armMovement = -gamepad2.left_stick_y;
-
-        /*if (-armMovement > 0) {
-            armscaling = .3;
-        } else if (-armMovement < 0) {
-            armscaling = .3;
-        }*/
-
         if (gamepad2.left_trigger > .9) { //activate the winch system
             winch.setPower(1);
         } else if (gamepad2.right_trigger > .9) {
@@ -260,9 +280,6 @@ public class IgutechTeleop extends OpMode {
         rightPow = rightPow * sloMo;
         leftPow = leftPow * sloMo;
 
-        armMotor1.setPower(armMovement * armscaling); //Write arm movements to the motors.
-        armMotor2.setPower(armMovement * armscaling);
-
         leftMotor.setPower(leftPow); //Write driving movements to the motors.
         rightMotor.setPower(rightPow);
 
@@ -296,20 +313,20 @@ public class IgutechTeleop extends OpMode {
 
     public void status()
     {
-        if(statusTicker == 1)
+        /*if(statusTicker == 1)
         {
             status = "Reseting arm encoders";
         }
         if(statusTicker == 2)
         {
             status = "Arm Live in ServoMode";
-        }
+        }*/
 
         //these show the current arm mode
         if(switchingmodes == 1 && switchingmodespast == 1){telemetry.addData("Toggle mode ", "LOCK MODE");}
         if(switchingmodes == 0 && switchingmodespast == 0){telemetry.addData("Toggle mode ", "FREE MODE");}
 
-        telemetry.addData("Status: ", status);
+        //telemetry.addData("Status: ", status);
     }
 
     public long appclock()
