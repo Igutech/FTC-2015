@@ -70,33 +70,24 @@ public class FtcOpModeRegister implements OpModeRegister {
      * Uncomment any of the following lines if you want to register an op mode.
      */
     //manager.register("MR Gyro Test", MRGyroTest.class);
-
     //manager.register("Color thingy Sahas", AdafruitRGBExample.class);
     //manager.register("MRRGBExample", MRRGBExample.class);
     //manager.register("AdafruitRGBExample", AdafruitRGBExample.class);
     //manager.register("ColorSensorDriver", ColorSensorDriver.class);
     //manager.register("HTRGBExample", HTRGBExample.class);
-
     //manager.register("IrSeekerOp", IrSeekerOp.class);
     //manager.register("CompassCalibration", CompassCalibration.class);
     //manager.register("I2cAddressChangeExample", LinearI2cAddressChange.class);
-
-
     //manager.register("NxtTeleOp", NxtTeleOp.class);
-
     //manager.register("LinearK9TeleOp", LinearK9TeleOp.class);
     //manager.register("LinearIrExample", LinearIrExample.class);
-
-
     //manager.register ("PushBotManual1", PushBotManual1.class);
     //manager.register ("PushBotAutoSensors", PushBotAutoSensors.class);
     //manager.register ("PushBotIrEvent", PushBotIrEvent.class);
-
     //manager.register ("PushBotManualSensors", PushBotManualSensors.class);
     //manager.register ("PushBotOdsDetectEvent", PushBotOdsDetectEvent.class);
     //manager.register ("PushBotOdsFollowEvent", PushBotOdsFollowEvent.class);
-    //manager.register ("PushBotTouchEvent", PushBotTouchEvent.class);    
-    
+    //manager.register ("PushBotTouchEvent", PushBotTouchEvent.class);
     //manager.register("IguTeleOp", IguTeleOp.class);
     //manager.register("IguTestOp", IguTestOp.class);
     //manager.register("Tilman's Teleop", TilmansTeleop.class);
@@ -107,9 +98,7 @@ public class FtcOpModeRegister implements OpModeRegister {
     //manager.register("PushBotSquare", PushBotSquare.class);
     //manager.register("Drive Up Ramp Autonomous", Drive_Up_Ramp_Auto.class);
     //manager.register("New Bot Teleop", IguNewbotTeleop.class);
-
     //manager.register("Servo Testing", ServoTestingAutonomas.class);
-
     manager.register("Igutech Teleop", IgutechTeleop.class);
     //manager.register("Encoder Driver Test", EncoderDriverTest.class);
     //manager.register("Test", NxtTeleOp.class);
@@ -117,7 +106,8 @@ public class FtcOpModeRegister implements OpModeRegister {
     //manager.register("Blue Right Ramp Autonomous", IguBlueAutoRampRight.class);
     //manager.register("Red Left Ramp Autonomous", IguRedAutoRampLeft.class);
     //manager.register("Red Right Ramp Autonomous", IguRedAutoRampRight.class);
+    //manager.register("Back Up Into Wall Using Ultrasonic Sensors", Back_Up_Into_Wall.class);
     manager.register("Autonomous", UniversalAutonomous.class);
-    manager.register("Back Up Into Wall Using Ultrasonic Sensors", Back_Up_Into_Wall.class);
+    manager.register("Experimental Autonomous", UniversalAutonomousUltrasonicExperiment.class);
   }
 }

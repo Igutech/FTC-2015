@@ -4,15 +4,14 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
-import com.qualcomm.robotcore.hardware.DeviceInterfaceModule;
 import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.UltrasonicSensor;
 
 /**
- * Created by The Team.
+ * Created by Logan on 2/25/2016
  */
-public class UniversalAutonomous extends LinearOpMode {
+public class UniversalAutonomousUltrasonicExperiment extends LinearOpMode {
 
     DcMotor leftMotor2, rightMotor2;
     DcMotor armMotor1;
@@ -25,7 +24,9 @@ public class UniversalAutonomous extends LinearOpMode {
     //ColorSensor adafruit;
 
     int counter = 1;
+    double wallDistance;
     boolean debugMode = false;
+    boolean inPosition = false;
 
     String team = "";
     int pos = 0;
@@ -140,7 +141,7 @@ public class UniversalAutonomous extends LinearOpMode {
         driveDistance(-93, 0, 1);
         Thread.sleep(100);
         driveDistance(-560, -560, -1); //Drives backwards further than necessary.
-        Thread.sleep(1000);
+        Thread.sleep(100);
         driveDistance(90, 90, 1);
         Thread.sleep(100);
         driveDistance(0, 95, .75);
@@ -153,7 +154,7 @@ public class UniversalAutonomous extends LinearOpMode {
          driveDistance(0, -93, 1);
          Thread.sleep(100);
          driveDistance(-560, -560, -1); //Drives backwards further than necessary.
-         Thread.sleep(1000);
+         Thread.sleep(100);
          driveDistance(90, 90, 1);
          Thread.sleep(100);
          driveDistance(95, 0, .75);
@@ -197,10 +198,19 @@ public class UniversalAutonomous extends LinearOpMode {
         Thread.sleep(700);
         armMotor1.setPower(0);
         armMotor2.setPower(0);
-        Thread.sleep(300);
-        driveDistance(-126, -126, -.5);
         Thread.sleep(100);
-
+        driveDistance(-100, -100, -.5);
+        Thread.sleep(50);
+        while (!inPosition) {
+            leftMotor2.setPower(-.4);
+            rightMotor2.setPower(-.4);
+            wallDistance = UltraL.getUltrasonicLevel();
+            if (wallDistance <= 6 && wallDistance >= 1) {
+                inPosition = true;
+            }
+        }
+        leftMotor2.setPower(0);
+        rightMotor2.setPower(0);
 
         for (double i = .20; i < .7; i+=.0025) {
             servo.setPosition(i);

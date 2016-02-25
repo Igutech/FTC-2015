@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.Servo;
 
 /**
- * Created by The team.
+ * Created by The Team.
  */
 public class IgutechTeleop extends OpMode {
 
