@@ -25,7 +25,7 @@ public class IgutechTeleop extends OpMode {
     int switchingmodespast = 0;
     Boolean wasThereJustSwitch = false;
 
-    double idleServoPos = .438;
+    double idleServoPos = .5; //was.438
 
     double JoyThr, JoyYaw, rightPow, leftPow, armMovement, armscaling, offset;
 
